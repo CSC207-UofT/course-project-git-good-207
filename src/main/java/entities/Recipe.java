@@ -20,4 +20,16 @@ public class Recipe {
     public void addIngredients(Ingredient ingredient) {
         this.ingredients.add(ingredient);
     }
+
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public ArrayList<String> getSteps() {
+        return steps;
+    }
+
+    public String getTitle() { return title; }
+
+    public void deleteLastStep() { steps.remove(steps.size() - 1); }
 }
