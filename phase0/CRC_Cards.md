@@ -50,8 +50,9 @@ Collaborators: User
 
 Class Name: LoginManager  
 Parent Class: N/A  
-Responsibilities: verifies User credentials; if credentials are correct, it stores the currently logged in User; clears the current User on logout  
-Collaborators: User, Post, Comment, UserManager
+Responsibilities: verifies User credentials; if credentials are correct, it stores the currently logged in User; clears the current User on logout,
+handles new User signup;  
+Collaborators: User, UserManager, DatabaseManager  
 
 Class Name: FeedManager  
 Parent Class: N/A  
@@ -71,7 +72,7 @@ Collaborators: LoginManager, UserManager, FeedManager
 ## Controllers
 Class Name: LoginPresenter  
 Parent Class: N/A  
-Responsibilities: Receive login input, send login input to LoginManager  
+Responsibilities: Receive login/logout/signup input, send input to LoginManager  
 Collaborators: LoginManager
 
 Class Name: UserProfilePresenter  
