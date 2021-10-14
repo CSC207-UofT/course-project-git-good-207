@@ -56,4 +56,4 @@ public class Post {
     public LocalDateTime getPostedTime(){
         return this.postedTime;
     }
-}
+  
