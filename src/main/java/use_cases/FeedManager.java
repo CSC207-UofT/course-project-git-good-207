@@ -42,4 +42,8 @@ public class FeedManager {
     public void setCurrentUsersFeed(Feed newFeed) {
         this.currentUsersFeed = newFeed;
     }
+
+    public ArrayList<Post> getPostsFromFeed(){
+        return this.currentUsersFeed.getPosts();
+    }
 }
