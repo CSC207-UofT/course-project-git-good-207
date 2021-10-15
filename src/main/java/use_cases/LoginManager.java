@@ -24,12 +24,13 @@ public class LoginManager {
      */
     public boolean login(String username, String password){
         boolean isValidLogin = verifyUser(username, password);
-        if (isValidLogin){
+//        if (isValidLogin){
             // TODO use UserManager method to create user with all needed data
             //currUser = [insert UserManager method] ;
-        }
-
-        return isValidLogin;
+//        }
+          this.currUser = new User(username, password);
+          return true; // dummy value, remove when we implement this method
+//        return isValidLogin;
     }
 
     /**
@@ -80,7 +81,7 @@ public class LoginManager {
             return false;
          }
          */
-
+        return true;
     }
 
     public User getCurrUser() {
