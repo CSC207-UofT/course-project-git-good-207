@@ -14,14 +14,13 @@ public class RecipeAppController {
     private PostPresenter postPresenter;
     private UserProfilePresenter userProfilePresenter;
     private LoginManager loginManager;
-    private String shellActionPrompt = """
-            Enter an action:
-            0 Browse your Feed
-            1 Browse a User Profile
-            2 Post a Recipe
-            3 Customize your User Profile
-            4 Logout
-            """;
+    private String shellActionPrompt =
+            "Enter an action:\n" +
+            "0 Browse your Feed\n" +
+            "1 Browse a User Profile\n" +
+            "2 Post a Recipe\n" +
+            "3 Customize your User Profile\n" +
+            "4 Logout\n";
 
     public RecipeAppController(InOut inOut) {
         this.inOut = inOut;
@@ -81,7 +80,7 @@ public class RecipeAppController {
         } else if (action == ShellAction.LOGOUT) {
             this.loginPresenter.run(ShellAction.LOGOUT);
         } else {
-            System.out.println("That is not a valid action.");
+            this.inOut.setOutput("That is not a valid action.");
         }
     }
 
