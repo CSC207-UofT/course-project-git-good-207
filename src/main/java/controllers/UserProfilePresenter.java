@@ -3,11 +3,22 @@ package controllers;
 import java.util.HashMap;
 import java.util.ArrayList;
 
+import entities.InOut;
+import entities.ShellAction;
 import entities.User;
 import entities.Post;
 import use_cases.UserManager;
 
 public class UserProfilePresenter {
+    private InOut inOut;
+
+    public UserProfilePresenter(InOut inOut) {
+        this.inOut = inOut;
+    }
+
+    public void run(ShellAction action) {
+        // TODO: get user inputs/display info based on the given action
+    }
 //    public static void main(String[] args) {
 //
 //        // initialize some empty variables to create a new object User
