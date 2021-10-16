@@ -39,7 +39,7 @@ public class LoginManager {
      * Logout current user by resetting currUser.
      */
     public void logout() {
-        currUser = null;
+        this.currUser = null;
     }
 
     public boolean signUp(String username, String password) {
