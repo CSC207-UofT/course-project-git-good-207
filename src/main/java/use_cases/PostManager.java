@@ -2,8 +2,10 @@ package use_cases;
 
 import entities.Comment;
 import entities.Post;
+import entities.Recipe;
 import entities.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /*
@@ -44,6 +46,12 @@ public class PostManager {
         return false;
     }
 
+    public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category)
+    {
+
+        Post p = new Post(owner, postedTime, recipe, category, this.posts.size());
+        this.addPostToList(p);
+    }
     public boolean commentPost(Post post, Comment comment){
         return interactPost(post, comment, true);
     }
