@@ -2,6 +2,7 @@ package entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A Post that Users make on Foodstagram.
@@ -12,6 +13,7 @@ public class Post {
     private User owner;
     private Recipe recipe;
     private String category;
+    private int idPost;
     private LocalDateTime postedTime;
 
     public Post(User owner, LocalDateTime postedTime, Recipe recipe, String category) {
@@ -21,6 +23,23 @@ public class Post {
         this.recipe = recipe;
         this.category = category;
         this.postedTime = postedTime;
+    }
+
+    public int getIdPost() {
+        return idPost;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return idPost == post.idPost;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idPost);
     }
 
     public void addComment(Comment comment) {
