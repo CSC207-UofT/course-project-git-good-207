@@ -16,17 +16,16 @@ public class Post {
     private int idPost;
     private LocalDateTime postedTime;
 
-    public Post(User owner, LocalDateTime postedTime, Recipe recipe, String category) {
+    public Post(User owner, LocalDateTime postedTime, Recipe recipe, String category, int pId) {
         this.likedUsers = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.owner = owner;
         this.recipe = recipe;
         this.category = category;
         this.postedTime = postedTime;
-        this.idPost = 0;
+        this.idPost = pId;
     }
 
-    public void setIdPost(int pId){ this.idPost = pId;}
     public int getIdPost() {
         return this.idPost;
     }
