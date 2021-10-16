@@ -14,16 +14,16 @@ public class Post {
     private String category;
     private LocalDateTime postedTime;
 
-    public Post(User owner, LocalDateTime postedTime, Recipe recipe, String category){
-        this.likedUsers = new ArrayList<User>();
-        this.comments = new ArrayList<Comment>();
+    public Post(User owner, LocalDateTime postedTime, Recipe recipe, String category) {
+        this.likedUsers = new ArrayList<>();
+        this.comments = new ArrayList<>();
         this.owner = owner;
         this.recipe = recipe;
         this.category = category;
         this.postedTime = postedTime;
     }
 
-    public void addComment(Comment comment){
+    public void addComment(Comment comment) {
         this.comments.add(comment);
     }
 
@@ -31,9 +31,13 @@ public class Post {
         this.likedUsers.add(user);
     }
 
-    public ArrayList<User> getLikedUsers() { return this.likedUsers; }
+    public ArrayList<User> getLikedUsers() {
+        return this.likedUsers;
+    }
 
-    public ArrayList<Comment> getComments() { return this.comments; }
+    public ArrayList<Comment> getComments() {
+        return this.comments;
+    }
 
     public int getNumLikes() {
         return this.likedUsers.size();
@@ -47,13 +51,15 @@ public class Post {
         return this.owner;
     }
 
-    public void setRecipe(Recipe recipe) { this.recipe = recipe; }
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
 
     /**
-     *
      * @return Return the local time the Post was created.
      */
-    public LocalDateTime getPostedTime(){
+    public LocalDateTime getPostedTime() {
         return this.postedTime;
     }
+}
   

@@ -1,6 +1,4 @@
 package entities;
-/*hi */
-import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -23,8 +21,18 @@ public class User {
      * explanation of User
      */
     // constructor
+    public User(String username, String password){
+        this.username = username;
+        this.password = password;
+        this.bio = "";
+        this.like_history = new HashMap<>();
+        this.followers = new ArrayList<>();
+        this.following = new ArrayList<>();
+        this.posts = new ArrayList<>();
+    }
+
     public User(String username, String password, String bio, HashMap<String, Integer> like_history,
-                ArrayList followers, ArrayList following, ArrayList posts){
+                ArrayList<User> followers, ArrayList<User> following, ArrayList<Post> posts){
         this.username = username;
         this.password = password;
         this.bio = bio;
