@@ -20,7 +20,7 @@ public class User {
     /**
      * explanation of User
      */
-    // constructor
+    // constructors
     public User(String username, String password){
         this.username = username;
         this.password = password;

@@ -9,6 +9,14 @@ import entities.Post;
 public class UserManager {
 
     /**
+     * Return a User object given the user's username and password
+     */
+    public User createUser(String username, String password) {
+        User user = new User(username, password);
+        return user;
+    }
+
+    /**
      * Update User's username into username given
      */
     public void update_username(User user, String username) {

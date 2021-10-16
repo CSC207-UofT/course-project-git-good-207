@@ -76,7 +76,7 @@ public class RecipeAppController {
         } else if (action == ShellAction.POST) {
             this.postPresenter.run(ShellAction.POST);
         } else if (action == ShellAction.CUSTOMIZEPROFILE) {
-            this.userProfilePresenter.run(ShellAction.POST);
+            this.userProfilePresenter.run(ShellAction.CUSTOMIZEPROFILE);
         } else if (action == ShellAction.LOGOUT) {
             this.loginPresenter.run(ShellAction.LOGOUT);
         } else {
