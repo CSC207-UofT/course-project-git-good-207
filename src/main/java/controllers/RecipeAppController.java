@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.*;
+import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 import use_cases.UserManager;
 
@@ -14,6 +15,8 @@ public class RecipeAppController {
     private PostPresenter postPresenter;
     private UserProfilePresenter userProfilePresenter;
     private LoginManager loginManager;
+    // Added this attribute:
+    private DatabaseManager databasemanager;
     private String shellActionPrompt =
             "Enter an action:\n" +
             "0 Browse your Feed\n" +
@@ -24,10 +27,12 @@ public class RecipeAppController {
 
     public RecipeAppController(InOut inOut) {
         this.inOut = inOut;
+        //Added this attribute:
+        this.databasemanager = new DatabaseManager();
         this.feedPresenter = new FeedPresenter(inOut);
         this.loginManager = new LoginManager(new UserManager());
         this.loginPresenter = new LoginPresenter(inOut, this.loginManager);
-        this.userProfilePresenter = new UserProfilePresenter(inOut);
+        this.userProfilePresenter = new UserProfilePresenter(inOut, this.loginManager, this.databasemanager);
         this.postPresenter = new PostPresenter(inOut);
     }
 
