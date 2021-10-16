@@ -23,10 +23,12 @@ public class Post {
         this.recipe = recipe;
         this.category = category;
         this.postedTime = postedTime;
+        this.idPost = 0;
     }
 
+    public void setIdPost(int pId){ this.idPost = pId;}
     public int getIdPost() {
-        return idPost;
+        return this.idPost;
     }
 
     @Override
