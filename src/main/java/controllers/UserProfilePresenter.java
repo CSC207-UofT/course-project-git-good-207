@@ -86,7 +86,7 @@ public class UserProfilePresenter {
                 else if (choice == 2) {
                     String new_bio = this.inOut.getInput("Enter what you'd like your new bio to be: ");
                     if (this.changeBio(this.loginmanager.getCurrUser(), new_bio)) {
-                        this.inOut.setOutput("Successfully changed bio to : " + new_bio + "\n");
+                        this.inOut.setOutput("Successfully changed bio to: " + new_bio + "\n");
                         this.inOut.setOutput("Returning to main page.");
                     }
                     else {
