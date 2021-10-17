@@ -56,6 +56,15 @@ public class DatabaseManager {
         } return false;
     }
 
+    public boolean updateUser(User updatedUser) {
+        for (int i=0; i < this.users.size(); i++) {
+            if (this.users.get(i).getUsername().equals(updatedUser.getUsername())) {
+                this.users.set(i, updatedUser);
+                return true;
+            }
+        } return false;
+    }
+
     public User[] getAllUsers() {
         User[] dummyUserArray = new User[this.users.size()];
         return this.users.toArray(dummyUserArray);

@@ -159,6 +159,8 @@ public class UserProfileController {
      */
     private void runChangeBioDisplay(User user, String newBio) {
         if (this.userManager.changeBio(user, newBio)) {
+            user.setBio(newBio);
+            this.databaseManager.updateUser(user);
             this.inOut.setOutput("Successfully changed bio to: " + newBio + "\n");
             this.inOut.setOutput("Returning to main page.");
         }

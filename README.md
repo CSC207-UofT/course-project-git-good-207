@@ -1,6 +1,6 @@
-## Replace this README.md!
+## The Recipe App - Git Good 207
 
-This is a standard README.md file for you to replace. You'll want to include your own content here!
+Our group, Git Good 207, decided to make a Recipe sharing app. We haven't decided on a name yet, but one possibility is "Foodstagram".
 
 Group Members:
 - Eric
@@ -9,6 +9,3 @@ Group Members:
 - Sebastian
 - Glen
 - Justin
-
-MD (Markdown) files use [Markdown formatting](https://guides.github.com/features/mastering-markdown/): 
-these look very much like .txt files, so you can write them in a very similar way.
