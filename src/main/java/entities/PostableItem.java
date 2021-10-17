@@ -2,15 +2,15 @@ package entities;
 
 public abstract class PostableItem {
     private String text;
-    private String author;
+    private String postAuthor;
 
     public PostableItem(String pAuthor){
         this.text = "";
-        this.author = pAuthor;
+        this.postAuthor = pAuthor;
     }
 
     public String getAuthor() {
-        return author;
+        return this.postAuthor;
     }
 
     public String getText() {

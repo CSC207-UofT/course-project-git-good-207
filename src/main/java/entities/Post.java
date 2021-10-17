@@ -13,21 +13,21 @@ public class Post {
     private User owner;
     private Recipe recipe;
     private String category;
-    private int idPost;
+    private int postId;
     private LocalDateTime postedTime;
 
-    public Post(User owner, LocalDateTime postedTime, Recipe recipe, String category, int pId) {
+    public Post(User owner, LocalDateTime postedTime, Recipe recipe, String category, int postId) {
         this.likedUsers = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.owner = owner;
         this.recipe = recipe;
         this.category = category;
         this.postedTime = postedTime;
-        this.idPost = pId;
+        this.postId = postId;
     }
 
     public int getIdPost() {
-        return this.idPost;
+        return this.postId;
     }
 
     @Override
@@ -35,12 +35,12 @@ public class Post {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return idPost == post.idPost;
+        return this.postId == post.postId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idPost);
+        return Objects.hash(this.postId);
     }
 
     public void addComment(Comment comment) {

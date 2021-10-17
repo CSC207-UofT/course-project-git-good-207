@@ -66,7 +66,7 @@ public class PostManager {
     }
 
     public ArrayList<Post> getPosts() {
-        return posts;
+        return this.posts;
     }
 
 
