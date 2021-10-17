@@ -52,7 +52,7 @@ public class LoginManager {
 
         if (isValidUsername && isValidPassword) {
             //use databaseManager to add new user to the database
-            this.databaseManager.addNewUser(username, password);
+            this.databaseManager.addNewUser(new User(username, password));
 
         }
         return isValidUsername && isValidPassword;

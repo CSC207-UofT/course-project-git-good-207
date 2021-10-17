@@ -5,32 +5,58 @@ import entities.Recipe;
 import entities.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DatabaseManager {
     //Temp user storage for loginManager testing
-    private HashMap<String, String> loginInfo;
+    private HashMap<String, String> loginInfo = new HashMap<>();
+    private ArrayList<Post> posts = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
 
     public DatabaseManager(){
-        loginInfo = new HashMap<>();
-        loginInfo.put("justin", "pass");
-        loginInfo.put("sebastian", "pass");
-        loginInfo.put("glen", "pass");
-        loginInfo.put("shawn", "pass");
-    }
-
-    //TODO: Add a new User into the database with its username and password
-    public boolean addNewUser(String username, String password) {
-        //temp action, change to writing to file
-        loginInfo.put(username, password);
-        return true;
+        this.initDummyData();
     }
 
     public HashMap<String, String> getLoginInfo(){
         return loginInfo;
     }
 
+    public void addNewPost(Post newPost) {
+        this.posts.add(newPost);
+    }
+
+    /**
+     * Save a new user to the database.
+     * @param newUser The new User to save to the database.
+     * @return A boolean which is true if the user was successfully
+     * added (there was no user with the same username). False if
+     * unsuccessful.
+     */
+    public boolean addNewUser(User newUser) {
+        if (this.loginInfo.containsKey(newUser.getUsername())) {
+            return false;
+        }
+        this.users.add(newUser);
+        this.loginInfo.put(newUser.getUsername(), newUser.getPassword());
+        return true;
+    }
+
     public Post[] getAllPosts() {
+        Post[] dummyPostArray = new Post[this.posts.size()];
+        return this.posts.toArray(dummyPostArray);
+    }
+
+    public User[] getAllUsers() {
+        User[] dummyUserArray = new User[this.users.size()];
+        return this.users.toArray(dummyUserArray);
+    }
+
+    private void initDummyData() {
+        this.loginInfo.put("justin", "pass");
+        this.loginInfo.put("sebastian", "pass");
+        this.loginInfo.put("glen", "pass");
+        this.loginInfo.put("shawn", "pass");
         Post chinesePost = new Post(
                 new User("justin", "password"),
                 LocalDateTime.now(),
@@ -51,16 +77,17 @@ public class DatabaseManager {
                 LocalDateTime.now(),
                 new Recipe("Peanut Butter and Onion Sandwich"),
                 "Other");
-        Post[] dummyPostArray = {chinesePost, koreanPost, italianPost, cursedPost};
-        return dummyPostArray;
-    }
-
-    public User[] getAllUsers() {
+        this.posts.add(chinesePost);
+        this.posts.add(koreanPost);
+        this.posts.add(italianPost);
+        this.posts.add(cursedPost);
         User justin = new User("justin", "pass");
         User sebastian = new User("sebastian", "pass");
         User glen = new User("glen", "pass");
         User shawn = new User("shawn", "pass");
-        User[] dummyAllUsers = {justin, sebastian, glen, shawn};
-        return dummyAllUsers;
+        this.users.add(justin);
+        this.users.add(sebastian);
+        this.users.add(glen);
+        this.users.add(shawn);
     }
 }
