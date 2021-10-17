@@ -27,8 +27,8 @@ public class RecipeAppController {
 
     public RecipeAppController(InOut inOut) {
         this.inOut = inOut;
-        this.feedPresenter = new FeedPresenter(inOut);
         this.loginManager = new LoginManager(new UserManager());
+        this.feedPresenter = new FeedPresenter(inOut, loginManager);
         this.loginPresenter = new LoginPresenter(inOut, this.loginManager);
         this.userProfilePresenter = new UserProfilePresenter(inOut, this.loginManager);
         this.postPresenter = new PostPresenter(inOut, this.postManager, this.loginManager);
