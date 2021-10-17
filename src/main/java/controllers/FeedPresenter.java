@@ -1,104 +1,85 @@
 package controllers;
 
 import entities.*;
+import use_cases.DatabaseManager;
 import use_cases.FeedManager;
+import use_cases.LoginManager;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class FeedPresenter {
     private FeedManager feedManager;
+    private LoginManager loginManager;
     private InOut inOut;
+    private DatabaseManager databaseManager = new DatabaseManager();
+    private String postsString;
+    private HashMap<Integer, Post> postsActionMap = new HashMap<>();
+    private String postActionPrompt = "Please select an action for this post: \n"
+            + "0 Like the Post";
 
-    public FeedPresenter(InOut inOut) {
+    public FeedPresenter(InOut inOut, LoginManager loginManager) {
         this.inOut = inOut;
-    }
-
-    public FeedPresenter(InOut inOut, User currentUser, Feed currentUsersFeed) {
-        this.inOut = inOut;
-        this.feedManager = new FeedManager(currentUser, currentUsersFeed);
+        this.loginManager = loginManager;
+        User currUser = this.loginManager.getCurrUser();
+        Post[] posts = this.databaseManager.getAllPosts();
+        Feed currUserFeed = new Feed(new ArrayList<>(Arrays.asList(posts)));
+        this.feedManager = new FeedManager(currUser, currUserFeed);
     }
 
     public void run(ShellAction action) {
         // TODO: get user inputs/display info based on the ShellAction
         if (action == ShellAction.BROWSEFEED) {
-            // Asks the user for a filter (can be none)
-            String filterInput = this.getFilterInput();
-
-            if (!filterInput.equals("none")) {
-                // Calls FeedManager to update the feed to show only the filtered posts
-                this.setFeedFilter(filterInput);
-            }
-
-            // Gets current user's feed
-            Feed currentFeed = this.feedManager.getCurrentUsersFeed();
-            // Convert the feed into strings
-            ArrayList<ArrayList<String>> feedInStrings = this.convertFeedToString(currentFeed);
-            // Send the strings to InOut to be shown
-            this.setOutputToInOut(feedInStrings);
+            this.runBrowseFeed();
         }
     }
 
-    public void setCurrentUser() {}
-
-    public void setCurrentUsersFeed() {}
-
-    public void setFeedFilter(String filter) {
-        this.feedManager.setFeedFilter(filter);
-    }
-
-    public void refreshFeed() {
-        this.feedManager.refreshFeed();
-    }
-
-    public String getFilterInput() {
-        // Will implement restrictions later to the input that the user is allowed to type.
+    private void runBrowseFeed() {
+        Feed feed = this.feedManager.getCurrentUsersFeed();
+        ArrayList<Post> allPosts = feed.getPosts();
+        this.postsString = this.generateFeedActions(allPosts);
         try {
-            String filterInput = this.inOut.getInput(
-                    "What type of cuisine would you like to see in your feed?" +
-                            "Type 'None' if you do not wish to have a filter.");
-            return filterInput;
-        } catch(IOException e) {
-            return "That cuisine type does not exist here.";
+            String postSelection = this.inOut.getInput(this.postsString);
+            Integer postNumber = Integer.parseInt(postSelection);
+            Post selectedPost = this.postsActionMap.get(postNumber);
+            this.displayPostInfo(selectedPost);
+            String postAction =  this.inOut.getInput(this.postActionPrompt);
+            this.runPostAction(selectedPost, Integer.parseInt(postAction));
+            this.displayPostInfo(selectedPost);
+        } catch (IOException e) {
+            this.inOut.setOutput("An error occurred: " + e);
+        } catch (NumberFormatException nfe) {
+            this.inOut.setOutput("You entered an invalid action input.");
+        }
+
+    }
+
+    private void runPostAction(Post selectedPost, Integer postAction) {
+        switch (postAction) {
+            case 0:
+                selectedPost.addLike(this.loginManager.getCurrUser());
+                break;
+            default:
+                this.inOut.setOutput("You entered an invalid action.");
         }
     }
 
-    public void setOutputToInOut(ArrayList<ArrayList<String>> feedInStrings) {
-        for (ArrayList<String> postInStrings : feedInStrings) {
-            for (String postDetails : postInStrings) {
-                this.inOut.setOutput(postDetails);
-            }
-            this.inOut.setOutput(System.getProperty("line.separator"));
-        }
+    private void displayPostInfo(Post selectedPost) {
+        this.inOut.setOutput("Post Title: " + selectedPost.getRecipe().getTitle());
+        this.inOut.setOutput("Category: " + selectedPost.getCategory());
+        this.inOut.setOutput("Number of Likes: " + selectedPost.getNumLikes());
     }
 
-    public ArrayList<ArrayList<String>> convertFeedToString(Feed feed) {
-        ArrayList<ArrayList<String>> feedList = new ArrayList<ArrayList<String>>();
+    private String generateFeedActions(ArrayList<Post> posts) {
+        this.postsActionMap = new HashMap<>();
+        String postsString = "Enter a number for a detailed view of a post: ";
 
-        for (Post post: feed.getDisplayedPosts()) {
-            ArrayList<String> postList = new ArrayList<String>();
-
-            //Getting the details of a single post
-            String postOwner = post.getOwner().getUsername() + "'s post";
-            //No method in Post class to get recipe yet.
-            String recipe = ;
-            String cuisineType = "Cuisine Type: " + post.getCategory();
-            String postedTime = "Posted Time: " + post.getPostedTime();
-            String numOfLikes = "Number of likes: " + post.getNumLikes();
-            String comments = "Comments: " + post.getComments();
-
-            //Add each post detail into postList to make a list that represents a post
-            postList.add(postOwner);
-            postList.add(recipe);
-            postList.add(cuisineType);
-            postList.add(postedTime);
-            postList.add(numOfLikes);
-            postList.add(comments);
-
-            feedList.add(postList);
+        for (int i=0; i < posts.size(); i++) {
+            this.postsActionMap.put(i, posts.get(i));
+            postsString += "\n" + i + " " + posts.get(i).getRecipe().getTitle();
         }
-
-        return feedList;
+        return postsString;
     }
 }
