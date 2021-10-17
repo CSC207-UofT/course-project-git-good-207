@@ -147,6 +147,7 @@ public class UserManager {
         }
         else {
             user.setBio(newBio);
+            this.databaseManager.updateUser(user);
             return true;
         }
     }
@@ -178,8 +179,9 @@ public class UserManager {
      * views the information(attributes) of another user, therefore password is not given
      */
     public String runBrowseOtherProfile(User user) {
-        String username = user.getUsername();
-        String bio = user.getBio();
+        User updatedUser = this.findUser(user.getUsername());
+        String username = updatedUser.getUsername();
+        String bio = updatedUser.getBio();
         return ("Username: " + username + "\nBio: " + bio);
     }
 
