@@ -13,12 +13,10 @@ public class DatabaseManager {
 
     public DatabaseManager(){
         loginInfo = new HashMap<>();
-    }
-
-    //TODO: Get a User object to check its username and password to help verify the login.
-    public User getUser() {
-        // dummy return value
-        return new User("username", "password");
+        loginInfo.put("justin", "pass");
+        loginInfo.put("sebastian", "pass");
+        loginInfo.put("glen", "pass");
+        loginInfo.put("shawn", "pass");
     }
 
     //TODO: Add a new User into the database with its username and password
