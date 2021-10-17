@@ -1,8 +1,11 @@
 import entities.Feed;
 import entities.Post;
+import entities.Recipe;
+import entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,7 +14,18 @@ public class FeedTest {
 
     @BeforeEach
     void setupFeedTest() {
-        this.feed = new Feed(new ArrayList<>(Arrays.asList(new Post(), new Post())));
+        this.feed = new Feed(new ArrayList<>(Arrays.asList(
+                new Post(
+                    new User("justin", "password"),
+                    LocalDateTime.now(),
+                    new Recipe("Stir Fry"),
+                    "Chinese"),
+                new Post(
+                    new User("justin", "password"),
+                    LocalDateTime.now(),
+                    new Recipe("Stir Fry"),
+                    "Chinese")
+        )));
     }
 
     @Test
