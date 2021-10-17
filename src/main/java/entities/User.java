@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class User {
     private String username, password, bio;
-    //HashMap<String cuisine_category, int likes>
-    private HashMap<String, Integer> like_history;
+    // HashMap<String cuisineCategory, int likes>
+    private HashMap<String, Integer> likeHistory;
     private ArrayList<User> followers, following;
     private ArrayList<Post> posts;
 
@@ -25,25 +25,25 @@ public class User {
         this.username = username;
         this.password = password;
         this.bio = "";
-        this.like_history = new HashMap<>();
+        this.likeHistory = new HashMap<>();
         this.followers = new ArrayList<>();
         this.following = new ArrayList<>();
         this.posts = new ArrayList<>();
     }
 
-    public User(String username, String password, String bio, HashMap<String, Integer> like_history,
+    public User(String username, String password, String bio, HashMap<String, Integer> likeHistory,
                 ArrayList<User> followers, ArrayList<User> following, ArrayList<Post> posts){
         this.username = username;
         this.password = password;
         this.bio = bio;
-        this.like_history = like_history;
+        this.likeHistory = likeHistory;
         this.followers = followers;
         this.following = following;
         this.posts = posts;
         // Should like_history, followers, following, and posts be initialized as an empty HashMap / ArrayList?
     }
 
-    //setters
+    // setters
     public void setUsername(String username) {
         this.username = username;
     }
@@ -56,8 +56,8 @@ public class User {
         this.bio = bio;
     }
 
-    public void setLike_history(HashMap<String, Integer> like_history) {
-        this.like_history = like_history;
+    public void setLikeHistory(HashMap<String, Integer> like_history) {
+        this.likeHistory = likeHistory;
     }
 
     public void setFollowers(ArrayList<User> followers) {
@@ -72,7 +72,7 @@ public class User {
         this.posts = posts;
     }
 
-    //getters
+    // getters
     public String getUsername() {
         return this.username;
     }
@@ -85,8 +85,8 @@ public class User {
         return this.bio;
     }
 
-    public HashMap<String, Integer> getLike_history() {
-        return this.like_history;
+    public HashMap<String, Integer> getLikeHistory() {
+        return this.likeHistory;
     }
 
     public ArrayList<User> getFollowers() {
