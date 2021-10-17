@@ -47,6 +47,15 @@ public class DatabaseManager {
         return this.posts.toArray(dummyPostArray);
     }
 
+    public boolean updatePost(Post updatedPost) {
+        for (int i=0; i < this.posts.size(); i++) {
+            if (this.posts.get(i).equals(updatedPost)) {
+                this.posts.set(i, updatedPost);
+                return true;
+            }
+        } return false;
+    }
+
     public User[] getAllUsers() {
         User[] dummyUserArray = new User[this.users.size()];
         return this.users.toArray(dummyUserArray);
