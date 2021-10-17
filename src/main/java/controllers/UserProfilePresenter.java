@@ -87,7 +87,7 @@ public class UserProfilePresenter {
      * runCustomizeProfile, Displays current user's profile and asks
      */
     public void runCustomizeProfile() {
-        this.inOut.setOutput(this.userManager.getUserInformation(this.loginManager.getCurrUser()));
+//        this.inOut.setOutput(this.userManager.getUserInformation(this.loginManager.getCurrUser()));
         this.inOut.setOutput(this.getCustomizeProfileScreen());
         try {
             int choice = Integer.parseInt(this.inOut.getInput("Select an option: "));
