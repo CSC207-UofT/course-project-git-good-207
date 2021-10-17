@@ -2,17 +2,21 @@ package use_cases;
 
 import entities.User;
 
+import java.util.HashMap;
+
 /*
 Manages user login and logout
  */
 public class LoginManager {
     private User currUser;
     private UserManager userManager;
+    private DatabaseManager databaseManager;
 
-    // TODO add DatabaseManager parameter
-    public LoginManager (UserManager userManager){
+
+    public LoginManager(UserManager userManager) {
         this.currUser = null;
         this.userManager = userManager;
+        this.databaseManager = new DatabaseManager();
     }
 
     /**
@@ -22,38 +26,33 @@ public class LoginManager {
      * @param password The entered password
      * @return Return true if login was successful. Return false otherwise.
      */
-    public boolean login(String username, String password){
+    public boolean login(String username, String password) {
         boolean isValidLogin = verifyUser(username, password);
-//        if (isValidLogin){
-            // TODO use UserManager method to create user with all needed data
-            //currUser = [insert UserManager method] ;
-//        }
-          this.currUser = new User(username, password);
-          return true; // dummy value, remove when we implement this method
-//        return isValidLogin;
+        if (isValidLogin) {
+            //use UserManager method to create user with all needed data
+            this.currUser = this.userManager.createUser(username, password);
+        }
+        return isValidLogin;
     }
 
     /**
      * Logout current user by resetting currUser.
      */
-    public void logout(){
-        currUser = null;
+    public void logout() {
+        this.currUser = null;
     }
 
-    public boolean signUp (String username, String password){
-        //TODO replace true isValidUsername value with databaseManager method
+    public boolean signUp(String username, String password) {
 
-        boolean isValidUsername = true;
-        //boolean isValidUsername = !(username in databaseManager.getUsers());
+        boolean isValidUsername = !(databaseManager.getLoginInfo().containsKey(username));
 
         //TODO can add future restrictions on what is a valid password
         //for now all passwords are valid
         boolean isValidPassword = true;
 
-        if(isValidUsername && isValidPassword){
-            //TODO use databaseManager to add new user to the database
-
-            //databaseManager.addUser(username, password);
+        if (isValidUsername && isValidPassword) {
+            //use databaseManager to add new user to the database
+            this.databaseManager.addNewUser(new User(username, password));
 
         }
         return isValidUsername && isValidPassword;
@@ -68,23 +67,21 @@ public class LoginManager {
      * @return Return true if both username and password match a username and
      * password pair in the Database. Return false otherwise.
      */
-    private boolean verifyUser(String username, String password){
-        //TODO use DatabaseManager to check if the given username and password
-        //match a username and password pair in the Database
+    private boolean verifyUser(String username, String password) {
 
-        /**
-         if (username in databaseManager.getUsers()){
+        HashMap<String, String> loginInfo = this.databaseManager.getLoginInfo();
+        //use DatabaseManager to check if the given username and password
+        //match a username and password pair in the Database
+        if (this.databaseManager.getLoginInfo().containsKey(username)) {
             //username is in database, so check if the password matches
-            return password == databaseManager[user];
-         }else{
+            return password.equals(loginInfo.get(username));
+        } else {
             //username not in database
             return false;
-         }
-         */
-        return true;
+        }
     }
 
     public User getCurrUser() {
-        return currUser;
+        return this.currUser;
     }
 }
