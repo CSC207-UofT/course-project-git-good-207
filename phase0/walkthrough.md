@@ -10,8 +10,8 @@
 ## Detailed Walkthrough
 Run the app by running the main method of RecipeAppMain (User Interface class). The shell will prompt you for a username and password. First, try entering incorrect login credentials and note that the shell does not allow you to login. RecipeAppController (controller class) is calling LoginManager (use case class) to check login attempts for correct credentials matching a User (entity class) stored in the database (for now, we have dummy APIs implemented in our use case class DatabaseManager). Now, Login with an existing username and password (username: “justin”, password: “pass”). User sign up is not fully functional yet.
 
-After a successful login, the user is given the prompt:
-“Enter an action:
+After a successful login, the user is given the prompt:  
+“Enter an action:  
 0 Browse your Feed  
 1 Browse User Profile  
 2 Post a Recipe  
