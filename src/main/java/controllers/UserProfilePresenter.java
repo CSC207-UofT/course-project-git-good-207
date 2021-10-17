@@ -17,16 +17,16 @@ public class UserProfilePresenter {
     private String otherUserScreen = "Select which action you'd like to take:" +
             "\n0 Follow user \n1 Browse user's posts";
     private String userToBrowsePrompt = "Enter the username of the person you'd like to view: ";
-    private LoginManager loginmanager;
-    private UserManager usermanager;
-    private DatabaseManager databasemanager;
+    private LoginManager loginManager;
+    private UserManager userManager;
+    private DatabaseManager databaseManager;
 
     // Constructor
-    public UserProfilePresenter(InOut inOut, LoginManager loginmanager) {
+    public UserProfilePresenter(InOut inOut, LoginManager loginManager) {
         this.inOut = inOut;
-        this.loginmanager = loginmanager;
-        this.databasemanager = new DatabaseManager();
-        this.usermanager = new UserManager();
+        this.loginManager = loginManager;
+        this.databaseManager = new DatabaseManager();
+        this.userManager = new UserManager();
     }
 
 
@@ -59,15 +59,15 @@ public class UserProfilePresenter {
         try {
             // display all the usernames in the database
             // runDisplayAllUsers()
-            String user_to_browse = this.inOut.getInput("Enter the username of the person you'd like to view: ");
-            if (this.usermanager.checkUserToBrowse(user_to_browse) ||
-                    user_to_browse.equals(this.loginmanager.getCurrUser().getUsername())) {
-                User target_user = this.usermanager.findUser(user_to_browse);
-                this.inOut.setOutput(this.usermanager.runBrowseOtherProfile(target_user));
+            String userToBrowse = this.inOut.getInput("Enter the username of the person you'd like to view: ");
+            if (this.userManager.checkUserToBrowse(userToBrowse) ||
+                    userToBrowse.equals(this.loginManager.getCurrUser().getUsername())) {
+                User targetUser = this.userManager.findUser(userToBrowse);
+                this.inOut.setOutput(this.userManager.runBrowseOtherProfile(targetUser));
                 // Give the choice of look following user or looking into user's post
                 int choice = Integer.parseInt(this.inOut.getInput(this.otherUserScreen));
                 if (choice == 0) {
-                    this.runFollowUser(this.loginmanager.getCurrUser(), target_user);
+                    this.runFollowUser(this.loginManager.getCurrUser(), targetUser);
                 }
                 else if (choice == 1) {
                     // TODO: Implement with a function from PostPresenter
@@ -87,36 +87,36 @@ public class UserProfilePresenter {
      * runCustomizeProfile, Displays current user's profile and asks
      */
     public void runCustomizeProfile() {
-        this.inOut.setOutput(this.usermanager.getUserInformation(this.loginmanager.getCurrUser()));
+        this.inOut.setOutput(this.userManager.getUserInformation(this.loginManager.getCurrUser()));
         this.inOut.setOutput(this.getCustomizeProfileScreen());
         try {
             int choice = Integer.parseInt(this.inOut.getInput("Select an option: "));
             if (choice == 0) {
-                String new_username = this.inOut.getInput("Enter what you'd like your new username to be: ");
-                runChangeUsernameDisplay(this.loginmanager.getCurrUser(), new_username);
+                String newUsername = this.inOut.getInput("Enter what you'd like your new username to be: ");
+                runChangeUsernameDisplay(this.loginManager.getCurrUser(), newUsername);
             }
             else if (choice == 1) {
-                String new_password = this.inOut.getInput("Enter what you'd like your new password to be: ");
-                runChangePasswordDisplay(this.loginmanager.getCurrUser(), new_password);
+                String newPassword = this.inOut.getInput("Enter what you'd like your new password to be: ");
+                runChangePasswordDisplay(this.loginManager.getCurrUser(), newPassword);
 
             }
             else if (choice == 2) {
-                String new_bio = this.inOut.getInput("Enter what you'd like your new bio to be: ");
-                runChangeBioDisplay(this.loginmanager.getCurrUser(), new_bio);
+                String newBio = this.inOut.getInput("Enter what you'd like your new bio to be: ");
+                runChangeBioDisplay(this.loginManager.getCurrUser(), newBio);
             }
             else if (choice == 3) {
                 // TODO: Implement this with a function from PostPresenter to show currentUser's posts
             }
             else if (choice == 4) {
                 // Show following list
-//                this.inOut.setOutput(this.displayFollowingList(this.loginmanager.getCurrUser()));
-                this.inOut.setOutput(this.usermanager.getFollowingListString(this.loginmanager.getCurrUser()));
+//                this.inOut.setOutput(this.displayFollowingList(this.loginManager.getCurrUser()));
+                this.inOut.setOutput(this.userManager.getFollowingListString(this.loginManager.getCurrUser()));
                 String action = this.inOut.getInput("Would you like to unfollow one of these users? (y/n): ");
                 if (action.toLowerCase().equals("y")) {
-                    String user_to_unfollow =
+                    String userToUnfollow =
                             this.inOut.getInput("Enter the username of the person you'd like to unfollow: ");
-                    if (this.usermanager.checkUserToBrowse(user_to_unfollow)) {
-                        this.runUnfollowUser(loginmanager.getCurrUser(), usermanager.findUser(user_to_unfollow));
+                    if (this.userManager.checkUserToBrowse(userToUnfollow)) {
+                        this.runUnfollowUser(loginManager.getCurrUser(), userManager.findUser(userToUnfollow));
                     }
                     else { this.inOut.setOutput("User not in database! Returning to main page"); }
                 }
@@ -129,10 +129,10 @@ public class UserProfilePresenter {
     /**
      * Displays the prompt to change username
      */
-    private void runChangeUsernameDisplay(User user, String new_username) {
-        if (this.usermanager.changeUsername(user, new_username)) {
-            this.usermanager.changeUsername(user, new_username);
-            this.inOut.setOutput("Successfully changed username to: " + new_username + "\n");
+    private void runChangeUsernameDisplay(User user, String newUsername) {
+        if (this.userManager.changeUsername(user, newUsername)) {
+            this.userManager.changeUsername(user, newUsername);
+            this.inOut.setOutput("Successfully changed username to: " + newUsername + "\n");
             this.inOut.setOutput("Returning to main page.");
         }
         else {
@@ -143,10 +143,10 @@ public class UserProfilePresenter {
     /**
      * Displays the prompt to change password
      */
-    private void runChangePasswordDisplay(User user, String new_password) {
-        if (this.usermanager.changePassword(user, new_password)) {
-            this.usermanager.changePassword(user, new_password);
-            this.inOut.setOutput("Successfully changed password to: " + new_password + "\n");
+    private void runChangePasswordDisplay(User user, String newPassword) {
+        if (this.userManager.changePassword(user, newPassword)) {
+            this.userManager.changePassword(user, newPassword);
+            this.inOut.setOutput("Successfully changed password to: " + newPassword + "\n");
             this.inOut.setOutput("Returning to main page.");
         }
         else {
@@ -157,9 +157,9 @@ public class UserProfilePresenter {
     /**
      * Displays the prompt to change bio
      */
-    private void runChangeBioDisplay(User user, String new_bio) {
-        if (this.usermanager.changeBio(user, new_bio)) {
-            this.inOut.setOutput("Successfully changed bio to: " + new_bio + "\n");
+    private void runChangeBioDisplay(User user, String newBio) {
+        if (this.userManager.changeBio(user, newBio)) {
+            this.inOut.setOutput("Successfully changed bio to: " + newBio + "\n");
             this.inOut.setOutput("Returning to main page.");
         }
         else {
@@ -171,9 +171,9 @@ public class UserProfilePresenter {
      * Return error msg if target_user is already followed by user, return successful msg
      * otherwise and follow target_user
      */
-    private void runFollowUser(User user, User target_user) {
-        if (this.usermanager.followUser(user, target_user)) {
-            this.usermanager.followUser(user, target_user);
+    private void runFollowUser(User user, User targetUser) {
+        if (this.userManager.followUser(user, targetUser)) {
+            this.userManager.followUser(user, targetUser);
             this.inOut.setOutput("Successfully followed the target user!");
         }
         else {
@@ -184,8 +184,8 @@ public class UserProfilePresenter {
     /**
      * Return false if target_user is not followed by user, return true otherwise and unfollow target_user
      */
-    private void runUnfollowUser(User user, User target_user) {
-        if (this.usermanager.unfollowUser(user, target_user)) {
+    private void runUnfollowUser(User user, User targetUser) {
+        if (this.userManager.unfollowUser(user, targetUser)) {
             this.inOut.setOutput("Successfully unfollowed the target user!");
         }
         else {
@@ -197,12 +197,12 @@ public class UserProfilePresenter {
      * Display user's following list
      */
     private String displayFollowingList(User user) {
-        ArrayList<String> following_list_usernames = this.usermanager.getFollowingListUsernames(user);
-        String following_list = "";
-        for (String username: following_list_usernames) {
-            following_list.concat(username + ", ");
+        ArrayList<String> followingListUsernames = this.userManager.getFollowingListUsernames(user);
+        String followingList = "";
+        for (String username: followingListUsernames) {
+            followingList.concat(username + ", ");
         }
-        return following_list;
+        return followingList;
     }
 
 
