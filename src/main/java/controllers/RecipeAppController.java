@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.*;
+import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 import use_cases.UserManager;
 
@@ -27,7 +28,7 @@ public class RecipeAppController {
         this.feedPresenter = new FeedPresenter(inOut);
         this.loginManager = new LoginManager(new UserManager());
         this.loginPresenter = new LoginPresenter(inOut, this.loginManager);
-        this.userProfilePresenter = new UserProfilePresenter(inOut);
+        this.userProfilePresenter = new UserProfilePresenter(inOut, this.loginManager);
         this.postPresenter = new PostPresenter(inOut);
     }
 
