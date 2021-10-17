@@ -72,7 +72,7 @@ Parent Class: N/A
 Responsibilities: defines possible user actions given in the RecipeAppController, which are passed to the appropriate controller for action handling  
 Collaborators: RecipeAppController, basically all the controllers  
 
-**## Use Cases**
+## Use Cases
 Class Name: UserManager  
 Parent Class: N/A  
 Responsibilities: Change a User’s username and password, updating a User’s following or follower count  
@@ -99,7 +99,7 @@ Parent Class: N/A
 Responsibilities: connects to the database at the start of execution and after log out edits the database with the changes made by the user, takes in an interface Payload which can be injected from the SQLiteDatabaseController (dependency inversion)  
 Collaborators: LoginManager, UserManager, FeedManager  
 
-**## Controllers**
+## Controllers
 Class Name: LoginController  
 Parent Class: N/A  
 Responsibilities: Receive login input, display login related output  
@@ -130,7 +130,7 @@ Parent Class: N/A
 Responsibilities: gets and sets info from the SQLite database, sends SQLitePayloads to the DatabaseManager for processing, receives write requests from the DatabaseManager  
 Collaborators: DatabaseManager 
 
-**## User Interface**
+## User Interface
 Class Name: RecipeAppMain  
 Parent Class:N/A  
 Responsibilities: contains a main method that instantiates a RecipeAppInOut and RecipeAppController and runs the controller  
