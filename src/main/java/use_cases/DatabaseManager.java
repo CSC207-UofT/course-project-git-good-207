@@ -1,70 +1,93 @@
 package use_cases;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import entities.Post;
+import entities.Recipe;
+import entities.User;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DatabaseManager {
-    // Database for the recipe posts and their comments
-    private String recipefileName;
-    // Database for the usernames and passwords (and maybe their unique ids if they change usernames)
-    private String userFileName;
-
-    //Temp user storage for loginmanager testing
-    private HashMap<String, String> loginInfo;
+    //Temp user storage for loginManager testing
+    private HashMap<String, String> loginInfo = new HashMap<>();
+    private ArrayList<Post> posts = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
 
     public DatabaseManager(){
-        loginInfo = new HashMap<>();
-    }
-
-    //TODO: Get a User object to check its username and password to help verify the login.
-    public entities.User getUser() {
-        //dummy return value
-        return new entities.User("username", "password");
-    }
-
-    //TODO: Add a new User into the database with its username and password
-    public boolean addNewUser(String username, String password) {
-        //temp action, change to writing to file
-        loginInfo.put(username, password);
-        return true;
+        this.initDummyData();
     }
 
     public HashMap<String, String> getLoginInfo(){
         return loginInfo;
     }
 
-    public List<String> readFile(String fileName) {
-        List<String> list = new ArrayList<>();
-
-        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
-            list = stream
-                    //.filter() (commented out, causes error)
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            System.out.println("An error occurred while reading " + fileName);
-            e.printStackTrace();
-        }
-
-        return list;
+    public void addNewPost(Post newPost) {
+        this.posts.add(newPost);
     }
 
-    public boolean writeToFile(String fileName) {
-        try {
-            FileWriter writer = new FileWriter("");
-            writer.write("");
-            writer.close();
-            return true;
-        } catch (IOException e) {
-            System.out.println("An error occurred while writing to " + fileName);
-            e.printStackTrace();
+    /**
+     * Save a new user to the database.
+     * @param newUser The new User to save to the database.
+     * @return A boolean which is true if the user was successfully
+     * added (there was no user with the same username). False if
+     * unsuccessful.
+     */
+    public boolean addNewUser(User newUser) {
+        if (this.loginInfo.containsKey(newUser.getUsername())) {
+            return false;
         }
-        return false;
+        this.users.add(newUser);
+        this.loginInfo.put(newUser.getUsername(), newUser.getPassword());
+        return true;
+    }
+
+    public Post[] getAllPosts() {
+        Post[] dummyPostArray = new Post[this.posts.size()];
+        return this.posts.toArray(dummyPostArray);
+    }
+
+    public User[] getAllUsers() {
+        User[] dummyUserArray = new User[this.users.size()];
+        return this.users.toArray(dummyUserArray);
+    }
+
+    private void initDummyData() {
+        this.loginInfo.put("justin", "pass");
+        this.loginInfo.put("sebastian", "pass");
+        this.loginInfo.put("glen", "pass");
+        this.loginInfo.put("shawn", "pass");
+        Post chinesePost = new Post(
+                new User("justin", "password"),
+                LocalDateTime.now(),
+                new Recipe("Stir Fry"),
+                "Chinese");
+        Post koreanPost = new Post(
+                new User("sebastian", "password"),
+                LocalDateTime.now(),
+                new Recipe("Bibimbap"),
+                "Korean");
+        Post italianPost = new Post(
+                new User("glen", "password"),
+                LocalDateTime.now(),
+                new Recipe("Gelato"),
+                "Italian");
+        Post cursedPost = new Post(
+                new User("shawn", "password"),
+                LocalDateTime.now(),
+                new Recipe("Peanut Butter and Onion Sandwich"),
+                "Other");
+        this.posts.add(chinesePost);
+        this.posts.add(koreanPost);
+        this.posts.add(italianPost);
+        this.posts.add(cursedPost);
+        User justin = new User("justin", "pass");
+        User sebastian = new User("sebastian", "pass");
+        User glen = new User("glen", "pass");
+        User shawn = new User("shawn", "pass");
+        this.users.add(justin);
+        this.users.add(sebastian);
+        this.users.add(glen);
+        this.users.add(shawn);
     }
 }
