@@ -20,6 +20,12 @@ public class PostManager {
         Returns true if the interaction could be done, false otherwise
         if the type is true, then the interaction is a comment
      */
+    public void fillPosts(Post[] arrayPosts)
+    {
+        for (Post arrayPost : arrayPosts) {
+            this.addPostToList(arrayPost);
+        }
+    }
     private boolean interactPost(Post post, Object obj, boolean type){
         // it looks into all the post in the stored structure
         // in order to work, the comparison of post should be
