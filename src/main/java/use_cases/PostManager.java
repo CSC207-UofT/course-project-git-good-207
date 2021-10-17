@@ -1,9 +1,6 @@
 package use_cases;
 
-import entities.Comment;
-import entities.Post;
-import entities.Recipe;
-import entities.User;
+import entities.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,6 +41,11 @@ public class PostManager {
             }
         }
         return false;
+    }
+
+    public Ingredient createIngridient(String pName){
+        Ingredient ing = new Ingredient(pName);
+        return ing;
     }
 
     public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category)
