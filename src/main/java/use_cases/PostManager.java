@@ -54,8 +54,13 @@ public class PostManager {
         return false;
     }
 
-    public Ingredient createIngridient(String pName){
-        Ingredient ing = new Ingredient(pName);
+    public Ingredient createMeasurableIngredient(String name, float amount, String units){
+        MeasurableIngredient ing = new MeasurableIngredient(name, amount, units);
+        return ing;
+    }
+
+    public Ingredient createCountableIngredient(String name, int number){
+        CountableIngredient ing = new CountableIngredient(name, number);
         return ing;
     }
 
