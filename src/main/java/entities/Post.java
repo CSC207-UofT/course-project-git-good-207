@@ -44,6 +44,10 @@ public class Post {
         return Objects.hash(this.postId);
     }
 
+    public Recipe getRecipe() {
+        return this.recipe;
+    }
+
     public void addComment(Comment comment) {
         this.comments.add(comment);
     }
