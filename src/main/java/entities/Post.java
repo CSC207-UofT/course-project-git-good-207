@@ -3,6 +3,7 @@ package entities;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * A Post that Users make on Foodstagram.
@@ -13,20 +14,20 @@ public class Post {
     private User owner;
     private Recipe recipe;
     private String category;
-    private int postId;
+    private String postId;
     private LocalDateTime postedTime;
 
-    public Post(User owner, LocalDateTime postedTime, Recipe recipe, String category, int postId) {
+    public Post(User owner, LocalDateTime postedTime, Recipe recipe, String category) {
         this.likedUsers = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.owner = owner;
         this.recipe = recipe;
         this.category = category;
         this.postedTime = postedTime;
-        this.postId = postId;
+        this.postId = UUID.randomUUID().toString();
     }
 
-    public int getIdPost() {
+    public String getPostId() {
         return this.postId;
     }
 
@@ -35,7 +36,7 @@ public class Post {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return this.postId == post.postId;
+        return this.postId.equals(post.postId);
     }
 
     @Override
