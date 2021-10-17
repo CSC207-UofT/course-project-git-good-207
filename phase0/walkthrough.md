@@ -12,11 +12,11 @@ Run the app by running the main method of RecipeAppMain (User Interface class). 
 
 After a successful login, the user is given the prompt:
 “Enter an action:
-0 Browse your Feed
-1 Browse User Profile
-2 Post a Recipe
-3 Customize your User Profile
-4 Logout”
+0 Browse your Feed  
+1 Browse User Profile  
+2 Post a Recipe  
+3 Customize your User Profile  
+4 Logout”  
 Each of these actions correspond to a ShellAction (enum, listed under entity CRCs): BROWSEFEED, BROWSEPROFILE, POST, CUSTOMIZEPROFILE, and LOGOUT.  
 
 Select the “Post a Recipe” action by entering 2 into the shell and pressing your Enter key. Follow the prompts by adding a recipe name. When completed all the required prompts, the Recipe (entity class) will be posted to the app inside a Post (entity class, with an attribute which is the Recipe associated with the Post). Note that Post extends the abstract PostableItem class.
