@@ -1,24 +1,22 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.ArrayList;
 
 import entities.InOut;
 import entities.ShellAction;
 import entities.User;
-import entities.Post;
 import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 import use_cases.UserManager;
 
 public class UserProfilePresenter {
     private InOut inOut;
-    private String CustomizeProfileScreen = "Select which option you'd like to customize:" +
+    private String customizeProfileScreen = "Select which option you'd like to customize:" +
             "\n0 Username \n1 Password \n2 Bio \n3 Posts \n4 Following list";
-    private String OtherUserScreen = "Select which action you'd like to take:" +
+    private String otherUserScreen = "Select which action you'd like to take:" +
             "\n0 Follow user \n1 Browse user's posts";
-    private String UserToBrowsePrompt = "Enter the username of the person you'd like to view: ";
+    private String userToBrowsePrompt = "Enter the username of the person you'd like to view: ";
     private LoginManager loginmanager;
     private UserManager usermanager;
     private DatabaseManager databasemanager;
@@ -47,7 +45,7 @@ public class UserProfilePresenter {
      * Return the choices available for user
      */
     private String getCustomizeProfileScreen() {
-        return this.CustomizeProfileScreen;
+        return this.customizeProfileScreen;
     }
 
     /**
@@ -59,16 +57,17 @@ public class UserProfilePresenter {
         // to a user in the database
         // run findUser to get the user that owns the username from the database
         try {
+            // display all the usernames in the database
+            // runDisplayAllUsers()
             String user_to_browse = this.inOut.getInput("Enter the username of the person you'd like to view: ");
             if (this.usermanager.checkUserToBrowse(user_to_browse) ||
                     user_to_browse.equals(this.loginmanager.getCurrUser().getUsername())) {
                 User target_user = this.usermanager.findUser(user_to_browse);
                 this.inOut.setOutput(this.usermanager.runBrowseOtherProfile(target_user));
                 // Give the choice of look following user or looking into user's post
-                int choice = Integer.parseInt(this.inOut.getInput(this.OtherUserScreen));
+                int choice = Integer.parseInt(this.inOut.getInput(this.otherUserScreen));
                 if (choice == 0) {
                     this.runFollowUser(this.loginmanager.getCurrUser(), target_user);
-
                 }
                 else if (choice == 1) {
                     // TODO: Implement with a function from PostPresenter
@@ -110,7 +109,7 @@ public class UserProfilePresenter {
             }
             else if (choice == 4) {
                 // Show following list
-//                this.inOut.setOutput(this.DisplayFollowingList(this.loginmanager.getCurrUser()));
+//                this.inOut.setOutput(this.displayFollowingList(this.loginmanager.getCurrUser()));
                 this.inOut.setOutput(this.usermanager.getFollowingListString(this.loginmanager.getCurrUser()));
                 String action = this.inOut.getInput("Would you like to unfollow one of these users? (y/n): ");
                 if (action.toLowerCase().equals("y")) {
@@ -160,7 +159,6 @@ public class UserProfilePresenter {
      */
     private void runChangeBioDisplay(User user, String new_bio) {
         if (this.usermanager.changeBio(user, new_bio)) {
-            this.usermanager.changeBio(user, new_bio);
             this.inOut.setOutput("Successfully changed bio to: " + new_bio + "\n");
             this.inOut.setOutput("Returning to main page.");
         }
@@ -173,9 +171,9 @@ public class UserProfilePresenter {
      * Return error msg if target_user is already followed by user, return successful msg
      * otherwise and follow target_user
      */
-    public void runFollowUser(User user, User target_user) {
-        if (this.usermanager.follow_user(user, target_user)) {
-            this.usermanager.follow_user(user, target_user);
+    private void runFollowUser(User user, User target_user) {
+        if (this.usermanager.followUser(user, target_user)) {
+            this.usermanager.followUser(user, target_user);
             this.inOut.setOutput("Successfully followed the target user!");
         }
         else {
@@ -186,8 +184,8 @@ public class UserProfilePresenter {
     /**
      * Return false if target_user is not followed by user, return true otherwise and unfollow target_user
      */
-    public void runUnfollowUser(User user, User target_user) {
-        if (this.usermanager.unfollow_user(user, target_user)) {
+    private void runUnfollowUser(User user, User target_user) {
+        if (this.usermanager.unfollowUser(user, target_user)) {
             this.inOut.setOutput("Successfully unfollowed the target user!");
         }
         else {
@@ -198,7 +196,7 @@ public class UserProfilePresenter {
     /**
      * Display user's following list
      */
-    public String DisplayFollowingList(User user) {
+    private String displayFollowingList(User user) {
         ArrayList<String> following_list_usernames = this.usermanager.getFollowingListUsernames(user);
         String following_list = "";
         for (String username: following_list_usernames) {
@@ -206,4 +204,6 @@ public class UserProfilePresenter {
         }
         return following_list;
     }
+
+
 }

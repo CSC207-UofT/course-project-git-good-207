@@ -58,7 +58,7 @@ public class UserManager {
     /**
      * follow User want_to_follow, adding want_to_follow into the logged-in user's following list
      */
-    public boolean follow_user(User current_user, User want_to_follow) {
+    public boolean followUser(User current_user, User want_to_follow) {
         /**
          * Return false if user is already followed, true otherwise.
          */
@@ -82,7 +82,7 @@ public class UserManager {
      * unfollow User want_to_unfollow, removing want_to_unfollow from the logged-in user's following list,
      * return false if want_to_unfollow is not followed to begin with, true if action done successfully
      */
-    public boolean unfollow_user(User current_user, User want_to_unfollow) {
+    public boolean unfollowUser(User current_user, User want_to_unfollow) {
         if (current_user.getFollowing().contains(want_to_unfollow)) {
             ArrayList<User> updated_following_list = new ArrayList<>();
             for (User user:current_user.getFollowing()) {
@@ -155,7 +155,7 @@ public class UserManager {
      */
     public boolean checkUserToBrowse(String user_to_browse) {
         ArrayList<User> user_database = this.databasemanager.getUsers();
-        for(User user: user_database) {
+        for (User user: user_database) {
             if (user.getUsername().equals(user_to_browse)) {
                 return true;
             }
@@ -183,7 +183,8 @@ public class UserManager {
     }
 
     /**
-     * Return the User object that is affiliated to the given username, return null if no user is found
+     * Return the User object that is affiliated to the given username, return a dummy variable that is not in the
+     * database if not found
      */
     public User findUser(String target_user) {
         ArrayList<User> user_database = this.databasemanager.getUsers();
