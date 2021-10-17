@@ -49,7 +49,7 @@ public class UserProfilePresenter {
     }
 
     /**
-     * runBrowseProfile, Displays the user from the username given, return to main page if user not found
+     * getUserInformation, Displays the user from the username given, return to main page if user not found
      */
     public void runBrowseProfile() {
         // Browse user's profile, given String username:
@@ -87,7 +87,7 @@ public class UserProfilePresenter {
      * runCustomizeProfile, Displays current user's profile and asks
      */
     public void runCustomizeProfile() {
-        this.inOut.setOutput(this.usermanager.runBrowseProfile(this.loginmanager.getCurrUser()));
+        this.inOut.setOutput(this.usermanager.getUserInformation(this.loginmanager.getCurrUser()));
         this.inOut.setOutput(this.getCustomizeProfileScreen());
         try {
             int choice = Integer.parseInt(this.inOut.getInput("Select an option: "));
