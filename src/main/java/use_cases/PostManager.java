@@ -24,9 +24,9 @@ public class PostManager {
         // it looks into all the post in the stored structure
         // in order to work, the comparison of post should be
         // implemented
-        for(int i = 0; i < this.posts.size(); i++)
+        for (int i = 0; i < this.posts.size(); i++)
         {
-            if(this.posts.get(i).equals(post))
+            if (this.posts.get(i).equals(post))
             {
                 if(type)
                 {
