@@ -20,7 +20,12 @@ public class PostManager {
         Returns true if the interaction could be done, false otherwise
         if the type is true, then the interaction is a comment
      */
-    public void fillPosts(Post[] arrayPosts)
+
+    public void getPostsFromDatabase(DatabaseManager databaseManager)
+    {
+        this.fillPosts(databaseManager.getAllPosts());
+    }
+    private void fillPosts(Post[] arrayPosts)
     {
         for (Post arrayPost : arrayPosts) {
             this.addPostToList(arrayPost);
