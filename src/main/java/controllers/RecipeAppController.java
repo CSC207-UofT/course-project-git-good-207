@@ -1,20 +1,18 @@
 package controllers;
 
 import entities.*;
-import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 import use_cases.PostManager;
 import use_cases.UserManager;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class RecipeAppController {
     private InOut inOut;
-    private LoginPresenter loginPresenter;
-    private FeedPresenter feedPresenter;
-    private PostPresenter postPresenter;
-    private UserProfilePresenter userProfilePresenter;
+    private LoginController loginController;
+    private FeedController feedController;
+    private PostController postController;
+    private UserProfileController userProfileController;
     private LoginManager loginManager;
     private PostManager postManager = new PostManager();
     private String shellActionPrompt =
@@ -28,16 +26,16 @@ public class RecipeAppController {
     public RecipeAppController(InOut inOut) {
         this.inOut = inOut;
         this.loginManager = new LoginManager(new UserManager());
-        this.feedPresenter = new FeedPresenter(inOut, loginManager);
-        this.loginPresenter = new LoginPresenter(inOut, this.loginManager);
-        this.userProfilePresenter = new UserProfilePresenter(inOut, this.loginManager);
-        this.postPresenter = new PostPresenter(inOut, this.postManager, this.loginManager);
+        this.feedController = new FeedController(inOut, loginManager);
+        this.loginController = new LoginController(inOut, this.loginManager);
+        this.userProfileController = new UserProfileController(inOut, this.loginManager);
+        this.postController = new PostController(inOut, this.postManager, this.loginManager);
     }
 
     public void run() {
         while (true) {
             if (this.loginManager.getCurrUser() == null) {
-                this.loginPresenter.runLoginPage();
+                this.loginController.runLoginPage();
             } else {
                 this.runLoggedInState();
             }
@@ -73,15 +71,15 @@ public class RecipeAppController {
 
     private void runAction(ShellAction action) {
         if (action == ShellAction.BROWSEFEED) {
-            this.feedPresenter.run(ShellAction.BROWSEFEED);
+            this.feedController.run(ShellAction.BROWSEFEED);
         } else if (action == ShellAction.BROWSEPROFILE) {
-            this.userProfilePresenter.run(ShellAction.BROWSEPROFILE);
+            this.userProfileController.run(ShellAction.BROWSEPROFILE);
         } else if (action == ShellAction.POST) {
-            this.postPresenter.run(ShellAction.POST);
+            this.postController.run(ShellAction.POST);
         } else if (action == ShellAction.CUSTOMIZEPROFILE) {
-            this.userProfilePresenter.run(ShellAction.CUSTOMIZEPROFILE);
+            this.userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         } else if (action == ShellAction.LOGOUT) {
-            this.loginPresenter.run(ShellAction.LOGOUT);
+            this.loginController.run(ShellAction.LOGOUT);
         } else {
             this.inOut.setOutput("That is not a valid action.");
         }

@@ -8,12 +8,12 @@ import use_cases.UserManager;
 
 import java.io.IOException;
 
-public class LoginPresenter {
+public class LoginController {
     private LoginManager loginManager;
     private String welcomeMessage = "Welcome to the Recipe App!";
     private InOut inOut;
 
-    public LoginPresenter(InOut inOut, LoginManager loginManager){
+    public LoginController(InOut inOut, LoginManager loginManager){
         this.loginManager = loginManager;
         this.inOut = inOut;
     }
