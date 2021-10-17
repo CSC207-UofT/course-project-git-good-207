@@ -6,15 +6,15 @@ import entities.ShellAction;
 import entities.User;
 import use_cases.FeedManager;
 
-public class FeedPresenter {
+public class FeedController {
     private FeedManager feedManager;
     private InOut inOut;
 
-    public FeedPresenter(InOut inOut) {
+    public FeedController(InOut inOut) {
         this.inOut = inOut;
     }
 
-    public FeedPresenter(InOut inOut, User currentUser, Feed currentUsersFeed) {
+    public FeedController(InOut inOut, User currentUser, Feed currentUsersFeed) {
         this.inOut = inOut;
         this.feedManager = new FeedManager(currentUser, currentUsersFeed);
     }

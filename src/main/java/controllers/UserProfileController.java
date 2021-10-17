@@ -10,7 +10,7 @@ import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 import use_cases.UserManager;
 
-public class UserProfilePresenter {
+public class UserProfileController {
     private InOut inOut;
     private String customizeProfileScreen = "Select which option you'd like to customize:" +
             "\n0 Username \n1 Password \n2 Bio \n3 Posts \n4 Following list";
@@ -22,7 +22,7 @@ public class UserProfilePresenter {
     private DatabaseManager databaseManager;
 
     // Constructor
-    public UserProfilePresenter(InOut inOut, LoginManager loginManager) {
+    public UserProfileController(InOut inOut, LoginManager loginManager) {
         this.inOut = inOut;
         this.loginManager = loginManager;
         this.databaseManager = new DatabaseManager();
