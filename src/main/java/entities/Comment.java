@@ -3,9 +3,8 @@ package entities;
 import java.time.LocalDateTime;
 
 
-public class Comment {
+public class Comment extends PostableItem {
     private String commentText;
-    private User commenter;
     private LocalDateTime dateTime;
 
     /**
@@ -13,12 +12,12 @@ public class Comment {
      * the local time the comment was created.
      *
      * @param commentText The text that makes up the Comment
-     * @param commenter The user that commented
+     * @param author The author of the comment
      * @param dateTime The local time the Comment was posted
      */
-    public Comment (String commentText, User commenter, LocalDateTime dateTime){
+    public Comment (String commentText, User author, LocalDateTime dateTime) {
+        super(author);
         this.commentText = commentText;
-        this.commenter = commenter;
         this.dateTime = dateTime;
     }
 
@@ -28,14 +27,6 @@ public class Comment {
      */
     public String getCommentText(){
         return this.commentText;
-    }
-
-    /**
-     *
-     * @return Return the User that made the Comment
-     */
-    public User getCommenter(){
-        return this.commenter;
     }
 
     /**

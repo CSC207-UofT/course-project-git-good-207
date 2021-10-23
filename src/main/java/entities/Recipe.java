@@ -1,15 +1,17 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Recipe {
     private ArrayList<String> steps;
     private ArrayList<Ingredient> ingredients;
     private String title;
+    private UUID id = UUID.randomUUID();
 
     public Recipe(String title) {
-        this.steps = new ArrayList<String>();
-        this.ingredients = new ArrayList<Ingredient>();
+        this.steps = new ArrayList<>();
+        this.ingredients = new ArrayList<>();
         this.title = title;
     }
 

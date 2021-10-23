@@ -1,15 +1,18 @@
 package entities;
 
+import java.util.UUID;
+
 public abstract class PostableItem {
     private String text;
-    private String postAuthor;
+    private User postAuthor;
+    protected UUID id = UUID.randomUUID();
 
-    public PostableItem(String pAuthor){
+    public PostableItem(User author){
         this.text = "";
-        this.postAuthor = pAuthor;
+        this.postAuthor = author;
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return this.postAuthor;
     }
 

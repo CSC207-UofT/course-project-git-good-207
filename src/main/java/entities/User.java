@@ -1,6 +1,7 @@
 package entities;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.UUID;
 
 // import other required classes
 // import list of cuisine categories (?)
@@ -16,6 +17,7 @@ public class User {
     private HashMap<String, Integer> likeHistory;
     private ArrayList<User> followers, following;
     private ArrayList<Post> posts;
+    private UUID id = UUID.randomUUID();
 
     /**
      * explanation of User
@@ -56,7 +58,7 @@ public class User {
         this.bio = bio;
     }
 
-    public void setLikeHistory(HashMap<String, Integer> like_history) {
+    public void setLikeHistory(HashMap<String, Integer> likeHistory) {
         this.likeHistory = likeHistory;
     }
 
