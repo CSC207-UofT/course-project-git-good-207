@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import use_cases.PostManager;
 
-public class PostPresenter {
+public class PostController {
     private InOut inOut;
     private LoginManager loginManager;
     private PostManager postManager;
 
-    public PostPresenter(InOut inOut, PostManager postManager, LoginManager loginManager) {
+    public PostController(InOut inOut, PostManager postManager, LoginManager loginManager) {
         this.inOut = inOut;
         this.postManager = postManager;
         this.loginManager = loginManager;

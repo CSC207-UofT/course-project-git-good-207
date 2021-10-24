@@ -12,7 +12,7 @@ public class Feed {
     }
 
     public void setFilter(String filter) {
-        ArrayList<Post> currDisplayedPosts = new ArrayList<Post>();
+        ArrayList<Post> currDisplayedPosts = new ArrayList<>();
         for (Post post : this.posts) {
             if (post.getCategory().equals(filter)) {
                 currDisplayedPosts.add(post);

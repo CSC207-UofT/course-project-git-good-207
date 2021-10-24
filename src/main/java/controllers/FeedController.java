@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class FeedPresenter {
+public class FeedController {
     private FeedManager feedManager;
     private LoginManager loginManager;
     private InOut inOut;
@@ -20,7 +20,7 @@ public class FeedPresenter {
     private String postActionPrompt = "Please select an action for this post: \n"
             + "0 Like the Post";
 
-    public FeedPresenter(InOut inOut, LoginManager loginManager) {
+    public FeedController(InOut inOut, LoginManager loginManager) {
         this.inOut = inOut;
         this.loginManager = loginManager;
         User currUser = this.loginManager.getCurrUser();
