@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 public class FeedTest {
     private Feed feed;
@@ -15,13 +16,11 @@ public class FeedTest {
     @BeforeEach
     void setupFeedTest() {
         this.feed = new Feed(new ArrayList<>(Arrays.asList(
-                new Post(
-                    new User("justin", "password"),
+                new Post(UUID.randomUUID().toString(),
                     LocalDateTime.now(),
                     new Recipe("Stir Fry"),
                     "Chinese"),
-                new Post(
-                    new User("justin", "password"),
+                new Post(UUID.randomUUID().toString(),
                     LocalDateTime.now(),
                     new Recipe("Stir Fry"),
                     "Chinese")

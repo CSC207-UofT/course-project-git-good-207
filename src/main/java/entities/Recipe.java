@@ -1,15 +1,17 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Recipe {
     private ArrayList<String> steps;
     private ArrayList<Ingredient> ingredients;
     private String title;
+    private String id = UUID.randomUUID().toString();
 
     public Recipe(String title) {
-        this.steps = new ArrayList<String>();
-        this.ingredients = new ArrayList<Ingredient>();
+        this.steps = new ArrayList<>();
+        this.ingredients = new ArrayList<>();
         this.title = title;
     }
 
@@ -30,6 +32,10 @@ public class Recipe {
     }
 
     public String getTitle() { return title; }
+
+    public String getId() {
+        return this.id;
+    }
 
     public void deleteLastStep() { steps.remove(steps.size() - 1); }
 }
