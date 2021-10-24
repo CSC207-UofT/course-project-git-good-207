@@ -1,19 +1,24 @@
 package entities;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public abstract class PostableItem {
-    private String text;
-    private User postAuthor;
-    protected UUID id = UUID.randomUUID();
+    protected String text;
+    protected LocalDateTime createdTime;
+    protected String id = UUID.randomUUID().toString();
 
-    public PostableItem(User author){
+    // The ID of the User that is the author of the PostableItem
+    private String authorId;
+
+    public PostableItem(String authorId, LocalDateTime dateTime){
         this.text = "";
-        this.postAuthor = author;
+        this.authorId = authorId;
+        this.createdTime = dateTime;
     }
 
-    public User getAuthor() {
-        return this.postAuthor;
+    public String getAuthorId() {
+        return this.authorId;
     }
 
     public String getText() {
@@ -23,4 +28,8 @@ public abstract class PostableItem {
     public void setText(String text) {
         this.text = text;
     }
+
+    public String getId() { return this.id; }
+
+    public LocalDateTime getCreatedTime() { return this.createdTime; }
 }
