@@ -14,7 +14,7 @@ Group Members:
 
 You need to setup a MySQL Database to get Foodstagram running. To do so, follow these steps:  
 1. Make sure you git pull from the main branch.
-2. Download MAMP here https://www.mamp.info/en/downloads/
+2. Download MAMP here https://www.mamp.info/en/downloads/. MAMP is a local server environment that will allow the database to operate on your computer.
 3. Install MAMP
 4. Open MAMP
 5. Click "Preferences" in the top left of the window.
