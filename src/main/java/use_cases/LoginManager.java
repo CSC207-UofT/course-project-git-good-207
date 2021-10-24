@@ -30,7 +30,13 @@ public class LoginManager {
         boolean isValidLogin = verifyUser(username, password);
         if (isValidLogin) {
             //use UserManager method to create user with all needed data
-            this.currUser = this.userManager.createUser(username, password);
+            // TODO: replace this with better code to guarantee we get a User (and not null)
+            User[] allUsers = this.databaseManager.getAllUsers();
+            for (User user: allUsers) {
+                if (user.getUsername().equals(username)) {
+                    this.currUser = user;
+                }
+            }
         }
         return isValidLogin;
     }
