@@ -17,7 +17,7 @@ public class User {
     private HashMap<String, Integer> likeHistory;
     private ArrayList<User> followers, following;
     private ArrayList<Post> posts;
-    private UUID id = UUID.randomUUID();
+    private String id;
 
     /**
      * explanation of User
@@ -27,6 +27,29 @@ public class User {
         this.username = username;
         this.password = password;
         this.bio = "";
+        this.likeHistory = new HashMap<>();
+        this.followers = new ArrayList<>();
+        this.following = new ArrayList<>();
+        this.posts = new ArrayList<>();
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public User(String username, String password, String bio) {
+        this.username = username;
+        this.password = password;
+        this.bio = bio;
+        this.id = UUID.randomUUID().toString();
+        this.likeHistory = new HashMap<>();
+        this.followers = new ArrayList<>();
+        this.following = new ArrayList<>();
+        this.posts = new ArrayList<>();
+    }
+
+    public User(String username, String password, String bio, String id) {
+        this.username = username;
+        this.password = password;
+        this.bio = bio;
+        this.id = UUID.nameUUIDFromBytes(id.getBytes()).toString();
         this.likeHistory = new HashMap<>();
         this.followers = new ArrayList<>();
         this.following = new ArrayList<>();
@@ -42,7 +65,7 @@ public class User {
         this.followers = followers;
         this.following = following;
         this.posts = posts;
-        // Should like_history, followers, following, and posts be initialized as an empty HashMap / ArrayList?
+        this.id = UUID.randomUUID().toString();
     }
 
     // setters
@@ -62,12 +85,24 @@ public class User {
         this.likeHistory = likeHistory;
     }
 
+    public void addFollower(User user) {
+        this.followers.add(user);
+    }
+
+    public void addFollowing(User user) {
+        this.following.add(user);
+    }
+
     public void setFollowers(ArrayList<User> followers) {
         this.followers = followers;
     }
 
     public void setFollowing(ArrayList<User> following) {
         this.following = following;
+    }
+
+    public void addPost(Post post) {
+        this.posts.add(post);
     }
 
     public void setPosts(ArrayList<Post> posts) {
@@ -85,6 +120,21 @@ public class User {
 
     public String getBio() {
         return this.bio;
+    }
+
+    public String getId() { return this.id; }
+
+    /**
+     * Increments a like on a cuisine category.
+     * @param cuisine The cuisine category to like.
+     */
+    public void setLike(String cuisine) {
+        if (this.likeHistory.containsKey(cuisine)) {
+            int likeCount = this.likeHistory.get(cuisine);
+            this.likeHistory.put(cuisine, likeCount + 1);
+        } else {
+            this.likeHistory.put(cuisine, 1);
+        }
     }
 
     public HashMap<String, Integer> getLikeHistory() {

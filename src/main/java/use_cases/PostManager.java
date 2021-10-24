@@ -18,16 +18,16 @@ public class PostManager {
         this.posts = new ArrayList<>(Arrays.asList(allPosts));
     }
 
-    private boolean interactPost(Post post, Object obj, boolean type){
-        for (int i = 0; i < this.posts.size(); i++) {
-            if (this.posts.get(i).equals(post)) {
+    private boolean interactPost(Post targetPost, Object obj, boolean type){
+        for (Post post: this.posts) {
+            if (post.equals(targetPost)) {
                 if (type) {
-                    this.posts.get(i).addComment((Comment) obj);
+                    post.addComment((Comment) obj);
                 }
                 else {
-                    this.posts.get(i).addLike((User) obj);
+                    post.addLike((User) obj);
                 }
-                this.databaseManager.updatePost(this.posts.get(i));
+                this.databaseManager.updatePost(post);
                 return true;
             }
         }
@@ -46,7 +46,7 @@ public class PostManager {
 
     public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category)
     {
-        Post p = new Post(owner, postedTime, recipe, category);
+        Post p = new Post(owner.getId(), postedTime, recipe, category);
         this.addPostToList(p);
     }
     public boolean commentPost(Post post, Comment comment){
