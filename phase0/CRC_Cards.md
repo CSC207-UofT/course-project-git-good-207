@@ -34,7 +34,7 @@ Collaborators: Post
 
 Class Name: Post  
 Parent Class: N/A  
-Responsibilities: Stores a list of Users who have liked the post, Stores comments on the post, Has an associated User object, has a Recipe, stores a String which is the category of the post (i.e. “Chinese”, “Indian”, “Italian”)  
+Responsibilities: Stores a list of Users who have liked the post, Stores comments on the post, Has an associated User object, has a Recipe, stores a String which is the category of the post (i.e. “Chinese”, “Indian”, “Italian”). Additionally it stores an id in order to be compared among other posts 
 Collaborators: Comment, Recipe, User  
 
 Class Name: Comment  
