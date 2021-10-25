@@ -1,18 +1,18 @@
 package use_cases;
 
-import java.util.HashMap;
 import java.util.ArrayList;
 
 import entities.User;
-import entities.Post;
-import use_cases.DatabaseManager;
 
 public class UserManager {
     private DatabaseManager databaseManager;
+    private User[] allUsers;
 
     // Constructor
     public UserManager() {
         this.databaseManager = new DatabaseManager();
+        // TODO: make allUsers stay up to date with Observable design pattern
+        this.allUsers = this.databaseManager.getAllUsers();
     }
 
     /**
@@ -22,6 +22,20 @@ public class UserManager {
         User user = new User(username, password);
         this.databaseManager.addNewUser(user);
         return user;
+    }
+
+    /**
+     * Get the User with the given ID. Returns null if no user with
+     * the given ID exists.
+     * @param id The ID of the User to find.
+     * @return a User with the given ID.
+     */
+    public User getUserById(String id) {
+        for (User user: this.allUsers) {
+            if (user.getId().equals(id)) {
+                return user;
+            }
+        } return null;
     }
 
     /**
