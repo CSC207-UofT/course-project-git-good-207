@@ -1,6 +1,7 @@
 package entities;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.UUID;
 
 // import other required classes
 // import list of cuisine categories (?)
@@ -12,10 +13,11 @@ import java.util.ArrayList;
  */
 public class User {
     private String username, password, bio;
-    //HashMap<String cuisine_category, int likes>
-    private HashMap<String, Integer> like_history;
+    // HashMap<String cuisineCategory, int likes>
+    private HashMap<String, Integer> likeHistory;
     private ArrayList<User> followers, following;
     private ArrayList<Post> posts;
+    private String id;
 
     /**
      * explanation of User
@@ -25,25 +27,48 @@ public class User {
         this.username = username;
         this.password = password;
         this.bio = "";
-        this.like_history = new HashMap<>();
+        this.likeHistory = new HashMap<>();
+        this.followers = new ArrayList<>();
+        this.following = new ArrayList<>();
+        this.posts = new ArrayList<>();
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public User(String username, String password, String bio) {
+        this.username = username;
+        this.password = password;
+        this.bio = bio;
+        this.id = UUID.randomUUID().toString();
+        this.likeHistory = new HashMap<>();
         this.followers = new ArrayList<>();
         this.following = new ArrayList<>();
         this.posts = new ArrayList<>();
     }
 
-    public User(String username, String password, String bio, HashMap<String, Integer> like_history,
+    public User(String username, String password, String bio, String id) {
+        this.username = username;
+        this.password = password;
+        this.bio = bio;
+        this.id = UUID.nameUUIDFromBytes(id.getBytes()).toString();
+        this.likeHistory = new HashMap<>();
+        this.followers = new ArrayList<>();
+        this.following = new ArrayList<>();
+        this.posts = new ArrayList<>();
+    }
+
+    public User(String username, String password, String bio, HashMap<String, Integer> likeHistory,
                 ArrayList<User> followers, ArrayList<User> following, ArrayList<Post> posts){
         this.username = username;
         this.password = password;
         this.bio = bio;
-        this.like_history = like_history;
+        this.likeHistory = likeHistory;
         this.followers = followers;
         this.following = following;
         this.posts = posts;
-        // Should like_history, followers, following, and posts be initialized as an empty HashMap / ArrayList?
+        this.id = UUID.randomUUID().toString();
     }
 
-    //setters
+    // setters
     public void setUsername(String username) {
         this.username = username;
     }
@@ -56,8 +81,16 @@ public class User {
         this.bio = bio;
     }
 
-    public void setLike_history(HashMap<String, Integer> like_history) {
-        this.like_history = like_history;
+    public void setLikeHistory(HashMap<String, Integer> likeHistory) {
+        this.likeHistory = likeHistory;
+    }
+
+    public void addFollower(User user) {
+        this.followers.add(user);
+    }
+
+    public void addFollowing(User user) {
+        this.following.add(user);
     }
 
     public void setFollowers(ArrayList<User> followers) {
@@ -68,11 +101,15 @@ public class User {
         this.following = following;
     }
 
+    public void addPost(Post post) {
+        this.posts.add(post);
+    }
+
     public void setPosts(ArrayList<Post> posts) {
         this.posts = posts;
     }
 
-    //getters
+    // getters
     public String getUsername() {
         return this.username;
     }
@@ -85,8 +122,23 @@ public class User {
         return this.bio;
     }
 
-    public HashMap<String, Integer> getLike_history() {
-        return this.like_history;
+    public String getId() { return this.id; }
+
+    /**
+     * Increments a like on a cuisine category.
+     * @param cuisine The cuisine category to like.
+     */
+    public void setLike(String cuisine) {
+        if (this.likeHistory.containsKey(cuisine)) {
+            int likeCount = this.likeHistory.get(cuisine);
+            this.likeHistory.put(cuisine, likeCount + 1);
+        } else {
+            this.likeHistory.put(cuisine, 1);
+        }
+    }
+
+    public HashMap<String, Integer> getLikeHistory() {
+        return this.likeHistory;
     }
 
     public ArrayList<User> getFollowers() {

@@ -7,27 +7,18 @@ import java.util.Objects;
 /**
  * A Post that Users make on Foodstagram.
  */
-public class Post {
+public class Post extends PostableItem {
     private ArrayList<User> likedUsers;
     private ArrayList<Comment> comments;
-    private User owner;
     private Recipe recipe;
     private String category;
-    private int postId;
-    private LocalDateTime postedTime;
 
-    public Post(User owner, LocalDateTime postedTime, Recipe recipe, String category, int postId) {
+    public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category) {
+        super(authorId, postedTime);
         this.likedUsers = new ArrayList<>();
         this.comments = new ArrayList<>();
-        this.owner = owner;
         this.recipe = recipe;
         this.category = category;
-        this.postedTime = postedTime;
-        this.postId = postId;
-    }
-
-    public int getIdPost() {
-        return this.postId;
     }
 
     @Override
@@ -35,12 +26,16 @@ public class Post {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return this.postId == post.postId;
+        return this.id.equals(post.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.postId);
+        return Objects.hash(this.id);
+    }
+
+    public Recipe getRecipe() {
+        return this.recipe;
     }
 
     public void addComment(Comment comment) {
@@ -67,19 +62,8 @@ public class Post {
         return this.category;
     }
 
-    public User getOwner() {
-        return this.owner;
-    }
-
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
-    }
-
-    /**
-     * @return Return the local time the Post was created.
-     */
-    public LocalDateTime getPostedTime() {
-        return this.postedTime;
     }
 }
   
