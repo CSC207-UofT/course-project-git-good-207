@@ -9,13 +9,11 @@ Manages user login and logout
  */
 public class LoginManager {
     private User currUser;
-    private UserManager userManager;
     private DatabaseManager databaseManager;
 
 
     public LoginManager(UserManager userManager) {
         this.currUser = null;
-        this.userManager = userManager;
         this.databaseManager = new DatabaseManager();
     }
 
@@ -29,15 +27,10 @@ public class LoginManager {
     public boolean login(String username, String password) {
         boolean isValidLogin = verifyUser(username, password);
         if (isValidLogin) {
-            //use UserManager method to create user with all needed data
+            //get User from the Database
             // TODO: replace this with better code to guarantee we get a User (and not null)
             User[] allUsers = this.databaseManager.getAllUsers();
-            /**
-            for (User user: allUsers) {
-                if (user.getUsername().equals(username)) {
-                    this.currUser = user;
-                }
-            }**/
+
             this.currUser = getExistingUser(username, allUsers);
         }
         return isValidLogin;
@@ -90,6 +83,12 @@ public class LoginManager {
         }
     }
 
+    /**
+     * Get the user from an array of users that has the given username
+     * @param username a given username
+     * @param allUsers array of all the existing users
+     * @return User with the given username if it exists, null otherwise
+     */
     private User getExistingUser(String username, User[] allUsers){
         for (User user: allUsers) {
             if (user.getUsername().equals(username)) {

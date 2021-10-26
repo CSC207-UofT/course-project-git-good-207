@@ -9,6 +9,7 @@ import java.io.IOException;
 public class LoginController {
     private LoginManager loginManager;
     private String loginMessage = "Please enter your login info.";
+    private String signUpMessage = "Please signup below:";
     private String welcomeMessage = "Welcome to the Recipe App!";
     private String welcomeActionPrompt = "Please select an action: \n"
             + "0 Sign up\n"
@@ -26,11 +27,17 @@ public class LoginController {
         }
     }
 
+    /**
+     * Runs the welcome page logic.
+     */
     public void runWelcomePage(){
         this.inOut.setOutput(this.getWelcomeMessage());
         try{
             String welcomeAction = inOut.getInput(welcomeActionPrompt);
             boolean isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
+
+            //Loops on chosen page until valid input is given
+            // TODO: evaluate if this is the best way to make user stay on login/signup page if input invalid
             while(!isComplete){
                 isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
             }
@@ -56,14 +63,19 @@ public class LoginController {
                 return false;
             }
         } catch (IOException e) {
-            inOut.setOutput("There was an error: " + e);
+            this.inOut.setOutput("There was an error: " + e);
             return false;
         }
 
     }
 
-    private boolean runSignInPage(){
+    /**
+     * Runs the sign in page logic.
+     * @return Returns true if user successfully signed up, false otherwise.
+     */
+    private boolean runSignUpPage(){
         try {
+            this.inOut.setOutput(this.signUpMessage);
             String username = this.inOut.getInput("Set username: ");
             String password = this.inOut.getInput("Set password: ");
             if (this.loginManager.signUp(username, password)) {
@@ -79,10 +91,15 @@ public class LoginController {
         }
     }
 
+    /**
+     * Handles actions from the welcome page
+     * @param welcomeAction The entered action from welcome page
+     * @return true if action was successful, false otherwise
+     */
     private boolean runWelcomeAction(Integer welcomeAction){
         switch(welcomeAction){
             case(0):
-                return this.runSignInPage();
+                return this.runSignUpPage();
             case(1):
                 return this.runLoginPage();
             default:
