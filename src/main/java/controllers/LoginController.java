@@ -2,9 +2,7 @@ package controllers;
 
 import entities.InOut;
 import entities.ShellAction;
-import entities.User;
 import use_cases.LoginManager;
-import use_cases.UserManager;
 
 import java.io.IOException;
 
@@ -28,11 +26,24 @@ public class LoginController {
         }
     }
 
+    public void runWelcomePage(){
+        this.inOut.setOutput(this.getWelcomeMessage());
+        try{
+            String welcomeAction = inOut.getInput(welcomeActionPrompt);
+            boolean isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
+            while(!isComplete){
+                isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
+            }
+        }catch (IOException e){
+            inOut.setOutput("There was an error: " + e);
+        }
+    }
+
     /**
      * Runs the login page logic. Returns a boolean which is true if the user
      * successfully logged in, false otherwise.
      * */
-    public boolean runLoginPage() {
+    private boolean runLoginPage() {
         this.inOut.setOutput(this.loginMessage);
         try {
             String username = this.inOut.getInput("Enter username: ");
@@ -51,16 +62,7 @@ public class LoginController {
 
     }
 
-    public void runWelcomePage(){
-        this.inOut.setOutput(this.getWelcomeMessage());
-        try{
-            String welcomeAction = inOut.getInput(welcomeActionPrompt);
-            runWelcomeAction(Integer.parseInt(welcomeAction));
-        }catch (IOException e){
-            inOut.setOutput("There was an error: " + e);
-        }
-    }
-    private boolean runSignIn(){
+    private boolean runSignInPage(){
         try {
             String username = this.inOut.getInput("Set username: ");
             String password = this.inOut.getInput("Set password: ");
@@ -77,17 +79,15 @@ public class LoginController {
         }
     }
 
-    private void runWelcomeAction(Integer welcomeAction){
+    private boolean runWelcomeAction(Integer welcomeAction){
         switch(welcomeAction){
             case(0):
-                this.runSignIn();
-                break;
+                return this.runSignInPage();
             case(1):
-                this.runLoginPage();
-                break;
+                return this.runLoginPage();
             default:
                 this.inOut.setOutput("You entered an invalid action input.");
-
+                return true;
         }
     }
 
