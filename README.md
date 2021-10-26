@@ -33,4 +33,9 @@ You need to setup a MySQL Database to get Foodstagram running. To do so, follow 
 18. In the top menu, go to File > Project Structure. In the window that opens, go to Modules > Course_project > main. Open the dependencies tab on the right.
 19. Once in the dependencies view, click the + button right above the word "export". Select the first option: "1 Jars and Directories", and select the mysql-connector.jar file in the "lib" folder of our course project.
 20. Click apply, and when the apply button greys out, click OK.
-21. Your MySQL server is now running and the Database should work. You can confirm this by running the main method in DatabaseManager.
+21. In the top menu, go to View > Tool Windows > Database
+22. In the Database window click the '+' icon, then Data Source > MySQL. A "Data Source and Drivers" window should pop up.
+23. Set Port to 8889, User to "admin", and Password to "1234"
+24. Then at the end of the URL enter "/foodstagram"
+25. Press "Apply" and then "OK".
+22. Your MySQL server is now running and the Database should work. You can confirm this by running the main method in DatabaseManager.

@@ -15,7 +15,7 @@ public class DatabaseManager {
     public DatabaseManager(){
         try {
             this.connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/foodstagram",
+                "jdbc:mysql://localhost:8889/foodstagram",
                 "admin",
                 "1234");
         } catch (Exception e) {
