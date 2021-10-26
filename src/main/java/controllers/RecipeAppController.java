@@ -35,7 +35,7 @@ public class RecipeAppController {
     public void run() {
         while (true) {
             if (this.loginManager.getCurrUser() == null) {
-                this.loginController.runLoginPage();
+                this.loginController.runWelcomePage();
             } else {
                 this.runLoggedInState();
             }
