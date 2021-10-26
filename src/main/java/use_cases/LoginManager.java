@@ -32,11 +32,13 @@ public class LoginManager {
             //use UserManager method to create user with all needed data
             // TODO: replace this with better code to guarantee we get a User (and not null)
             User[] allUsers = this.databaseManager.getAllUsers();
+            /**
             for (User user: allUsers) {
                 if (user.getUsername().equals(username)) {
                     this.currUser = user;
                 }
-            }
+            }**/
+            this.currUser = getExistingUser(username, allUsers);
         }
         return isValidLogin;
     }
@@ -75,16 +77,26 @@ public class LoginManager {
      */
     private boolean verifyUser(String username, String password) {
 
-        HashMap<String, String> loginInfo = this.databaseManager.getLoginInfo();
+        User[] allUsers= this.databaseManager.getAllUsers();
         //use DatabaseManager to check if the given username and password
         //match a username and password pair in the Database
-        if (this.databaseManager.getLoginInfo().containsKey(username)) {
+        User user = getExistingUser(username,allUsers);
+        if (user != null) {
             //username is in database, so check if the password matches
-            return password.equals(loginInfo.get(username));
+            return password.equals(user.getPassword());
         } else {
             //username not in database
             return false;
         }
+    }
+
+    private User getExistingUser(String username, User[] allUsers){
+        for (User user: allUsers) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public User getCurrUser() {
