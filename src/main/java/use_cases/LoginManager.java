@@ -70,10 +70,10 @@ public class LoginManager {
      */
     private boolean verifyUser(String username, String password) {
 
-        User[] allUsers= this.databaseManager.getAllUsers();
+        User[] allUsers = this.databaseManager.getAllUsers();
         //use DatabaseManager to check if the given username and password
         //match a username and password pair in the Database
-        User user = getExistingUser(username,allUsers);
+        User user = getExistingUser(username, allUsers);
         if (user != null) {
             //username is in database, so check if the password matches
             return password.equals(user.getPassword());
@@ -85,12 +85,13 @@ public class LoginManager {
 
     /**
      * Get the user from an array of users that has the given username
+     *
      * @param username a given username
      * @param allUsers array of all the existing users
      * @return User with the given username if it exists, null otherwise
      */
-    private User getExistingUser(String username, User[] allUsers){
-        for (User user: allUsers) {
+    private User getExistingUser(String username, User[] allUsers) {
+        for (User user : allUsers) {
             if (user.getUsername().equals(username)) {
                 return user;
             }

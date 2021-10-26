@@ -13,10 +13,10 @@ public class LoginController {
     private String welcomeMessage = "Welcome to the Recipe App!";
     private String welcomeActionPrompt = "Please select an action: \n"
             + "0 Sign up\n"
-            + "1 Log in";
+            + "1 Login";
     private InOut inOut;
 
-    public LoginController(InOut inOut, LoginManager loginManager){
+    public LoginController(InOut inOut, LoginManager loginManager) {
         this.loginManager = loginManager;
         this.inOut = inOut;
     }
@@ -30,18 +30,18 @@ public class LoginController {
     /**
      * Runs the welcome page logic.
      */
-    public void runWelcomePage(){
+    public void runWelcomePage() {
         this.inOut.setOutput(this.getWelcomeMessage());
-        try{
+        try {
             String welcomeAction = inOut.getInput(welcomeActionPrompt);
             boolean isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
 
             //Loops on chosen page until valid input is given
             // TODO: evaluate if this is the best way to make user stay on login/signup page if input invalid
-            while(!isComplete){
+            while (!isComplete) {
                 isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             inOut.setOutput("There was an error: " + e);
         }
     }
@@ -49,7 +49,7 @@ public class LoginController {
     /**
      * Runs the login page logic. Returns a boolean which is true if the user
      * successfully logged in, false otherwise.
-     * */
+     */
     private boolean runLoginPage() {
         this.inOut.setOutput(this.loginMessage);
         try {
@@ -71,9 +71,10 @@ public class LoginController {
 
     /**
      * Runs the sign in page logic.
+     *
      * @return Returns true if user successfully signed up, false otherwise.
      */
-    private boolean runSignUpPage(){
+    private boolean runSignUpPage() {
         try {
             this.inOut.setOutput(this.signUpMessage);
             String username = this.inOut.getInput("Set username: ");
@@ -93,14 +94,15 @@ public class LoginController {
 
     /**
      * Handles actions from the welcome page
+     *
      * @param welcomeAction The entered action from welcome page
      * @return true if action was successful, false otherwise
      */
-    private boolean runWelcomeAction(Integer welcomeAction){
-        switch(welcomeAction){
-            case(0):
+    private boolean runWelcomeAction(Integer welcomeAction) {
+        switch (welcomeAction) {
+            case (0):
                 return this.runSignUpPage();
-            case(1):
+            case (1):
                 return this.runLoginPage();
             default:
                 this.inOut.setOutput("You entered an invalid action input.");
