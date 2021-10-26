@@ -11,6 +11,9 @@ import java.io.IOException;
 public class LoginController {
     private LoginManager loginManager;
     private String welcomeMessage = "Welcome to the Recipe App!";
+    private String welcomeActionPrompt = "Please select an action: \n"
+            + "0 Sign up\n"
+            + "1 Log in";
     private InOut inOut;
 
     public LoginController(InOut inOut, LoginManager loginManager){
@@ -45,6 +48,33 @@ public class LoginController {
             return false;
         }
 
+    }
+
+    public void runWelcomePage(){
+        this.inOut.setOutput(this.getWelcomeMessage());
+        try{
+            String welcomeAction = inOut.getInput(welcomeActionPrompt);
+            runWelcomeAction(Integer.parseInt(welcomeAction));
+        }catch (IOException e){
+            inOut.setOutput("There was an error: " + e);
+        }
+    }
+    private void runSignIn(){
+
+    }
+
+    private void runWelcomeAction(Integer welcomeAction){
+        switch(welcomeAction){
+            case(0):
+                this.runSignIn();
+                break;
+            case(1):
+                this.runLoginPage();
+                break;
+            default:
+                this.inOut.setOutput("You entered an invalid action input.");
+
+        }
     }
 
     private void runLogout() {
