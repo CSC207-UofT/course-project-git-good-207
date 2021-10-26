@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class LoginController {
     private LoginManager loginManager;
+    private String loginMessage = "Please enter your login info.";
     private String welcomeMessage = "Welcome to the Recipe App!";
     private String welcomeActionPrompt = "Please select an action: \n"
             + "0 Sign up\n"
@@ -32,7 +33,7 @@ public class LoginController {
      * successfully logged in, false otherwise.
      * */
     public boolean runLoginPage() {
-        this.inOut.setOutput(this.getWelcomeMessage());
+        this.inOut.setOutput(this.loginMessage);
         try {
             String username = this.inOut.getInput("Enter username: ");
             String password = this.inOut.getInput("Enter password: ");
@@ -59,8 +60,21 @@ public class LoginController {
             inOut.setOutput("There was an error: " + e);
         }
     }
-    private void runSignIn(){
-
+    private boolean runSignIn(){
+        try {
+            String username = this.inOut.getInput("Set username: ");
+            String password = this.inOut.getInput("Set password: ");
+            if (this.loginManager.signUp(username, password)) {
+                this.inOut.setOutput("Sign up successful.");
+                return true;
+            } else {
+                this.inOut.setOutput("Your username or password was invalid.");
+                return false;
+            }
+        } catch (IOException e) {
+            inOut.setOutput("There was an error: " + e);
+            return false;
+        }
     }
 
     private void runWelcomeAction(Integer welcomeAction){
