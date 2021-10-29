@@ -20,4 +20,14 @@ public class RecipeManager {
     public Recipe createRecipe(String title, ArrayList<Ingredient> ingredients, ArrayList<String> steps) {
         return new Recipe(title, ingredients, steps);
     }
+
+    public void deleteStep(Recipe recipe) {
+        recipe.deleteLastStep();
+    }
+
+    public void addStep(Recipe recipe, String step) {
+        recipe.addStep(step);
+    }
+
+    public void updateTitle(Recipe recipe, String title) {recipe.setTitle(title);}
 }
