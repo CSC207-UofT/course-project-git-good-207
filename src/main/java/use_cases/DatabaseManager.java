@@ -89,7 +89,7 @@ public class DatabaseManager {
                         postId,
                         new Post(userId,
                             postedTime,
-                            new Recipe(""),
+                            new Recipe("", new ArrayList<>(), new ArrayList<>()),
                             category)
                     );
             }

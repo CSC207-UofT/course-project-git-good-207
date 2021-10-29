@@ -5,19 +5,25 @@ import use_cases.LoginManager;
 import use_cases.PostManager;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import use_cases.PostManager;
+import use_cases.RecipeManager;
 
 public class PostController {
     private InOut inOut;
     private LoginManager loginManager;
     private PostManager postManager;
+    private RecipeManager recipeManager;
 
-    public PostController(InOut inOut, PostManager postManager, LoginManager loginManager) {
+    public PostController(InOut inOut, PostManager postManager, LoginManager loginManager, RecipeManager recipeManager) {
         this.inOut = inOut;
         this.postManager = postManager;
+        this.recipeManager = recipeManager;
         this.loginManager = loginManager;
     }
 
@@ -30,24 +36,14 @@ public class PostController {
             String promptCountable = "Enter measurable ingredients (in grams, ounces etc) in format '1 lemon, 1 apple, etc.' or N/A if no countable ingredients";
 
             try {
-
-
                 String inputMeasurable = this.inOut.getInput(promptMeasurable);
-                if (!inputMeasurable.equals("N/A")) {
-                    String[] measurable = inputMeasurable.split(", ");
-                    for (String measurableIngredient : measurable) {
-                        postManager.createMeasurableIngredient(measurableIngredient);
-                    }
-                }
                 String inputCountable = this.inOut.getInput(promptCountable);
-                if (!inputCountable.equals("N/A")) {
-                    String[] countable = inputCountable.split(", ");
-                    for (String countableIngredient : countable) {
-                        postManager.createCountableIngredient(countableIngredient);
-                    }
-                }
+                ArrayList<Ingredient> allIngredients = createCountable(inputCountable, createMeasurable(inputMeasurable));
+
                 String recipeTitle = this.inOut.getInput("Enter title of recipe");
-                Recipe recipe = new Recipe(recipeTitle);
+                String recipeSteps = this.inOut.getInput(promptRecipeSteps);
+
+                Recipe recipe = recipeManager.createRecipe(recipeTitle, allIngredients, getRecipeSteps(recipeSteps));
                 String category = this.inOut.getInput("What is the recipe category?");
                 postManager.createPost(currUser, now, recipe, category);
 
@@ -56,6 +52,42 @@ public class PostController {
             }
 
         }
+    }
+
+    private ArrayList<String> getRecipeSteps(String recipeSteps) {
+        String[] stepsList = recipeSteps.split(", ");
+        List<String> list = Arrays.asList(stepsList);
+        ArrayList<String> finalSteps = new ArrayList<>(list);
+        return finalSteps;
+    }
+
+    private ArrayList<Ingredient> createCountable(String inputCountable, ArrayList measurable) {
+        ArrayList<Ingredient> ingredientList = new ArrayList<>();
+        if (!inputCountable.equals("N/A")) {
+            String[] countable = inputCountable.split(", ");
+
+            for (String countableIngredient : countable) {
+                String[] splitIngredient = countableIngredient.split(" ");
+                ingredientList.add(recipeManager.createCountableIngredient(splitIngredient[1],
+                        Integer.parseInt(splitIngredient[0])));
+            }
+        }
+        ingredientList.addAll(measurable);
+        return ingredientList;
+    }
+
+    private ArrayList<Ingredient> createMeasurable(String inputMeasurable) {
+        if (!inputMeasurable.equals("N/A")) {
+            String[] measurable = inputMeasurable.split(", ");
+            ArrayList<Ingredient> ingredientList = new ArrayList<>();
+            for (String measurableIngredient : measurable) {
+                String[] splitIngredientParts = measurableIngredient.split(" ");
+                ingredientList.add(recipeManager.createMeasurableIngredient(splitIngredientParts[2],
+                        Float.parseFloat(splitIngredientParts[0]), splitIngredientParts[1]));
+            }
+            return ingredientList;
+        }
+        return new ArrayList<>();
     }
 
     public void displayPost(Post post) { /* return formatted post */ }
