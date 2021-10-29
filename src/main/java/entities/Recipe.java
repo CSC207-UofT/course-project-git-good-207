@@ -9,9 +9,9 @@ public class Recipe {
     private String title;
     private String id = UUID.randomUUID().toString();
 
-    public Recipe(String title) {
-        this.steps = new ArrayList<>();
-        this.ingredients = new ArrayList<>();
+    public Recipe(String title, ArrayList<Ingredient> ingredients, ArrayList<String> steps) {
+        this.steps = steps;
+        this.ingredients = ingredients;
         this.title = title;
     }
 

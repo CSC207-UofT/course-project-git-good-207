@@ -209,7 +209,7 @@ public class DatabaseManager {
     }
 
     /**
-     * Save the steps in a recipe to the database.
+     * Save the ingredients in a recipe to the database.
      * @param recipe The recipe which contains the ingredients to save.
      */
     private void insertRecipeIngredientsDB(Recipe recipe) {

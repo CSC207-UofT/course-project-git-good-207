@@ -25,13 +25,13 @@ public class PostController {
         if (action == ShellAction.POST) {
             User currUser = this.loginManager.getCurrUser();
             LocalDateTime now = LocalDateTime.now();
-            /* String promptRecipeSteps = "Enter recipe steps in this comma-separated format: 'Add the water, mix flour'";
+            String promptRecipeSteps = "Enter recipe steps in this comma-separated format: 'Add the water, mix flour'";
             String promptMeasurable = "Enter measurable ingredients (in grams, ounces etc) in format '50 grams sugar, 1 cup flour, etc.' or N/A if no measurable ingredients";
             String promptCountable = "Enter measurable ingredients (in grams, ounces etc) in format '1 lemon, 1 apple, etc.' or N/A if no countable ingredients";
-            */
+
             try {
 
-                /*
+
                 String inputMeasurable = this.inOut.getInput(promptMeasurable);
                 if (!inputMeasurable.equals("N/A")) {
                     String[] measurable = inputMeasurable.split(", ");
@@ -45,7 +45,7 @@ public class PostController {
                     for (String countableIngredient : countable) {
                         postManager.createCountableIngredient(countableIngredient);
                     }
-                } */
+                }
                 String recipeTitle = this.inOut.getInput("Enter title of recipe");
                 Recipe recipe = new Recipe(recipeTitle);
                 String category = this.inOut.getInput("What is the recipe category?");
@@ -54,8 +54,6 @@ public class PostController {
             } catch (IOException e) {
                 inOut.setOutput("There was an error: " + e);
             }
-
-
 
         }
     }
