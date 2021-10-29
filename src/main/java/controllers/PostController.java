@@ -54,11 +54,10 @@ public class PostController {
     private ArrayList<String> getRecipeSteps(String recipeSteps) {
         String[] stepsList = recipeSteps.split(", ");
         List<String> list = Arrays.asList(stepsList);
-        ArrayList<String> finalSteps = new ArrayList<>(list);
-        return finalSteps;
+        return new ArrayList<>(list);
     }
 
-    private ArrayList<Ingredient> createCountable(String inputCountable, ArrayList measurable) {
+    private ArrayList<Ingredient> createCountable(String inputCountable, ArrayList<Ingredient> measurable) {
         ArrayList<Ingredient> ingredientList = new ArrayList<>();
         if (!inputCountable.equals("N/A")) {
             String[] countable = inputCountable.split(", ");
