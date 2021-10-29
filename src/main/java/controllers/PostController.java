@@ -27,22 +27,21 @@ public class PostController {
     public void run(ShellAction action) {
         if (action == ShellAction.POST) {
             User currUser = this.loginManager.getCurrUser();
-            LocalDateTime now = LocalDateTime.now();
-            String promptRecipeSteps = "Enter recipe steps in this comma-separated format: 'Add the water, mix flour'";
-            String promptMeasurable = "Enter measurable ingredients (in grams, ounces etc) in format '50 grams sugar, 1 cup flour, etc.' or N/A if no measurable ingredients";
-            String promptCountable = "Enter measurable ingredients (in grams, ounces etc) in format '1 lemon, 1 apple, etc.' or N/A if no countable ingredients";
+            LocalDateTime timeNow = LocalDateTime.now();
+            String promptMeasurable = createPostHelper()[0], promptCountable = createPostHelper()[1],
+                    promptRecipeSteps = createPostHelper()[2];
 
             try {
                 String inputMeasurable = this.inOut.getInput(promptMeasurable);
                 String inputCountable = this.inOut.getInput(promptCountable);
-                ArrayList<Ingredient> allIngredients = createCountable(inputCountable, createMeasurable(inputMeasurable));
+                ArrayList<Ingredient> allIngredients = createCountableIngredient(inputCountable, createMeasurable(inputMeasurable));
 
                 String recipeTitle = this.inOut.getInput("Enter title of recipe");
                 String recipeSteps = this.inOut.getInput(promptRecipeSteps);
 
                 Recipe recipe = recipeManager.createRecipe(recipeTitle, allIngredients, getRecipeSteps(recipeSteps));
                 String category = this.inOut.getInput("What is the recipe category?");
-                postManager.createPost(currUser, now, recipe, category);
+                postManager.createPost(currUser, timeNow, recipe, category);
 
             } catch (IOException e) {
                 inOut.setOutput("There was an error: " + e);
@@ -51,13 +50,20 @@ public class PostController {
         }
     }
 
+    private String[] createPostHelper() {
+        String promptRecipeSteps = "Enter recipe steps in this comma-separated format: 'Add the water, mix flour'";
+        String promptMeasurable = "Enter measurable ingredients (in grams, ounces etc) in format '50 grams sugar, 1 cup flour, etc.' or N/A if no measurable ingredients";
+        String promptCountable = "Enter measurable ingredients (in grams, ounces etc) in format '1 lemon, 1 apple, etc.' or N/A if no countable ingredients";
+        return new String[]{promptRecipeSteps, promptMeasurable, promptCountable};
+    }
+
     private ArrayList<String> getRecipeSteps(String recipeSteps) {
         String[] stepsList = recipeSteps.split(", ");
         List<String> list = Arrays.asList(stepsList);
         return new ArrayList<>(list);
     }
 
-    private ArrayList<Ingredient> createCountable(String inputCountable, ArrayList<Ingredient> measurable) {
+    private ArrayList<Ingredient> createCountableIngredient(String inputCountable, ArrayList<Ingredient> measurable) {
         ArrayList<Ingredient> ingredientList = new ArrayList<>();
         if (!inputCountable.equals("N/A")) {
             String[] countable = inputCountable.split(", ");
