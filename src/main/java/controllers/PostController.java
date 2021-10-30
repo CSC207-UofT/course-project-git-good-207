@@ -34,12 +34,12 @@ public class PostController {
             try {
                 String inputMeasurable = this.inOut.getInput(promptMeasurable);
                 String inputCountable = this.inOut.getInput(promptCountable);
-                ArrayList<Ingredient> allIngredients = createCountableIngredient(inputCountable, createMeasurable(inputMeasurable));
+                ArrayList<Ingredient> allIngredients = createCountableIngredient(inputCountable, createMeasurableIngredient(inputMeasurable));
 
                 String recipeTitle = this.inOut.getInput("Enter title of recipe");
                 String recipeSteps = this.inOut.getInput(promptRecipeSteps);
 
-                Recipe recipe = recipeManager.createRecipe(recipeTitle, allIngredients, getRecipeSteps(recipeSteps));
+                Recipe recipe = recipeManager.createRecipe(recipeTitle, allIngredients, getRecipeStepsList(recipeSteps));
                 String category = this.inOut.getInput("What is the recipe category?");
                 postManager.createPost(currUser, timeNow, recipe, category);
 
@@ -57,7 +57,7 @@ public class PostController {
         return new String[]{promptRecipeSteps, promptMeasurable, promptCountable};
     }
 
-    private ArrayList<String> getRecipeSteps(String recipeSteps) {
+    private ArrayList<String> getRecipeStepsList(String recipeSteps) {
         String[] stepsList = recipeSteps.split(", ");
         List<String> list = Arrays.asList(stepsList);
         return new ArrayList<>(list);
@@ -78,7 +78,7 @@ public class PostController {
         return ingredientList;
     }
 
-    private ArrayList<Ingredient> createMeasurable(String inputMeasurable) {
+    private ArrayList<Ingredient> createMeasurableIngredient(String inputMeasurable) {
         if (!inputMeasurable.equals("N/A")) {
             String[] measurable = inputMeasurable.split(", ");
             ArrayList<Ingredient> ingredientList = new ArrayList<>();
