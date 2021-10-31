@@ -113,12 +113,7 @@ public class UserProfileController {
                 this.inOut.setOutput(this.userManager.getFollowingListString(this.loginManager.getCurrUser()));
                 String action = this.inOut.getInput("Would you like to unfollow one of these users? (y/n): ");
                 if (action.toLowerCase().equals("y")) {
-                    String userToUnfollow =
-                            this.inOut.getInput("Enter the username of the person you'd like to unfollow: ");
-                    if (this.userManager.checkUserToBrowse(userToUnfollow)) {
-                        this.runUnfollowUser(loginManager.getCurrUser(), userManager.findUser(userToUnfollow));
-                    }
-                    else { this.inOut.setOutput("User not in database! Returning to main page"); }
+                    this.runUnfollowUser();
                 }
             }
         } catch(IOException e) {
@@ -186,12 +181,17 @@ public class UserProfileController {
     /**
      * Return false if target_user is not followed by user, return true otherwise and unfollow target_user
      */
-    private void runUnfollowUser(User user, User targetUser) {
-        if (this.userManager.unfollowUser(user, targetUser)) {
-            this.inOut.setOutput("Successfully unfollowed the target user!");
-        }
-        else {
-            this.inOut.setOutput("User is not followed to begin with!");
+    private void runUnfollowUser() {
+        try {
+            String userToUnfollow =
+                    this.inOut.getInput("Enter the username of the person you'd like to unfollow: ");
+            if (this.userManager.unfollowUser(this.loginManager.getCurrUser(), this.userManager.findUser(userToUnfollow))) {
+                this.inOut.setOutput("Successfully unfollowed the target user!");
+            } else {
+                this.inOut.setOutput("User is not followed to begin with!");
+            }
+        } catch (IOException e) {
+            inOut.setOutput("There was an error: " + e);
         }
     }
 

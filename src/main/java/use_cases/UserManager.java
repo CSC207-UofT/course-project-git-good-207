@@ -2,6 +2,7 @@ package use_cases;
 
 import java.util.ArrayList;
 
+import entities.Post;
 import entities.User;
 
 public class UserManager {
@@ -27,15 +28,17 @@ public class UserManager {
     /**
      * Get the User with the given ID. Returns null if no user with
      * the given ID exists.
+     *
      * @param id The ID of the User to find.
      * @return a User with the given ID.
      */
     public User getUserById(String id) {
-        for (User user: this.allUsers) {
+        for (User user : this.allUsers) {
             if (user.getId().equals(id)) {
                 return user;
             }
-        } return null;
+        }
+        return null;
     }
 
     /**
@@ -55,7 +58,7 @@ public class UserManager {
     /**
      * Update User's bio into bio given
      */
-    public void update_bio(User user, String bio) {
+    public void updateBio(User user, String bio) {
         user.setBio(bio);
     }
 
@@ -80,12 +83,11 @@ public class UserManager {
         // check whether User want_to_follow is already followed by current_user
         if (currentUser.getFollowing().contains(wantToFollow)) {
             return false;
-        }
-        else {
+        } else {
             // update current_user's following list: following
             ArrayList<User> updatedFollowingList = new ArrayList<>();
             updatedFollowingList.add(wantToFollow);
-            for (User user: currentUser.getFollowing()) {
+            for (User user : currentUser.getFollowing()) {
                 updatedFollowingList.add(user);
             }
             currentUser.setFollowing(updatedFollowingList);
@@ -100,7 +102,7 @@ public class UserManager {
     public boolean unfollowUser(User currentUser, User wantToUnfollow) {
         if (currentUser.getFollowing().contains(wantToUnfollow)) {
             ArrayList<User> updatedFollowingList = new ArrayList<>();
-            for (User user: currentUser.getFollowing()) {
+            for (User user : currentUser.getFollowing()) {
                 updatedFollowingList.add(user);
             }
             updatedFollowingList.remove(wantToUnfollow);
@@ -113,14 +115,13 @@ public class UserManager {
     /**
      * add a follower to User's followers' list
      */
-    public boolean addFollower(User user, User new_follower){
+    public boolean addFollower(User user, User new_follower) {
         /**
          * Return false if new_follower is already following user, true otherwise.
          */
-        if (user.getFollowers().contains(new_follower)){
+        if (user.getFollowers().contains(new_follower)) {
             return false;
-        }
-        else {
+        } else {
             user.getFollowers().add(new_follower);
             return true;
         }
@@ -132,8 +133,7 @@ public class UserManager {
     public boolean changeUsername(User user, String newUsername) {
         if (user.getUsername().equals(newUsername)) {
             return false;
-        }
-        else {
+        } else {
             user.setUsername(newUsername);
             return true;
         }
@@ -145,8 +145,7 @@ public class UserManager {
     public boolean changePassword(User user, String newPassword) {
         if (user.getPassword().equals(newPassword)) {
             return false;
-        }
-        else {
+        } else {
             user.setPassword(newPassword);
             return true;
         }
@@ -158,8 +157,7 @@ public class UserManager {
     public boolean changeBio(User user, String newBio) {
         if (user.getBio().equals(newBio)) {
             return false;
-        }
-        else {
+        } else {
             user.setBio(newBio);
             this.databaseManager.updateUser(user);
             return true;
@@ -171,7 +169,7 @@ public class UserManager {
      */
     public boolean checkUserToBrowse(String userToBrowse) {
         User[] userDatabase = this.databaseManager.getAllUsers();
-        for (User user: userDatabase) {
+        for (User user : userDatabase) {
             if (user.getUsername().equals(userToBrowse)) {
                 return true;
             }
@@ -204,7 +202,7 @@ public class UserManager {
      */
     public User findUser(String targetUser) {
         User[] users = this.databaseManager.getAllUsers();
-        for(User user: users) {
+        for (User user : users) {
             if (user.getUsername().equals(targetUser)) {
                 return user;
             }
@@ -225,7 +223,7 @@ public class UserManager {
     public ArrayList<String> getFollowingListUsernames(User user) {
         ArrayList<User> followingList = user.getFollowing();
         ArrayList<String> followingListUsernames = new ArrayList<>();
-        for (User targetUser: followingList) {
+        for (User targetUser : followingList) {
             followingListUsernames.add(targetUser.getUsername());
         }
         return followingListUsernames;
@@ -236,11 +234,10 @@ public class UserManager {
      */
     public String getFollowingListString(User user) {
         String followingList = "";
-        for (String username: this.getFollowingListUsernames(user)) {
+        for (String username : this.getFollowingListUsernames(user)) {
             if (followingList == "") {
                 followingList = username;
-            }
-            else {
+            } else {
                 followingList = followingList + ", " + username;
             }
         }
