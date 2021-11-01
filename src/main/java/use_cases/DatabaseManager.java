@@ -346,6 +346,48 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Deletes the user from the database if the user exists
+     * @param user
+     */
+    public void deleteUser(User user)
+    {
+        try
+        {
+            String query = "DELETE FROM `user_info` WHERE `username`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Given an user objects changes all the attributes
+     * such that match the ones given in the parameter
+     * except the id
+     * @param user
+     */
+    public void editUser(User user){
+        try
+        {
+            String query = "UPDATE FROM `user_info` SET `username`= ?, `password`=?, `bio`=? " +
+                    "WHERE `username`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getUsername());
+            preparedStatement.setString(3, user.getUsername());
+            preparedStatement.setString(4, user.getUsername());
+            preparedStatement.execute();
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] arg) {
         // database demo
         DatabaseManager d = new DatabaseManager();
