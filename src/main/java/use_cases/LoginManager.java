@@ -9,13 +9,11 @@ Manages user login and logout
  */
 public class LoginManager {
     private User currUser;
-    private UserManager userManager;
     private DatabaseManager databaseManager;
 
 
     public LoginManager(UserManager userManager) {
         this.currUser = null;
-        this.userManager = userManager;
         this.databaseManager = new DatabaseManager();
     }
 
@@ -29,14 +27,11 @@ public class LoginManager {
     public boolean login(String username, String password) {
         boolean isValidLogin = verifyUser(username, password);
         if (isValidLogin) {
-            //use UserManager method to create user with all needed data
+            //get User from the Database
             // TODO: replace this with better code to guarantee we get a User (and not null)
             User[] allUsers = this.databaseManager.getAllUsers();
-            for (User user: allUsers) {
-                if (user.getUsername().equals(username)) {
-                    this.currUser = user;
-                }
-            }
+
+            this.currUser = getExistingUser(username, allUsers);
         }
         return isValidLogin;
     }
@@ -75,16 +70,33 @@ public class LoginManager {
      */
     private boolean verifyUser(String username, String password) {
 
-        HashMap<String, String> loginInfo = this.databaseManager.getLoginInfo();
+        User[] allUsers = this.databaseManager.getAllUsers();
         //use DatabaseManager to check if the given username and password
         //match a username and password pair in the Database
-        if (this.databaseManager.getLoginInfo().containsKey(username)) {
+        User user = getExistingUser(username, allUsers);
+        if (user != null) {
             //username is in database, so check if the password matches
-            return password.equals(loginInfo.get(username));
+            return password.equals(user.getPassword());
         } else {
             //username not in database
             return false;
         }
+    }
+
+    /**
+     * Get the user from an array of users that has the given username
+     *
+     * @param username a given username
+     * @param allUsers array of all the existing users
+     * @return User with the given username if it exists, null otherwise
+     */
+    private User getExistingUser(String username, User[] allUsers) {
+        for (User user : allUsers) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public User getCurrUser() {

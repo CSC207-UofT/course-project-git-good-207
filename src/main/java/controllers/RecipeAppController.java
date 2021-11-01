@@ -3,6 +3,7 @@ package controllers;
 import entities.*;
 import use_cases.LoginManager;
 import use_cases.PostManager;
+import use_cases.RecipeManager;
 import use_cases.UserManager;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class RecipeAppController {
     private UserProfileController userProfileController;
     private LoginManager loginManager;
     private PostManager postManager = new PostManager();
+    private RecipeManager recipeManager = new RecipeManager();
     private String shellActionPrompt =
             "Enter an action:\n" +
             "0 Browse your Feed\n" +
@@ -29,13 +31,13 @@ public class RecipeAppController {
         this.feedController = new FeedController(inOut, loginManager);
         this.loginController = new LoginController(inOut, this.loginManager);
         this.userProfileController = new UserProfileController(inOut, this.loginManager);
-        this.postController = new PostController(inOut, this.postManager, this.loginManager);
+        this.postController = new PostController(inOut, this.postManager, this.loginManager, this.recipeManager);
     }
 
     public void run() {
         while (true) {
             if (this.loginManager.getCurrUser() == null) {
-                this.loginController.runLoginPage();
+                this.loginController.runWelcomePage();
             } else {
                 this.runLoggedInState();
             }

@@ -15,7 +15,7 @@ public class DatabaseManager {
     public DatabaseManager(){
         try {
             this.connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/foodstagram",
+                "jdbc:mysql://localhost:8889/foodstagram",
                 "admin",
                 "1234");
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class DatabaseManager {
                         postId,
                         new Post(userId,
                             postedTime,
-                            new Recipe(""),
+                            new Recipe("", new ArrayList<>(), new ArrayList<>()),
                             category)
                     );
             }
@@ -209,7 +209,7 @@ public class DatabaseManager {
     }
 
     /**
-     * Save the steps in a recipe to the database.
+     * Save the ingredients in a recipe to the database.
      * @param recipe The recipe which contains the ingredients to save.
      */
     private void insertRecipeIngredientsDB(Recipe recipe) {
