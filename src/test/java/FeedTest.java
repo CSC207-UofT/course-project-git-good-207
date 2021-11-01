@@ -18,11 +18,11 @@ public class FeedTest {
         this.feed = new Feed(new ArrayList<>(Arrays.asList(
                 new Post(UUID.randomUUID().toString(),
                     LocalDateTime.now(),
-                    new Recipe("Stir Fry"),
+                    new Recipe("Stir Fry", new ArrayList<>(), new ArrayList<>()),
                     "Chinese"),
                 new Post(UUID.randomUUID().toString(),
                     LocalDateTime.now(),
-                    new Recipe("Stir Fry"),
+                    new Recipe("Stir Fry", new ArrayList<>(), new ArrayList<>()),
                     "Chinese")
         )));
     }
