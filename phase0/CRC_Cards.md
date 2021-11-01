@@ -47,32 +47,22 @@ Parent Class: PostableItem
 Responsibilities: Stores the User id who wrote the comment, the time posted, and a string which is the contents of the comment  
 Collaborators: Post, User
 
+## Use Cases
 Class Name: Payload<E> (interface)  
 Parent Class: N/A  
 Responsibilities: contains a method that returns an HTTP response code, contains method that returns an object of type E or null  
-Collaborators: SQLitePayload, SQLiteDatabaseController, DatabaseManager  
+Collaborators: MySQLPayload, MySQLDatabaseController, DatabaseManager  
 
-Class Name: SQLitePayload<E>  
+Class Name: MySQLPayload<E>  
 Parent Class: N/A, implements Payload<E>  
-Responsibilities: contains method(s) to convert data from SQLite into things compatible with the Payload interface  
-Collaborators: SQLitePayload, SQLiteDatabaseController, DatabaseManager  
+Responsibilities: contains method(s) to convert data from MySQL into things compatible with the Payload interface  
+Collaborators: MySQLPayload, MySQLDatabaseController, DatabaseManager     
 
 Class Name: InOut (interface)  
 Parent Class: N/A  
 Responsibilities: Describes the getInput and setOutput methods which allows sending typed inputs and String outputs between the UI and the controllers  
-Collaborators: InOut, all the controllers  
+Collaborators: InOut, all the controllers 
 
-Class Name: RecipeAppInOut  
-Parent Class: InOut (implements)  
-Responsibilities: Implements the InOut interface to work with the console. We are using an interface because we may create a UI later (and get rid of the shell UI).  
-Collaborators: RecipeAppShell, InOut, all the controllers  
-
-Class Name: ShellAction (enum)  
-Parent Class: N/A  
-Responsibilities: defines possible user actions given in the RecipeAppController, which are passed to the appropriate controller for action handling  
-Collaborators: RecipeAppController, basically all the controllers  
-
-## Use Cases
 Class Name: UserManager  
 Parent Class: N/A  
 Responsibilities: Create new User, change a User’s username, bio and password, updating a User’s following or follower list, run browse profile.
@@ -96,7 +86,7 @@ Collaborators: Post, FeedManager, PostPresenter
 
 Class Name: DatabaseManager  
 Parent Class: N/A  
-Responsibilities: connects to the database at the start of execution, fetches info about users and posts after log out saves the changes made by the user to the database, takes in an interface Payload which can be injected from the SQLiteDatabaseController (dependency inversion)  
+Responsibilities: connects to the database at the start of execution, fetches info about users and posts after log out saves the changes made by the user to the database, takes in an interface Payload which can be injected from the MySQLDatabaseController (dependency inversion)  
 Collaborators: LoginManager, UserManager, FeedManager  
 
 ## Controllers
@@ -125,13 +115,23 @@ Parent Class: N/A
 Responsibilities: Is the “master” controller that calls upon the appropriate controllers (like LoginController, FeedController, etc.) based on user commands.  
 Collaborators: All other Controllers  
 
-Class Name: SQLiteDatabaseController  
+Class Name: MySQLDatabaseController  
 Parent Class: N/A  
-Responsibilities: gets and sets info from the SQLite database, sends SQLitePayloads to the DatabaseManager for processing, receives write requests from the DatabaseManager  
+Responsibilities: gets and sets info from the MySQL database, sends MySQLPayloads to the DatabaseManager for processing, receives write requests from the DatabaseManager  
 Collaborators: DatabaseManager 
 
 ## User Interface
 Class Name: RecipeAppMain  
 Parent Class:N/A  
 Responsibilities: contains a main method that instantiates a RecipeAppInOut and RecipeAppController and runs the controller  
-Collaborators: RecipeAppController, RecipeAppInOut  
+Collaborators: RecipeAppController, RecipeAppInOut
+
+Class Name: ShellAction (enum)  
+Parent Class: N/A  
+Responsibilities: defines possible user actions given in the RecipeAppController, which are passed to the appropriate controller for action handling  
+Collaborators: RecipeAppController, basically all the controllers 
+  
+Class Name: RecipeAppInOut  
+Parent Class: InOut (implements)  
+Responsibilities: Implements the InOut interface to work with the console. We are using an interface because we may create a UI later (and get rid of the shell UI).  
+Collaborators: RecipeAppShell, InOut, all the controllers
