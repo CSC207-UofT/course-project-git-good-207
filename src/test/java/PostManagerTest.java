@@ -1,6 +1,4 @@
-import entities.Ingredient;
-import entities.Post;
-import entities.Recipe;
+import entities.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import use_cases.PostManager;
@@ -8,11 +6,14 @@ import use_cases.PostManager;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class PostManagerTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+class PostManagerTest {
     private PostManager postManager;
+    private Post samplePost;
 
     @BeforeEach
-    void setupPostManagerTest(){
+    void setupPostManagerTest() {
         // set up a list of predefined posts
         ArrayList<Post> listPosts = new ArrayList<>();
         ArrayList<Ingredient> ingredient = new ArrayList<>();
@@ -23,5 +24,50 @@ public class PostManagerTest {
                 Recipe("Recipe Test", ingredient, steps), "Italian"));
 
         this.postManager = new PostManager(listPosts);
+        // setting up the sample post
+        ArrayList<Ingredient> otherIngredients = new ArrayList<>();
+        ArrayList<String> otherSteps = new ArrayList<>();
+        steps.add("Add Cheese into the oven");
+        ingredient.add(new Ingredient("Cheese"));
+        this.samplePost = new Post("James", LocalDateTime.now(), new Recipe("Second Cheese",
+                otherIngredients,
+                otherSteps),
+                "latin-american");
+
+    }
+
+    @Test
+    void testCommentPost() {
+        Comment comment = new Comment("Great Place", "ibarrame", LocalDateTime.now());
+        this.postManager.createPost(this.samplePost);
+        boolean commented = this.postManager.commentPost(this.samplePost, comment);
+        // the last comment should be the one we add it
+        ArrayList<Comment> allComments = this.postManager.getSpecificPost(this.samplePost).getComments();
+        assert(allComments.size() == 1 && commented);
+
+    }
+
+    @Test
+    void testLikePost() {
+        User user = new User("ibarrame", "password");
+        this.postManager.createPost(this.samplePost);
+        boolean liked = this.postManager.likePost(this.samplePost, user);
+        assert(this.postManager.getSpecificPost(this.samplePost).getNumLikes() == 1 && liked);
+
+
+    }
+
+    @Test
+    void testCreatePost() {
+        // create a simple post
+
+        int total_posts = this.postManager.getPosts().size();
+        this.postManager.createPost(this.samplePost);
+        assert total_posts + 1 == this.postManager.getPosts().size();
+    }
+
+    @Test
+    void getPosts() {
+        assert this.postManager.getPosts().size() == 1;
     }
 }
