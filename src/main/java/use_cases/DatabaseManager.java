@@ -350,8 +350,7 @@ public class DatabaseManager {
      * Deletes the user from the database if the user exists
      * @param user
      */
-    public void deleteUser(User user)
-    {
+    public void deleteUser(User user) {
         try {
             String query = "DELETE FROM `user_info` WHERE `username`=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
