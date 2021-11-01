@@ -352,8 +352,7 @@ public class DatabaseManager {
      */
     public void deleteUser(User user)
     {
-        try
-        {
+        try {
             String query = "DELETE FROM `user_info` WHERE `username`=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getUsername());
@@ -371,14 +370,13 @@ public class DatabaseManager {
      * @param user
      */
     public void editUser(User user){
-        try
-        {
+        try {
             String query = "UPDATE FROM `user_info` SET `username`= ?, `password`=?, `bio`=? " +
                     "WHERE `username`=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getUsername());
-            preparedStatement.setString(3, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getBio());
             preparedStatement.setString(4, user.getUsername());
             preparedStatement.execute();
 
