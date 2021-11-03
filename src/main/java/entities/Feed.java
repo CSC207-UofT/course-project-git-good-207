@@ -6,6 +6,11 @@ public class Feed {
     private final ArrayList<Post> posts;
     private ArrayList<Post> displayedPosts;
 
+    /**
+     * Construct a Feed object.
+     *
+     * @param posts The list of posts that will be stored inside the feed.
+     */
     public Feed(ArrayList<Post> posts) {
         this.posts = posts;
         this.displayedPosts = posts;
