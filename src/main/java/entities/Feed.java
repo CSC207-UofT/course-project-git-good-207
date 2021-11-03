@@ -9,7 +9,7 @@ public class Feed {
     /**
      * Construct a Feed object.
      *
-     * @param posts The list of posts that will be stored inside the feed.
+     * @param posts The list of posts that will be stored inside the feed object.
      */
     public Feed(ArrayList<Post> posts) {
         this.posts = posts;

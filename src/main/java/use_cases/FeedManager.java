@@ -9,9 +9,9 @@ public class FeedManager {
     private Feed currentUsersFeed;
 
     /**
-     * Construct a Feed object.
+     * Construct a FeedManager object.
      *
-     * @param currentUser The user that is currently running the program
+     * @param currentUser The user that is currently running the program.
      * @param currentUsersFeed The feed that belongs to the current user running the program.
      */
     public FeedManager(User currentUser, Feed currentUsersFeed) {
