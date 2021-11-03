@@ -16,9 +16,7 @@ public class Feed {
         this.displayedPosts = posts;
     }
 
-    public ArrayList<Post> getPosts() {
-        return posts;
-    }
+    public ArrayList<Post> getPosts() { return posts; }
 
     public ArrayList<Post> getDisplayedPosts() {
         return this.displayedPosts;

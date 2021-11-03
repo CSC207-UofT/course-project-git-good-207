@@ -35,9 +35,7 @@ public class FeedManager {
         this.setCurrentUsersFeed(filteredFeed);
     }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
+    public User getCurrentUser() { return currentUser; }
 
     public Feed getCurrentUsersFeed() {
         return currentUsersFeed;
