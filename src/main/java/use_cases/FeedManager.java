@@ -1,13 +1,11 @@
 package use_cases;
 
-import entities.Feed;
-import entities.Post;
-import entities.User;
+import entities.*;
 
 import java.util.ArrayList;
 
 public class FeedManager {
-    private User currentUser;
+    private final User currentUser;
     private Feed currentUsersFeed;
 
     public FeedManager(User currentUser, Feed currentUsersFeed) {
@@ -15,24 +13,24 @@ public class FeedManager {
         this.currentUsersFeed = currentUsersFeed;
     }
 
-    public void setFeedFilter(String filter) {
-        // TODO: set the filter on the currentUsersFeed
-    }
+    public void setFeedFilter(ArrayList<Integer> filterNumInput) {
+        Filter filterObject;
+        if (filterNumInput.get(0) == 0) {
+            filterObject = new Filter(this.getCurrentUsersFeed());
+        } else if (filterNumInput.get(0) == 1) {
+            filterObject = new FilterByCuisine(this.getCurrentUsersFeed(), filterNumInput.get(1));
+        } else if (filterNumInput.get(0) == 2) {
+            filterObject = new FilterByLikes(this.getCurrentUsersFeed());
+        } else {
+            filterObject = new FilterByFollowing(this.getCurrentUsersFeed(), this.getCurrentUser());
+        }
 
-    public void refreshFeed() {
-        // TODO: refresh the feed based users followed in currentUser and possibly likes in currentUser
-        ArrayList<Post> newDisplayedPosts = new ArrayList<>();
-        // TODO: iterate through Feed.posts and add to displayed
-        //  posts if matches followed user ID or filter settings
-        this.currentUsersFeed.setDisplayedPosts(newDisplayedPosts);
+        Feed filteredFeed = filterObject.runFilter();
+        this.setCurrentUsersFeed(filteredFeed);
     }
 
     public User getCurrentUser() {
         return currentUser;
-    }
-
-    public void setCurrentUser(User newUser) {
-        this.currentUser = newUser;
     }
 
     public Feed getCurrentUsersFeed() {
