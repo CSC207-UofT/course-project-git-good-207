@@ -12,10 +12,17 @@ import use_cases.UserManager;
 
 public class UserProfileController {
     private InOut inOut;
-    private String customizeProfileScreen = "Select which option you'd like to customize:" +
-            "\n0 Username \n1 Password \n2 Bio \n3 Posts \n4 Following list";
-    private String otherUserScreen = "Select which action you'd like to take:" +
-            "\n0 Follow user \n1 Browse user's posts";
+    private String customizeProfileScreen = """
+            Select which option you'd like to customize:
+            0 Username\s
+            1 Password\s
+            2 Bio\s
+            3 Posts\s
+            4 Following list""";
+    private String otherUserScreen = """
+            Select which action you'd like to take:
+            0 Follow user\s
+            1 Browse user's posts""";
     private String userToBrowsePrompt = "Enter the username of the person you'd like to view: ";
     private LoginManager loginManager;
     private UserManager userManager;
@@ -112,7 +119,7 @@ public class UserProfileController {
 //                this.inOut.setOutput(this.displayFollowingList(this.loginManager.getCurrUser()));
                 this.inOut.setOutput(this.userManager.getFollowingListString(this.loginManager.getCurrUser()));
                 String action = this.inOut.getInput("Would you like to unfollow one of these users? (y/n): ");
-                if (action.toLowerCase().equals("y")) {
+                if (action.equalsIgnoreCase("y")) {
                     String userToUnfollow =
                             this.inOut.getInput("Enter the username of the person you'd like to unfollow: ");
                     if (this.userManager.checkUserToBrowse(userToUnfollow)) {
@@ -202,7 +209,7 @@ public class UserProfileController {
         ArrayList<String> followingListUsernames = this.userManager.getFollowingListUsernames(user);
         String followingList = "";
         for (String username: followingListUsernames) {
-            followingList.concat(username + ", ");
+            followingList = followingList.concat(username + ", ");
         }
         return followingList;
     }
