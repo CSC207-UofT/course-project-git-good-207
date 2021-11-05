@@ -2,6 +2,7 @@ package controllers;
 
 import entities.InOut;
 import entities.ShellAction;
+import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 
 import java.io.IOException;
@@ -16,8 +17,8 @@ public class LoginController {
             + "1 Login";
     private InOut inOut;
 
-    public LoginController(InOut inOut, LoginManager loginManager) {
-        this.loginManager = loginManager;
+    public LoginController(InOut inOut, DatabaseManager dbManager) {
+        this.loginManager = new LoginManager(dbManager);
         this.inOut = inOut;
     }
 

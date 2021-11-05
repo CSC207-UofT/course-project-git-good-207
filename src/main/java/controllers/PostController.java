@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.*;
+import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 import use_cases.PostManager;
 
@@ -17,11 +18,11 @@ public class PostController {
     private PostManager postManager;
     private RecipeManager recipeManager;
 
-    public PostController(InOut inOut, PostManager postManager, LoginManager loginManager, RecipeManager recipeManager) {
+    public PostController(InOut inOut, DatabaseManager dbManager) {
         this.inOut = inOut;
-        this.postManager = postManager;
-        this.recipeManager = recipeManager;
-        this.loginManager = loginManager;
+        this.postManager = new PostManager(dbManager);
+        this.recipeManager = new RecipeManager();
+        this.loginManager = new LoginManager(dbManager);
     }
 
     public void run(ShellAction action) {

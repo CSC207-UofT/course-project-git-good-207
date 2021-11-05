@@ -14,15 +14,16 @@ public class FeedController {
     private FeedManager feedManager;
     private LoginManager loginManager;
     private InOut inOut;
-    private DatabaseManager databaseManager = new DatabaseManager();
+    private DatabaseManager databaseManager;
     private String postsString;
     private HashMap<Integer, Post> postsActionMap = new HashMap<>();
     private String postActionPrompt = "Please select an action for this post: \n"
             + "0 Like the Post";
 
-    public FeedController(InOut inOut, LoginManager loginManager) {
+    public FeedController(InOut inOut, DatabaseManager dbManager) {
         this.inOut = inOut;
-        this.loginManager = loginManager;
+        this.loginManager = new LoginManager(dbManager);
+        this.databaseManager = dbManager;
         User currUser = this.loginManager.getCurrUser();
         Post[] posts = this.databaseManager.getAllPosts();
         Feed currUserFeed = new Feed(new ArrayList<>(Arrays.asList(posts)));

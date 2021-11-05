@@ -22,11 +22,11 @@ public class UserProfileController {
     private DatabaseManager databaseManager;
 
     // Constructor
-    public UserProfileController(InOut inOut, LoginManager loginManager) {
+    public UserProfileController(InOut inOut, DatabaseManager dbManager) {
         this.inOut = inOut;
-        this.loginManager = loginManager;
-        this.databaseManager = new DatabaseManager();
-        this.userManager = new UserManager();
+        this.loginManager = new LoginManager(dbManager);
+        this.databaseManager = dbManager;
+        this.userManager = new UserManager(dbManager);
     }
 
 

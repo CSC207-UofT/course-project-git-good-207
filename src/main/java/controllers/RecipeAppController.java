@@ -10,13 +10,12 @@ import java.io.IOException;
 
 public class RecipeAppController {
     private InOut inOut;
+    private MySQLController mySQLController;
     private LoginController loginController;
     private FeedController feedController;
     private PostController postController;
     private UserProfileController userProfileController;
     private LoginManager loginManager;
-    private PostManager postManager = new PostManager();
-    private RecipeManager recipeManager = new RecipeManager();
     private String shellActionPrompt =
             "Enter an action:\n" +
             "0 Browse your Feed\n" +
@@ -27,11 +26,12 @@ public class RecipeAppController {
 
     public RecipeAppController(InOut inOut) {
         this.inOut = inOut;
-        this.loginManager = new LoginManager(new UserManager());
-        this.feedController = new FeedController(inOut, loginManager);
-        this.loginController = new LoginController(inOut, this.loginManager);
-        this.userProfileController = new UserProfileController(inOut, this.loginManager);
-        this.postController = new PostController(inOut, this.postManager, this.loginManager, this.recipeManager);
+        this.mySQLController = new MySQLController();
+        this.loginManager = new LoginManager(this.mySQLController);
+        this.feedController = new FeedController(inOut, this.mySQLController);
+        this.loginController = new LoginController(inOut, this.mySQLController);
+        this.userProfileController = new UserProfileController(inOut, this.mySQLController);
+        this.postController = new PostController(inOut, this.mySQLController);
     }
 
     public void run() {
