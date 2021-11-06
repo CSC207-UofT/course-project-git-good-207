@@ -20,8 +20,8 @@ public class LoginController {
             1 Login""";
     private InOut inOut;
 
-    public LoginController(InOut inOut, DatabaseManager dbManager) {
-        this.loginManager = new LoginManager(dbManager);
+    public LoginController(InOut inOut, LoginManager loginManager) {
+        this.loginManager = loginManager;
         this.inOut = inOut;
     }
 

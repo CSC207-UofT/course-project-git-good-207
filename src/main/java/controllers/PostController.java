@@ -18,11 +18,11 @@ public class PostController {
     private PostManager postManager;
     private RecipeManager recipeManager;
 
-    public PostController(InOut inOut, DatabaseManager dbManager) {
+    public PostController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
         this.inOut = inOut;
         this.postManager = new PostManager(dbManager);
         this.recipeManager = new RecipeManager();
-        this.loginManager = new LoginManager(dbManager);
+        this.loginManager = loginManager;
     }
 
     public void run(ShellAction action) {
