@@ -18,17 +18,11 @@ public class RecipeAppController {
     private final LoginManager loginManager;
     private final String shellActionPrompt = """
             Enter an action:
-                        
             0 Browse your Feed
-                        
             1 Browse a User Profile
-                        
             2 Post a Recipe
-                        
             3 Customize your User Profile
-                        
             4 Logout
-                        
             """;
 
     public RecipeAppController(InOut inOut) {

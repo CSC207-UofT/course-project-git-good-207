@@ -14,9 +14,7 @@ public class LoginController {
     private String welcomeMessage = "Welcome to the Recipe App!";
     private String welcomeActionPrompt = """
             Please select an action:
-                        
             0 Sign up
-                        
             1 Login""";
     private InOut inOut;
 

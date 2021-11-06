@@ -14,14 +14,14 @@ public class UserProfileController {
     private InOut inOut;
     private String customizeProfileScreen = """
             Select which option you'd like to customize:
-            0 Username\s
-            1 Password\s
-            2 Bio\s
-            3 Posts\s
+            0 Username
+            1 Password
+            2 Bio
+            3 Posts
             4 Following list""";
     private String otherUserScreen = """
             Select which action you'd like to take:
-            0 Follow user\s
+            0 Follow user
             1 Browse user's posts""";
     private String userToBrowsePrompt = "Enter the username of the person you'd like to view: ";
     private LoginManager loginManager;
