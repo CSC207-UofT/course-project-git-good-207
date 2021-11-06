@@ -12,10 +12,10 @@ import java.util.List;
 import use_cases.RecipeManager;
 
 public class PostController {
-    private InOut inOut;
-    private LoginManager loginManager;
-    private PostManager postManager;
-    private RecipeManager recipeManager;
+    private final InOut inOut;
+    private final LoginManager loginManager;
+    private final PostManager postManager;
+    private final RecipeManager recipeManager;
 
     public PostController(InOut inOut, PostManager postManager, LoginManager loginManager, RecipeManager recipeManager) {
         this.inOut = inOut;
@@ -28,8 +28,8 @@ public class PostController {
         if (action == ShellAction.POST) {
             User currUser = this.loginManager.getCurrUser();
             LocalDateTime timeNow = LocalDateTime.now();
-            String promptMeasurable = createPostHelper()[0], promptCountable = createPostHelper()[1],
-                    promptRecipeSteps = createPostHelper()[2];
+            String promptMeasurable = createPostHelper()[1], promptCountable = createPostHelper()[2],
+                    promptRecipeSteps = createPostHelper()[0];
 
             try {
                 String inputMeasurable = this.inOut.getInput(promptMeasurable);
@@ -53,7 +53,7 @@ public class PostController {
     private String[] createPostHelper() {
         String promptRecipeSteps = "Enter recipe steps in this comma-separated format: 'Add the water, mix flour'";
         String promptMeasurable = "Enter measurable ingredients (in grams, ounces etc) in format '50 grams sugar, 1 cup flour, etc.' or N/A if no measurable ingredients";
-        String promptCountable = "Enter measurable ingredients (in grams, ounces etc) in format '1 lemon, 1 apple, etc.' or N/A if no countable ingredients";
+        String promptCountable = "Enter countable ingredients (in grams, ounces etc) in format '1 lemon, 1 apple, etc.' or N/A if no countable ingredients";
         return new String[]{promptRecipeSteps, promptMeasurable, promptCountable};
     }
 
