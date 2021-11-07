@@ -2,6 +2,7 @@ package use_cases;
 
 import entities.*;
 
+import java.lang.reflect.Executable;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -350,17 +351,46 @@ public class DatabaseManager {
      * Deletes the user from the database if the user exists
      * @param user
      */
-    public void deleteUser(User user) {
+    public void deleteUser(User user){
         try {
-            String query = "DELETE FROM `user_info` WHERE `username`=?";
+            String query = "DELETE FROM `user_info` WHERE `user_id`=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        // delete the posts the user had made
+        this.deletePostsFromUser(user);
+        //
+    }
+
+    private void deletePostsFromUser(User user){
+        try {
+            String query = "DELETE FROM `posts` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+       } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private void deleteLikesFromUser(User user){
+        try {
+            String query = "DELETE FROM `posts` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
             preparedStatement.execute();
 
         } catch (Exception e){
             e.printStackTrace();
         }
     }
+
 
     /**
      * Given an user objects changes all the attributes
