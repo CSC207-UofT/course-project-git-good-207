@@ -9,8 +9,8 @@ public class UserManager {
     private User[] allUsers;
 
     // Constructor
-    public UserManager() {
-        this.databaseManager = new DatabaseManager();
+    public UserManager(DatabaseManager dbManager) {
+        this.databaseManager = dbManager;
         // TODO: make allUsers stay up to date with Observable design pattern
         this.allUsers = this.databaseManager.getAllUsers();
     }
