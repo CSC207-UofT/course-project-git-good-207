@@ -28,10 +28,10 @@ public class PostManager {
 
     /**
      * Private function in order to interacts with the posts
-     * @param targetPost: the post we want to interact
-     * @param obj: the object in case of a adding a comment is a
+     * @param targetPost the post we want to interact
+     * @param obj the object in case of a adding a comment is a
      *           comment, but in the case of being a like is the user
-     * @param type: depending on its either a comment or a like
+     * @param type depending on its either a comment or a like
      *            then it would change the behavior
      * @return true iff the post was founded and could be interacted with
      */
@@ -53,10 +53,10 @@ public class PostManager {
 
     /**
      * Creates a post and adds it to the list of post
-     * @param owner: who created the post
-     * @param postedTime: the time it was posted
-     * @param recipe: a recipe object containing the info of the recipe
-     * @param category: which category it belongs
+     * @param owner who created the post
+     * @param postedTime the time it was posted
+     * @param recipe a recipe object containing the info of the recipe
+     * @param category which category it belongs
      */
     public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category)
     {
@@ -66,8 +66,8 @@ public class PostManager {
 
     /**
      * Comments a post iff could be done returns true
-     * @param post: The post object itself
-     * @param comment: The comment is being added
+     * @param post The post object itself
+     * @param comment The comment is being added
      * @return true iff it could be added the comment
      */
     public boolean commentPost(Post post, Comment comment){
@@ -76,8 +76,8 @@ public class PostManager {
 
     /**
      *  likes a post and saves the state
-     * @param post: the post is being liked
-     * @param user: the user that is giving the like
+     * @param post the post is being liked
+     * @param user the user that is giving the like
      * @return true if the post could be liked
      */
     public boolean likePost(Post post, User user) {
@@ -86,7 +86,7 @@ public class PostManager {
 
     /**
      * Adds a post directly from object
-     * @param post: the post object is being added
+     * @param post the post object is being added
      */
     public void createPost(Post post){
         this.posts.add(post);
@@ -103,7 +103,7 @@ public class PostManager {
     /**
      * Given a post as parameter, returns the same post
      * that is stored in the PostManager
-     * @param post: the post object
+     * @param post the post object
      * @return the post stored in the postManager
      */
     public Post getSpecificPost(Post post)
