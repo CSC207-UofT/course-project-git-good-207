@@ -42,7 +42,7 @@ class PostManagerTest {
         this.postManager.createPost(this.samplePost);
         boolean commented = this.postManager.commentPost(this.samplePost, comment);
         // the last comment should be the one we add it
-        ArrayList<Comment> allComments = this.postManager.getSpecificPost(this.samplePost).getComments();
+        ArrayList<Comment> allComments = this.postManager.getSpecificPost(this.samplePost.getId()).getComments();
         assert(allComments.size() == 1 && commented);
 
     }
@@ -52,7 +52,7 @@ class PostManagerTest {
         User user = new User("ibarrame", "password");
         this.postManager.createPost(this.samplePost);
         boolean liked = this.postManager.likePost(this.samplePost, user);
-        assert(this.postManager.getSpecificPost(this.samplePost).getNumLikes() == 1 && liked);
+        assert(this.postManager.getSpecificPost(this.samplePost.getId()).getNumLikes() == 1 && liked);
 
 
     }
