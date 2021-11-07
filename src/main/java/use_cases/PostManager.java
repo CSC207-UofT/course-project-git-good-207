@@ -37,7 +37,7 @@ public class PostManager {
      */
     private boolean interactPost(Post targetPost, Object obj, boolean type){
         for (Post post: this.posts) {
-            if (post.equals(targetPost)) {
+            if (post.getId().equals(targetPost.getId())) {
                 if (type) {
                     post.addComment((Comment) obj);
                 }
@@ -103,17 +103,15 @@ public class PostManager {
     /**
      * Given a post as parameter, returns the same post
      * that is stored in the PostManager
-     * @param post the post object
+     * @param id the unique identifier of a post
      * @return the post stored in the postManager
      */
-    public Post getSpecificPost(Post post)
+    public Post getSpecificPost(String id)
     {
         for(Post element: this.getPosts())
         {
-            if (post == element)
+            if (id.equals(element.getId()))
             {
-                //TODO: is a good idea using object?
-
                 return element;
             }
         }
