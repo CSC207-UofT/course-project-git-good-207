@@ -349,7 +349,7 @@ public class DatabaseManager {
 
     /**
      * Deletes the user from the database if the user exists
-     * @param user
+     * @param user user object where we get the id
      */
     public void deleteUser(User user){
         try {
@@ -361,27 +361,54 @@ public class DatabaseManager {
         } catch (Exception e){
             e.printStackTrace();
         }
-        // delete the posts the user had made
         this.deletePostsFromUser(user);
-        //
+        this.deleteCommentsFromUser(user);
+        this.deleteFollowsFromUser(user);
+        this.deleteLikesFromUser(user);
+
     }
 
+    /**
+     * deletes the posts from the table in mysql related to user
+     * @param user object user storing id
+     */
     private void deletePostsFromUser(User user){
-        try {
-            String query = "DELETE FROM `posts` WHERE `user_id`=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, user.getId());
-            preparedStatement.execute();
-
-       } catch (Exception e){
-            e.printStackTrace();
-        }
-
+       deletingFromUser(user, "posts");
     }
 
+    /**
+     * deletes the likes given by the user from mysql table
+     * @param user object user storing id
+     */
     private void deleteLikesFromUser(User user){
+        this.deletingFromUser(user, "likes");
+    }
+
+    /**
+     * deletes the comments given by the user from mysql table
+     * @param user object user storing id
+     */
+    private void deleteCommentsFromUser(User user){
+        this.deletingFromUser(user, "comments");
+    }
+
+    /**
+     * deletes the rows from the mysql table in follows
+     * @param user object user storing id
+     */
+    private void deleteFollowsFromUser(User user){
+       this.deletingFromUser(user, "follows");
+    }
+
+    /**
+     * Given a correct tableName this method deletes the rows where
+     * the user_id is equal to the one given
+     * @param user: object user where we get the user_id
+     * @param tableName: the name of the table
+     */
+    private void deletingFromUser(User user, String tableName){
         try {
-            String query = "DELETE FROM `posts` WHERE `user_id`=?";
+            String query = "DELETE FROM `" + tableName + "` WHERE `user_id`=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getId());
             preparedStatement.execute();
@@ -390,7 +417,6 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Given an user objects changes all the attributes
