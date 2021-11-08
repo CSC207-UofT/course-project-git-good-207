@@ -1,18 +1,18 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class Recipe {
     private ArrayList<String> steps;
     private ArrayList<Ingredient> ingredients;
     private String title;
-    private String id = UUID.randomUUID().toString();
+    private String id;
 
-    public Recipe(String title, ArrayList<Ingredient> ingredients, ArrayList<String> steps) {
+    public Recipe(String title, ArrayList<Ingredient> ingredients, ArrayList<String> steps, String id) {
         this.steps = steps;
         this.ingredients = ingredients;
         this.title = title;
+        this.id = id;
     }
 
     public void addStep(String step) {
@@ -24,7 +24,23 @@ public class Recipe {
     }
 
     public ArrayList<Ingredient> getIngredients() {
-        return ingredients;
+        return new ArrayList<>(ingredients);
+    }
+
+    public ArrayList<CountableIngredient> getCountableIngredients() {
+        ArrayList<CountableIngredient> countableIngredients = new ArrayList<>();
+        for (Ingredient ing: this.ingredients) {
+            if (ing instanceof CountableIngredient)
+                countableIngredients.add((CountableIngredient) ing);
+        } return countableIngredients;
+    }
+
+    public ArrayList<MeasurableIngredient> getMeasurableIngredients() {
+        ArrayList<MeasurableIngredient> measurableIngredients = new ArrayList<>();
+        for (Ingredient ing: this.ingredients) {
+            if (ing instanceof MeasurableIngredient)
+                measurableIngredients.add((MeasurableIngredient) ing);
+        } return measurableIngredients;
     }
 
     public ArrayList<String> getSteps() {
