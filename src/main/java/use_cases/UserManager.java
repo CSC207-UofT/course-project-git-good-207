@@ -12,7 +12,6 @@ public class UserManager {
     // Constructor
     public UserManager() {
         this.databaseManager = new DatabaseManager();
-        // TODO: make allUsers stay up to date with Observable design pattern
         this.allUsers = this.databaseManager.getAllUsers();
     }
 
@@ -69,17 +68,12 @@ public class UserManager {
         int currentLikes = user.getLikeHistory().get(cuisineCategory);
         currentLikes = currentLikes + 1;
         user.getLikeHistory().put(cuisineCategory, currentLikes);
-//        Transforming this function into the one line below makes it less readable
-//        user.getLike_history().put(cuisine_category, user.getLike_history().get(cuisine_category) + 1);
     }
 
     /**
-     * follow User want_to_follow, adding want_to_follow into the logged-in user's following list
+     * return true if user wantToFollow is successfully added to user's following list, false otherwise
      */
     public boolean followUser(User currentUser, User wantToFollow) {
-        /**
-         * Return false if user is already followed, true otherwise.
-         */
         // check whether User want_to_follow is already followed by current_user
         if (currentUser.getFollowing().contains(wantToFollow)) {
             return false;
@@ -87,9 +81,7 @@ public class UserManager {
             // update current_user's following list: following
             ArrayList<User> updatedFollowingList = new ArrayList<>();
             updatedFollowingList.add(wantToFollow);
-            for (User user : currentUser.getFollowing()) {
-                updatedFollowingList.add(user);
-            }
+            updatedFollowingList.addAll(currentUser.getFollowing());
             currentUser.setFollowing(updatedFollowingList);
             return true;
         }
@@ -100,12 +92,15 @@ public class UserManager {
      * return false if want_to_unfollow is not followed to begin with, true if action done successfully
      */
     public boolean unfollowUser(User currentUser, User wantToUnfollow) {
-        if (currentUser.getFollowing().contains(wantToUnfollow)) {
+        String usernameWantToUnfollow = wantToUnfollow.getUsername();
+        ArrayList<String> usernamesFollowed = getFollowingListUsernames(currentUser);
+        if (usernamesFollowed.contains(usernameWantToUnfollow)) {
             ArrayList<User> updatedFollowingList = new ArrayList<>();
             for (User user : currentUser.getFollowing()) {
-                updatedFollowingList.add(user);
+                if (!user.getUsername().equals(usernameWantToUnfollow)) {
+                    updatedFollowingList.add(user);
+                }
             }
-            updatedFollowingList.remove(wantToUnfollow);
             currentUser.setFollowing(updatedFollowingList);
             return true;
         }
@@ -113,12 +108,9 @@ public class UserManager {
     }
 
     /**
-     * add a follower to User's followers' list
+     * return true if new_follower is successfully added to user's followers list, false otherwise
      */
     public boolean addFollower(User user, User new_follower) {
-        /**
-         * Return false if new_follower is already following user, true otherwise.
-         */
         if (user.getFollowers().contains(new_follower)) {
             return false;
         } else {
@@ -211,13 +203,6 @@ public class UserManager {
     }
 
     /**
-     * Return user's following list as User objects
-     */
-    public ArrayList<User> getFollowingList(User user) {
-        return user.getFollowing();
-    }
-
-    /**
      * Return user's following list as usernames
      */
     public ArrayList<String> getFollowingListUsernames(User user) {
@@ -233,15 +218,21 @@ public class UserManager {
      * Return user's following list as strings
      */
     public String getFollowingListString(User user) {
-        String followingList = "";
+        StringBuilder followingList = new StringBuilder();
         for (String username : this.getFollowingListUsernames(user)) {
-            if (followingList == "") {
-                followingList = username;
-            } else {
-                followingList = followingList + ", " + username;
+            if (followingList.length() != 0) {
+                followingList.append(", ");
             }
+            followingList.append(username);
         }
-        return followingList;
+        return followingList.toString();
+    }
+
+    /**
+     * Return user's posts as a list of posts
+     */
+    public ArrayList<Post> getUserPosts(User user) {
+        return user.getPosts();
     }
 
     /**
