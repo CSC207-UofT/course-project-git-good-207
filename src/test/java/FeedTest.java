@@ -1,36 +1,32 @@
 import entities.Feed;
 import entities.Post;
 import entities.Recipe;
-import entities.User;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.UUID;
 
 public class FeedTest {
-    private static Feed feed;
+    private Feed feed;
 
-    @BeforeAll
-    static void setupFeedTest() {
-        feed = new Feed(new ArrayList<>(Arrays.asList(
-                new Post(UUID.randomUUID().toString(),
+    @BeforeEach
+    void setupFeedTest() {
+        this.feed = new Feed(new ArrayList<>(Arrays.asList(
+                new Post("eric",
                     LocalDateTime.now(),
-                    new Recipe("Stir Fry", new ArrayList<>(), new ArrayList<>()),
-                    "Chinese"),
-                new Post(UUID.randomUUID().toString(),
+                    new Recipe("Stir Fry", new ArrayList<>(), new ArrayList<>(), "a"),
+                    "Chinese", "a1"),
+                new Post("justin",
                     LocalDateTime.now(),
-                    new Recipe("Stir Fry", new ArrayList<>(), new ArrayList<>()),
-                    "Chinese")
+                    new Recipe("Stir Fry", new ArrayList<>(), new ArrayList<>(), "b"),
+                    "Chinese", "b1")
         )));
     }
 
     @Test
-    void testGetPosts() {assert !feed.getPosts().isEmpty();}
-
-    @Test
-    void testGetDisplayedPosts() { assert !feed.getDisplayedPosts().isEmpty();}
+    void testGetPosts() {
+        assert !this.feed.getPosts().isEmpty();
+    }
 }

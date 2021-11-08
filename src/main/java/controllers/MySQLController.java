@@ -7,6 +7,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class MySQLController extends DatabaseManager {
     public MySQLController() {
@@ -38,6 +39,61 @@ public class MySQLController extends DatabaseManager {
         this.insertRecipeIngredientsDB(newPost.getRecipe());
         this.insertCommentsDB(newPost, newPost.getComments());
         this.insertLikesDB(newPost, newPost.getLikedUsers());
+    }
+
+    /**
+     * Edit the Post saved in the Database
+     * @param newPost The Post to save to the database.
+     */
+    public void editPost(Post newPost) {
+        try {
+            if (!postExistsInDB(newPost.getId())) {
+                throw new DatabaseException("The given Post with ID " + newPost.getId() +
+                        " was not found in the Database.");
+            } else {
+                this.updatePostsTable(newPost);
+                this.updateRecipesTable(newPost.getRecipe());
+                this.updateRecipesStepsTable(newPost.getRecipe());
+                this.updateRecipeIngredientsTable(newPost.getRecipe());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Check if the given post ID exists in the database.
+     * @param postID the ID of the Post to check for in the database.
+     * @return a boolean which is true if the Post exists.
+     */
+    public boolean postExistsInDB(String postID) {
+        try {
+            String query = "SELECT * from posts WHERE post_id=?";
+
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setString(1, postID);
+
+            ResultSet result = preparedStmt.executeQuery();
+            return result.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Delete a Post in the database.
+     * @param postID The ID of the Post to delete.
+     */
+    public void deletePost(String postID) {
+        try {
+            this.deleteFromPostsTable(postID);
+            this.deleteFromCommentsTable(postID);
+            this.deleteFromLikesTable(postID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -73,25 +129,17 @@ public class MySQLController extends DatabaseManager {
     public Post[] getAllPosts() {
         try {
             HashMap<String, Post> postData = new HashMap<>();
-            HashMap<String, String> postIdsToRecipeIds = new HashMap<>();
             String postsQuery = "SELECT * FROM `posts` WHERE 1";
             ResultSet postsResult = this.connection.createStatement().executeQuery(postsQuery);
-            while(postsResult.next()) {
+            while (postsResult.next()) {
                 String postId = postsResult.getString("post_id");
                 String userId = postsResult.getString("user_id");
                 String recipeId = postsResult.getString("recipe_id");
                 String category = postsResult.getString("category");
                 LocalDateTime postedTime = postsResult.getTimestamp("posted_time").toLocalDateTime();
-                postData.put(
-                        postId,
-                        new Post(userId,
-                                postedTime,
-                                new Recipe("", new ArrayList<>(), new ArrayList<>()),
-                                category)
-                );
+                Recipe associatedRecipe = this.getRecipe(recipeId);
+                postData.put(postId, new Post(userId, postedTime, associatedRecipe, category, postId));
             }
-
-            // TODO: add recipe data
 
             Post[] posts = new Post[postData.size()];
             int postsCounter = 0;
@@ -103,6 +151,22 @@ public class MySQLController extends DatabaseManager {
         } catch (Exception e) {
             e.printStackTrace();
             return new Post[0];
+        }
+    }
+
+    public Recipe getRecipe(String recipeID) throws SQLException, DatabaseException {
+        String recipeTitle;
+        String query = "SELECT title FROM recipes WHERE recipe_id = ?";
+        PreparedStatement preparedStmt = connection.prepareStatement(query);
+        preparedStmt.setString(1, recipeID);
+        ResultSet recipeTitleResult = preparedStmt.executeQuery();
+        if (recipeTitleResult.next()) {
+            recipeTitle = recipeTitleResult.getString("title");
+            ArrayList<String> recipeSteps = this.getRecipeSteps(recipeID);
+            ArrayList<Ingredient> ingredients = this.getIngredients(recipeID);
+            return new Recipe(recipeTitle, ingredients, recipeSteps, recipeID);
+        } else {
+            throw new DatabaseException("A recipe with the ID " + recipeID + " was not found.");
         }
     }
 
@@ -139,6 +203,49 @@ public class MySQLController extends DatabaseManager {
             e.printStackTrace();
             return new User[0];
         }
+    }
+
+    private ArrayList<String> getRecipeSteps(String recipeID) throws SQLException {
+        String query = "SELECT step_number, step_text from recipes_steps where recipe_id=?";
+        PreparedStatement preparedStmt = connection.prepareStatement(query);
+        preparedStmt.setString(1, recipeID);
+        ResultSet recipeStepsResult = preparedStmt.executeQuery();
+        TreeMap<Integer, String> stepNumToStepText = new TreeMap<>();
+        while (recipeStepsResult.next()) {
+            stepNumToStepText.put(
+                recipeStepsResult.getInt("step_number"),
+                recipeStepsResult.getString("step_text")
+            );
+        }
+        return new ArrayList<>(stepNumToStepText.values());
+    }
+
+    private ArrayList<Ingredient> getIngredients(String recipeID) throws SQLException {
+        ResultSet recipeIngredientsResult = this.getRecipeIngredients(recipeID);
+        return this.assembleIngredientsList(recipeIngredientsResult);
+    }
+
+    private ResultSet getRecipeIngredients(String recipeID) throws SQLException {
+        String query = "SELECT ingredient_name, ingredient_count, ingredient_amount, ingredient_measurement " +
+                "from recipe_ingredients where recipe_id=?";
+        PreparedStatement preparedStmt = connection.prepareStatement(query);
+        preparedStmt.setString(1, recipeID);
+        return preparedStmt.executeQuery();
+    }
+
+    private ArrayList<Ingredient> assembleIngredientsList(ResultSet recipeIngredientsResult) throws SQLException {
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        while (recipeIngredientsResult.next()) {
+            String name = recipeIngredientsResult.getString("ingredient_name");
+            int count = recipeIngredientsResult.getInt("ingredient_count");
+            float amount = recipeIngredientsResult.getFloat("ingredient_amount");
+            String measurement = recipeIngredientsResult.getString("ingredient_measurement");
+            if (measurement != null && !measurement.isEmpty()) {
+                ingredients.add(new MeasurableIngredient(name, amount, measurement));
+            } else {
+                ingredients.add(new CountableIngredient(name, count));
+            }
+        } return ingredients;
     }
 
     /**
@@ -343,17 +450,134 @@ public class MySQLController extends DatabaseManager {
         }
     }
 
+    private void updatePostsTable(Post newPost) throws SQLException {
+        String query = "UPDATE posts SET user_id=?, recipe_id=?, category=?, posted_time=? WHERE post_id=?";
+
+        PreparedStatement preparedStmt = connection.prepareStatement(query);
+        preparedStmt.setString(1, newPost.getAuthorId());
+        preparedStmt.setString(2, newPost.getRecipe().getId());
+        preparedStmt.setString(3, newPost.getCategory());
+        preparedStmt.setTimestamp(4, Timestamp.valueOf(newPost.getCreatedTime()));
+        preparedStmt.setString(5, newPost.getId());
+
+        preparedStmt.execute();
+    }
+
+    private void updateRecipesTable(Recipe newRecipe) throws SQLException {
+        String query = "UPDATE recipes SET title=? WHERE recipe_id=?";
+
+        PreparedStatement preparedStmt = connection.prepareStatement(query);
+        preparedStmt.setString(1, newRecipe.getTitle());
+        preparedStmt.setString(2, newRecipe.getId());
+
+        preparedStmt.execute();
+    }
+
+    private void updateRecipesStepsTable(Recipe newRecipe) throws SQLException {
+        String deleteQuery = "DELETE from recipes_steps where recipe_id=?";
+        PreparedStatement deleteStmt = connection.prepareStatement(deleteQuery);
+        deleteStmt.setString(1, newRecipe.getId());
+        deleteStmt.execute();
+
+        ArrayList<String> steps = newRecipe.getSteps();
+        for (int i = 0; i < steps.size(); i++) {
+            String insertQuery = "INSERT into recipes_steps (recipe_id, step_number, step_text) VALUES (?,?,?)";
+            PreparedStatement insertStmt = connection.prepareStatement(insertQuery);
+            insertStmt.setString(1, newRecipe.getId());
+            insertStmt.setInt(2, i);
+            insertStmt.setString(3, steps.get(i));
+            insertStmt.execute();
+        }
+    }
+
+    private void updateRecipeIngredientsTable(Recipe newRecipe) throws SQLException {
+        String deleteQuery = "DELETE from recipe_ingredients where recipe_id=?";
+        PreparedStatement deleteStmt = connection.prepareStatement(deleteQuery);
+        deleteStmt.setString(1, newRecipe.getId());
+        deleteStmt.execute();
+
+        ArrayList<CountableIngredient> countableIngredients = newRecipe.getCountableIngredients();
+        ArrayList<MeasurableIngredient> measurableIngredients = newRecipe.getMeasurableIngredients();
+        this.updateRecipeCountableIngredients(countableIngredients, newRecipe);
+        this.updateRecipeMeasurableIngredients(measurableIngredients, newRecipe);
+    }
+
+    private void updateRecipeCountableIngredients(
+            ArrayList<CountableIngredient> countableIngredients, Recipe newRecipe) throws SQLException {
+        for (CountableIngredient countableIngredient: countableIngredients) {
+            String insertQuery = "INSERT into recipe_ingredients" +
+                    "(recipe_id, ingredient_name, ingredient_count) VALUES (?,?,?)";
+            PreparedStatement insertStmt = connection.prepareStatement(insertQuery);
+            insertStmt.setString(1, newRecipe.getId());
+            insertStmt.setString(2, countableIngredient.getIngredientName());
+            insertStmt.setFloat(3, countableIngredient.getIngredientNumber());
+            insertStmt.execute();
+        }
+    }
+
+    private void updateRecipeMeasurableIngredients(
+            ArrayList<MeasurableIngredient> measurableIngredients, Recipe newRecipe) throws SQLException {
+        for (MeasurableIngredient measurableIngredient: measurableIngredients) {
+            String insertQuery = "INSERT into recipe_ingredients (recipe_id, ingredient_name," +
+                    "ingredient_amount, ingredient_measurement) VALUES (?,?,?,?)";
+            PreparedStatement insertStmt = connection.prepareStatement(insertQuery);
+            insertStmt.setString(1, newRecipe.getId());
+            insertStmt.setString(2, measurableIngredient.getIngredientName());
+            insertStmt.setFloat(3, measurableIngredient.getIngredientAmount());
+            insertStmt.setString(4, measurableIngredient.getIngredientMeasurementType());
+            insertStmt.execute();
+        }
+    }
+
+    private void deleteFromPostsTable(String postID) throws SQLException {
+        String deleteQuery = "DELETE from posts where post_id=?";
+        PreparedStatement deleteStmt = connection.prepareStatement(deleteQuery);
+        deleteStmt.setString(1, postID);
+        deleteStmt.execute();
+    }
+
+    private void deleteFromLikesTable(String postID) throws SQLException {
+        String deleteQuery = "DELETE from likes where post_id=?";
+        PreparedStatement deleteStmt = connection.prepareStatement(deleteQuery);
+        deleteStmt.setString(1, postID);
+        deleteStmt.execute();
+    }
+
+    private void deleteFromCommentsTable(String postID) throws SQLException {
+        String deleteQuery = "DELETE from comments where post_id=?";
+        PreparedStatement deleteStmt = connection.prepareStatement(deleteQuery);
+        deleteStmt.setString(1, postID);
+        deleteStmt.execute();
+    }
+
     public static void main(String[] arg) {
         // database demo
         DatabaseManager d = new MySQLController();
         Post[] posts = d.getAllPosts();
         for (Post post: posts) {
             System.out.println("post category is: " + post.getCategory());
+            System.out.println("post recipe title is: " + post.getRecipe().getTitle());
+            if (post.getRecipe().getSteps().size() > 0) {
+                System.out.println("first step of post recipe is: " + post.getRecipe().getSteps().get(0));
+            }
         }
 
         User[] users = d.getAllUsers();
         for (User user: users) {
             System.out.println("users username is: " + user.getUsername());
+        }
+        Post newPost = posts[0];
+        Recipe newRecipe = newPost.getRecipe();
+        newRecipe.setTitle("My new recipe title!" + LocalDateTime.now());
+        d.editPost(posts[0]);
+
+        posts = d.getAllPosts();
+        for (Post post: posts) {
+            System.out.println("post category is: " + post.getCategory());
+            System.out.println("post recipe title is: " + post.getRecipe().getTitle());
+            if (post.getRecipe().getSteps().size() > 0) {
+                System.out.println("first step of post recipe is: " + post.getRecipe().getSteps().get(0));
+            }
         }
     }
 }
