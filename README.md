@@ -29,17 +29,13 @@ You need to setup a MySQL Database to get Foodstagram running. To do so, follow 
 14. You should see a toolbar at the top of the window that has "Databases, SQL, Status, User accounts, Export, Import, Settings, etc.". Click on "Import".
 15. Click on "Choose File" and go to your Course Project directory (wherever your local copy of our app is), and select the file "setup.sql".
 16. Now that "setup.sql" is loaded in, click the "Go" button in the bottom right of the webpage.
-17. Navigate to "User Accounts" in the top bar.
-18. Click on "Add new account".
-19. In username put "admin" and in password put "1234". Retype the password. Next to "Global Privileges", click on the words "Check all".
-20. Scroll down and click "Go" to create your user.
-21. Open the course project in IntelliJ.
-22. In the top menu, go to File > Project Structure. In the window that opens, go to Modules > Course_project > main. Open the dependencies tab on the right.
-23. Once in the dependencies view, click the + button right above the word "export". Select the first option: "1 Jars and Directories", and select the mysql-connector.jar file in the "lib" folder of our course project.
-24. Click apply, and when the apply button greys out, click OK.
-25. In the top menu, go to View > Tool Windows > Database
-26. In the Database window click the '+' icon, then Data Source > MySQL. A "Data Source and Drivers" window should pop up.
-27. Set Port to 8889, User to "admin", and Password to "1234"
-28. Then at the end of the URL enter "/foodstagram"
-29. Press "Apply" and then "OK".
-30. Your MySQL server is now running and the Database should work. You can confirm this by running the main method in DatabaseManager.
+17. Open the course project in IntelliJ.
+18. In the top menu, go to File > Project Structure. In the window that opens, go to Modules > Course_project > main. Open the dependencies tab on the right.
+19. Once in the dependencies view, click the + button right above the word "export". Select the first option: "1 Jars and Directories", and select the mysql-connector.jar file in the "lib" folder of our course project.
+20. Click apply, and when the apply button greys out, click OK.
+21. In the top menu, go to View > Tool Windows > Database
+22. In the Database window click the '+' icon, then Data Source > MySQL. A "Data Source and Drivers" window should pop up.
+23. Set Port to 8889, User to "admin", and Password to "1234"
+24. Then at the end of the URL enter "/foodstagram"
+25. Press "Apply" and then "OK".
+22. Your MySQL server is now running and the Database should work. You can confirm this by running the main method in DatabaseManager.

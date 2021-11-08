@@ -11,10 +11,9 @@ import java.util.Arrays;
  */
 public class PostManager {
     private ArrayList<Post> posts;
-    private DatabaseManager databaseManager;
+    private DatabaseManager databaseManager = new DatabaseManager();
 
-    public PostManager(DatabaseManager dbManager) {
-        this.databaseManager = dbManager;
+    public PostManager(){
         Post[] allPosts = this.databaseManager.getAllPosts();
         this.posts = new ArrayList<>(Arrays.asList(allPosts));
     }
@@ -33,6 +32,16 @@ public class PostManager {
             }
         }
         return false;
+    }
+
+    public Ingredient createMeasurableIngredient(String name, float amount, String units){
+        MeasurableIngredient ing = new MeasurableIngredient(name, amount, units);
+        return ing;
+    }
+
+    public Ingredient createCountableIngredient(String name, int number){
+        CountableIngredient ing = new CountableIngredient(name, number);
+        return ing;
     }
 
     public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category)

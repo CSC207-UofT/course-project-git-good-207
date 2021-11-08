@@ -10,8 +10,8 @@ public class UserManager {
     private User[] allUsers;
 
     // Constructor
-    public UserManager(DatabaseManager dbManager) {
-        this.databaseManager = dbManager;
+    public UserManager() {
+        this.databaseManager = new DatabaseManager();
         this.allUsers = this.databaseManager.getAllUsers();
     }
 

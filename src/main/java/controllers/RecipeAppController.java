@@ -3,36 +3,33 @@ package controllers;
 import entities.*;
 import use_cases.LoginManager;
 import use_cases.PostManager;
-import use_cases.RecipeManager;
 import use_cases.UserManager;
 
 import java.io.IOException;
 
 public class RecipeAppController {
-    private final InOut inOut;
-    private final MySQLController mySQLController;
-    private final LoginController loginController;
-    private final FeedController feedController;
-    private final PostController postController;
-    private final UserProfileController userProfileController;
-    private final LoginManager loginManager;
-    private final String shellActionPrompt = """
-            Enter an action:
-            0 Browse your Feed
-            1 Browse a User Profile
-            2 Post a Recipe
-            3 Customize your User Profile
-            4 Logout
-            """;
+    private InOut inOut;
+    private LoginController loginController;
+    private FeedController feedController;
+    private PostController postController;
+    private UserProfileController userProfileController;
+    private LoginManager loginManager;
+    private PostManager postManager = new PostManager();
+    private String shellActionPrompt =
+            "Enter an action:\n" +
+            "0 Browse your Feed\n" +
+            "1 Browse a User Profile\n" +
+            "2 Post a Recipe\n" +
+            "3 Customize your User Profile\n" +
+            "4 Logout\n";
 
     public RecipeAppController(InOut inOut) {
         this.inOut = inOut;
-        this.mySQLController = new MySQLController();
-        this.loginManager = new LoginManager(this.mySQLController);
-        this.feedController = new FeedController(inOut, this.mySQLController, this.loginManager);
+        this.loginManager = new LoginManager(new UserManager());
+        this.feedController = new FeedController(inOut, loginManager);
         this.loginController = new LoginController(inOut, this.loginManager);
-        this.userProfileController = new UserProfileController(inOut, this.mySQLController, this.loginManager);
-        this.postController = new PostController(inOut, this.mySQLController, this.loginManager);
+        this.userProfileController = new UserProfileController(inOut, this.loginManager);
+        this.postController = new PostController(inOut, this.postManager, this.loginManager);
     }
 
     public void run() {
@@ -56,14 +53,20 @@ public class RecipeAppController {
     }
 
     private ShellAction getShellActionEnum(String action) {
-        return switch (action) {
-            case "0" -> ShellAction.BROWSEFEED;
-            case "1" -> ShellAction.BROWSEPROFILE;
-            case "2" -> ShellAction.POST;
-            case "3" -> ShellAction.CUSTOMIZEPROFILE;
-            case "4" -> ShellAction.LOGOUT;
-            default -> ShellAction.INVALIDACTION;
-        };
+        switch (action) {
+            case "0":
+                return ShellAction.BROWSEFEED;
+            case "1":
+                return ShellAction.BROWSEPROFILE;
+            case "2":
+                return ShellAction.POST;
+            case "3":
+                return ShellAction.CUSTOMIZEPROFILE;
+            case "4":
+                return ShellAction.LOGOUT;
+            default:
+                return ShellAction.INVALIDACTION;
+        }
     }
 
     private void runAction(ShellAction action) {
