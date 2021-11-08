@@ -221,11 +221,19 @@ public class MySQLController extends DatabaseManager {
     }
 
     private ArrayList<Ingredient> getIngredients(String recipeID) throws SQLException {
+        ResultSet recipeIngredientsResult = this.getRecipeIngredients(recipeID);
+        return this.assembleIngredientsList(recipeIngredientsResult);
+    }
+
+    private ResultSet getRecipeIngredients(String recipeID) throws SQLException {
         String query = "SELECT ingredient_name, ingredient_count, ingredient_amount, ingredient_measurement " +
                 "from recipe_ingredients where recipe_id=?";
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         preparedStmt.setString(1, recipeID);
-        ResultSet recipeIngredientsResult = preparedStmt.executeQuery();
+        return preparedStmt.executeQuery();
+    }
+
+    private ArrayList<Ingredient> assembleIngredientsList(ResultSet recipeIngredientsResult) throws SQLException {
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         while (recipeIngredientsResult.next()) {
             String name = recipeIngredientsResult.getString("ingredient_name");
