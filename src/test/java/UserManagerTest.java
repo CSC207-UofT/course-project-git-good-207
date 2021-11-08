@@ -12,10 +12,10 @@ public class UserManagerTest {
     private DatabaseManager databaseManager;
 
     @BeforeEach
-    void setupFeedTest() {
+    void setupFeedTest(DatabaseManager dbManager) {
         this.user = new User("eren_yeager", "#1titan_slayer");
-        this.userManager = new UserManager();
-        this.databaseManager = new DatabaseManager();
+        this.userManager = new UserManager(dbManager);
+        this.databaseManager = dbManager;
     }
 
     @Test

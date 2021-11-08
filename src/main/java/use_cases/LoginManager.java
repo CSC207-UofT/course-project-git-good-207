@@ -12,9 +12,9 @@ public class LoginManager {
     private DatabaseManager databaseManager;
 
 
-    public LoginManager(UserManager userManager) {
+    public LoginManager(DatabaseManager dbManager) {
         this.currUser = null;
-        this.databaseManager = new DatabaseManager();
+        this.databaseManager = dbManager;
     }
 
     /**
