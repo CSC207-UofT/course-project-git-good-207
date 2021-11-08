@@ -1,4 +1,8 @@
-package entities;
+package use_cases;
+
+import entities.Feed;
+import entities.Post;
+import use_cases.Filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,11 +24,16 @@ public class FilterByCuisine extends Filter {
         this.cuisineNumInput = cuisineNumInput;
     }
 
+    /**
+     * Get the list of Posts filtered by a cuisine type from the current User's Feed's Posts.
+     * @return an ArrayList of Posts filtered by a cuisine type from the current User's Feed's Posts.
+     */
     @Override
     ArrayList<Post> filterFeed() {
         ArrayList<Post> allPosts = this.currentUserFeed.getPosts();
         ArrayList<Post> cuisinePosts = new ArrayList<>();
         for (Post p : allPosts) {
+            // Get the posts with the cuisine types that are not Chinese, American, Japanese, Italian, French, Mexican
             if (this.cuisineNumInput == 6) {
                 if (!this.cuisineList.contains(p.getCategory().toLowerCase())) {
                     cuisinePosts.add(p);

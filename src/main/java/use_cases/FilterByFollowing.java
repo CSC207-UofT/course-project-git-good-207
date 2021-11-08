@@ -1,4 +1,9 @@
-package entities;
+package use_cases;
+
+import entities.Feed;
+import entities.Post;
+import entities.User;
+import use_cases.Filter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +20,10 @@ public class FilterByFollowing extends Filter {
         this.currentUser = currentUser;
     }
 
+    /**
+     * Get the list of Posts filtered by the current User's following list from the current User's Feed's Posts.
+     * @return an ArrayList of Posts filtered by the current User's following list from the current User's Feed's Posts.
+     */
     @Override
     ArrayList<Post> filterFeed() {
         ArrayList<String> usersFollowingInStrings = this.getUsersFollowingList();
@@ -29,6 +38,10 @@ public class FilterByFollowing extends Filter {
         return followingPosts;
     }
 
+    /**
+     * Get the list of IDs of Users that the current User follow.
+     * @return an ArrayList of IDs of Users that the current User follow.
+     */
     private ArrayList<String> getUsersFollowingList() {
         ArrayList<User> currentUsersFollowing = this.currentUser.getFollowing();
         ArrayList<String> usersFollowingInStrings = new ArrayList<>();

@@ -1,4 +1,7 @@
-package entities;
+package use_cases;
+
+import entities.Feed;
+import entities.Post;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +19,9 @@ public class Filter {
         this.currentUserFeed = currentUserFeed;
     }
 
+    /**
+     * Run the filter algorithm process.
+     */
     public Feed runFilter() {
         ArrayList<Post> tempDisplayedPosts = this.filterFeed();
         ArrayList<Post> maxDisplayedPosts = this.limitNumPosts(tempDisplayedPosts);
@@ -25,6 +31,10 @@ public class Filter {
         return this.currentUserFeed;
     }
 
+    /**
+     * Get the list of Posts filtered by default from the current User's Feed's Posts.
+     * @return an ArrayList of Posts filtered by default from the current User's Feed's Posts.
+     */
     ArrayList<Post> filterFeed() {
         // For now, the default filter will be to just pick random posts.
         ArrayList<Post> allPosts = this.currentUserFeed.getPosts();
@@ -32,7 +42,12 @@ public class Filter {
         return allPosts;
     }
 
-    private ArrayList<Post> sortByPostedTime(ArrayList<Post> tempDisplayedPosts) {
+    /**
+     * Sort the list of filtered Posts from the most recent to the least.
+     * @param maxDisplayedPosts An ArrayList of ten Posts maximum.
+     * @return an ArrayList of Posts sorted from the most recent to the least.
+     */
+    private ArrayList<Post> sortByPostedTime(ArrayList<Post> maxDisplayedPosts) {
         // Sort from most recent to oldest
         Comparator<Post> byPostedTime = (p1, p2) -> {
             if (p1.getCreatedTime().isBefore(p2.getCreatedTime())) {
@@ -43,10 +58,15 @@ public class Filter {
                 return -1;
             }
         };
-        tempDisplayedPosts.sort(byPostedTime);
-        return tempDisplayedPosts;
+        maxDisplayedPosts.sort(byPostedTime);
+        return maxDisplayedPosts;
     }
 
+    /**
+     * Get the list of ten Posts maximum.
+     * @param tempDisplayedPosts An ArrayList of Posts.
+     * @return an ArrayList of ten Posts maximum.
+     */
     private ArrayList<Post> limitNumPosts(ArrayList<Post> tempDisplayedPosts) {
         ArrayList<Post> maxDisplayedPosts = new ArrayList<>();
         if (!this.checkNumPosts(tempDisplayedPosts)) {
@@ -58,6 +78,11 @@ public class Filter {
         return tempDisplayedPosts;
     }
 
+    /**
+     * Check if the number of Posts in the parameter list has less than or equal to ten.
+     * @param tempDisplayedPosts An ArrayList of Posts.
+     * @return a boolean whether tempDisplayedPosts has less than or equal to ten posts.
+     */
     private boolean checkNumPosts(ArrayList<Post> tempDisplayedPosts) {
         return tempDisplayedPosts.size() <= 10;
     }
