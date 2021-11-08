@@ -35,9 +35,9 @@ public class PostManager {
         return false;
     }
 
-    public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category)
+    public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category, String id)
     {
-        Post p = new Post(owner.getId(), postedTime, recipe, category);
+        Post p = new Post(owner.getId(), postedTime, recipe, category, id);
         this.addPostToList(p);
     }
     public boolean commentPost(Post post, Comment comment){

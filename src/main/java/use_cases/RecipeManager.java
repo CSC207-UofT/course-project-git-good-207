@@ -17,8 +17,8 @@ public class RecipeManager {
         return new CountableIngredient(name, number);
     }
 
-    public Recipe createRecipe(String title, ArrayList<Ingredient> ingredients, ArrayList<String> steps) {
-        return new Recipe(title, ingredients, steps);
+    public Recipe createRecipe(String title, ArrayList<Ingredient> ingredients, ArrayList<String> steps, String id) {
+        return new Recipe(title, ingredients, steps, id);
     }
 
     public void deleteStep(Recipe recipe) {

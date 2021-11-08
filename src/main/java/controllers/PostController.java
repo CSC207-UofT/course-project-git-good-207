@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
+
 import use_cases.RecipeManager;
 
 public class PostController {
@@ -40,9 +42,9 @@ public class PostController {
                 String recipeTitle = this.inOut.getInput("Enter title of recipe");
                 String recipeSteps = this.inOut.getInput(promptRecipeSteps);
 
-                Recipe recipe = recipeManager.createRecipe(recipeTitle, allIngredients, getRecipeStepsList(recipeSteps));
+                Recipe recipe = recipeManager.createRecipe(recipeTitle, allIngredients, getRecipeStepsList(recipeSteps), UUID.randomUUID().toString());
                 String category = this.inOut.getInput("What is the recipe category?");
-                postManager.createPost(currUser, timeNow, recipe, category);
+                postManager.createPost(currUser, timeNow, recipe, category, UUID.randomUUID().toString());
 
             } catch (IOException e) {
                 inOut.setOutput("There was an error: " + e);
