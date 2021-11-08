@@ -6,29 +6,32 @@ import java.util.ArrayList;
 import entities.InOut;
 import entities.ShellAction;
 import entities.User;
-import entities.Post;
 import use_cases.DatabaseManager;
 import use_cases.LoginManager;
-import use_cases.PostManager;
 import use_cases.UserManager;
 
 public class UserProfileController {
     private InOut inOut;
-    private String customizeProfileScreen = "Select which option you'd like to customize:" +
-            "\n0 Username \n1 Password \n2 Bio \n3 Posts \n4 Following list";
-    private String otherUserScreen = "Select which action you'd like to take:" +
-            "\n0 Follow user \n1 Browse user's posts";
+    private String customizeProfileScreen = "Select which option you'd like to customize:\n" +
+            "0 Username\n" +
+            "1 Password\n" +
+            "2 Bio\n" +
+            "3 Posts\n" +
+            "4 Following list\n";
+    private String otherUserScreen = "Select which action you'd like to take:\n" +
+            "0 Follow user\n" +
+            "1 Browse user's posts\n";
     private String userToBrowsePrompt = "Enter the username of the person you'd like to view: ";
     private LoginManager loginManager;
     private UserManager userManager;
     private DatabaseManager databaseManager;
 
     // Constructor
-    public UserProfileController(InOut inOut, LoginManager loginManager) {
+    public UserProfileController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
         this.inOut = inOut;
         this.loginManager = loginManager;
-        this.databaseManager = new DatabaseManager();
-        this.userManager = new UserManager();
+        this.databaseManager = dbManager;
+        this.userManager = new UserManager(dbManager);
     }
 
 
@@ -36,7 +39,9 @@ public class UserProfileController {
         if (action == ShellAction.BROWSEPROFILE) {
             this.runBrowseProfile();
 
-        } else if (action == ShellAction.CUSTOMIZEPROFILE) {
+        }
+
+        else if (action == ShellAction.CUSTOMIZEPROFILE) {
             this.runCustomizeProfile();
         }
     }
@@ -58,21 +63,23 @@ public class UserProfileController {
         // run findUser to get the user that owns the username from the database
         try {
             // display all the usernames in the database
-            this.runDisplayAllUsers();
+            // runDisplayAllUsers()
             String userToBrowse = this.inOut.getInput("Enter the username of the person you'd like to view: ");
-            if (this.userManager.checkUserToBrowse(userToBrowse) &&
-                    !(userToBrowse.equals(this.loginManager.getCurrUser().getUsername()))) {
+            if (this.userManager.checkUserToBrowse(userToBrowse) ||
+                    userToBrowse.equals(this.loginManager.getCurrUser().getUsername())) {
                 User targetUser = this.userManager.findUser(userToBrowse);
                 this.inOut.setOutput(this.userManager.runBrowseOtherProfile(targetUser));
-                // Give the choice of following user or looking into user's post
+                // Give the choice of look following user or looking into user's post
                 int choice = Integer.parseInt(this.inOut.getInput(this.otherUserScreen));
                 if (choice == 0) {
                     this.runFollowUser(this.loginManager.getCurrUser(), targetUser);
-                } else if (choice == 1) {
-                    this.runDisplayUserPosts(targetUser);
-
                 }
-            } else {
+                else if (choice == 1) {
+                    // TODO: Implement with a function from PostPresenter
+                    // show user's posts w/ PostPresenter
+                }
+            }
+            else {
                 this.inOut.setOutput("Error! Either user is not in the database or user is yourself! " +
                         "Returning to main page");
             }
@@ -85,27 +92,41 @@ public class UserProfileController {
      * runCustomizeProfile, Displays current user's profile and asks
      */
     public void runCustomizeProfile() {
+//        this.inOut.setOutput(this.userManager.getUserInformation(this.loginManager.getCurrUser()));
         this.inOut.setOutput(this.getCustomizeProfileScreen());
         try {
             int choice = Integer.parseInt(this.inOut.getInput("Select an option: "));
             if (choice == 0) {
-                this.runCustomizeUsername();
-            } else if (choice == 1) {
-                this.runCustomizePassword();
-            } else if (choice == 2) {
-                this.runCustomizeBio();
-            } else if (choice == 3) {
+                String newUsername = this.inOut.getInput("Enter what you'd like your new username to be: ");
+                runChangeUsernameDisplay(this.loginManager.getCurrUser(), newUsername);
+            }
+            else if (choice == 1) {
+                String newPassword = this.inOut.getInput("Enter what you'd like your new password to be: ");
+                runChangePasswordDisplay(this.loginManager.getCurrUser(), newPassword);
+
+            }
+            else if (choice == 2) {
+                String newBio = this.inOut.getInput("Enter what you'd like your new bio to be: ");
+                runChangeBioDisplay(this.loginManager.getCurrUser(), newBio);
+            }
+            else if (choice == 3) {
                 // TODO: Implement this with a function from PostPresenter to show currentUser's posts
-                this.runDisplayUserPosts(this.loginManager.getCurrUser());
-            } else if (choice == 4) {
+            }
+            else if (choice == 4) {
                 // Show following list
+//                this.inOut.setOutput(this.displayFollowingList(this.loginManager.getCurrUser()));
                 this.inOut.setOutput(this.userManager.getFollowingListString(this.loginManager.getCurrUser()));
                 String action = this.inOut.getInput("Would you like to unfollow one of these users? (y/n): ");
-                if (action.toLowerCase().equals("y")) {
-                    this.runUnfollowUser();
+                if (action.equalsIgnoreCase("y")) {
+                    String userToUnfollow =
+                            this.inOut.getInput("Enter the username of the person you'd like to unfollow: ");
+                    if (this.userManager.checkUserToBrowse(userToUnfollow)) {
+                        this.runUnfollowUser(loginManager.getCurrUser(), userManager.findUser(userToUnfollow));
+                    }
+                    else { this.inOut.setOutput("User not in database! Returning to main page"); }
                 }
             }
-        } catch (IOException e) {
+        } catch(IOException e) {
             inOut.setOutput("There was an error: " + e);
         }
     }
@@ -118,7 +139,8 @@ public class UserProfileController {
             this.userManager.changeUsername(user, newUsername);
             this.inOut.setOutput("Successfully changed username to: " + newUsername + "\n");
             this.inOut.setOutput("Returning to main page.");
-        } else {
+        }
+        else {
             this.inOut.setOutput("Username entered is the same as the old one. Returning to main page.");
         }
     }
@@ -131,7 +153,8 @@ public class UserProfileController {
             this.userManager.changePassword(user, newPassword);
             this.inOut.setOutput("Successfully changed password to: " + newPassword + "\n");
             this.inOut.setOutput("Returning to main page.");
-        } else {
+        }
+        else {
             this.inOut.setOutput("Password entered is the same as the old one. Returning to main page");
         }
     }
@@ -145,7 +168,8 @@ public class UserProfileController {
             this.databaseManager.updateUser(user);
             this.inOut.setOutput("Successfully changed bio to: " + newBio + "\n");
             this.inOut.setOutput("Returning to main page.");
-        } else {
+        }
+        else {
             this.inOut.setOutput("Bio given is the same as the old one. Returning to main page");
         }
     }
@@ -158,7 +182,8 @@ public class UserProfileController {
         if (this.userManager.followUser(user, targetUser)) {
             this.userManager.followUser(user, targetUser);
             this.inOut.setOutput("Successfully followed the target user!");
-        } else {
+        }
+        else {
             this.inOut.setOutput("Target user already followed!");
         }
     }
@@ -166,91 +191,26 @@ public class UserProfileController {
     /**
      * Return false if target_user is not followed by user, return true otherwise and unfollow target_user
      */
-    private void runUnfollowUser() {
-        try {
-            String usernameToUnfollow =
-                    this.inOut.getInput("Enter the username of the person you'd like to unfollow: ");
-            User userToUnfollow = this.userManager.findUser(usernameToUnfollow);
-            if (this.userManager.unfollowUser(this.loginManager.getCurrUser(), userToUnfollow)) {
-                this.inOut.setOutput("Successfully unfollowed the target user!");
-            } else {
-                this.inOut.setOutput("User is not followed to begin with!");
-            }
-        } catch (IOException e) {
-            inOut.setOutput("There was an error: " + e);
+    private void runUnfollowUser(User user, User targetUser) {
+        if (this.userManager.unfollowUser(user, targetUser)) {
+            this.inOut.setOutput("Successfully unfollowed the target user!");
+        }
+        else {
+            this.inOut.setOutput("User is not followed to begin with!");
         }
     }
 
     /**
-     * return user's following list
+     * Display user's following list
      */
     private String displayFollowingList(User user) {
         ArrayList<String> followingListUsernames = this.userManager.getFollowingListUsernames(user);
         String followingList = "";
-        for (String username : followingListUsernames) {
-            followingList.concat(username + ", ");
+        for (String username: followingListUsernames) {
+            followingList = followingList.concat(username + ", ");
         }
         return followingList;
     }
 
-    /**
-     * Display all currently registered usernames
-     */
-    private void runDisplayAllUsers() {
-        User[] users = this.databaseManager.getAllUsers();
-        String allUsernames = "";
-        for (User user : users) {
-            allUsernames += " " + this.userManager.getUsername(user) + ", ";
-        }
-        this.inOut.setOutput("Currently registered users:" + allUsernames.substring(0, allUsernames.length() - 2));
-    }
-
-    /**
-     * Display user's posts
-     */
-    private void runDisplayUserPosts(User user) {
-        PostManager postManager = new PostManager();
-        PostController postController = new PostController(this.inOut, postManager, this.loginManager);
-        for(Post post: this.userManager.getUserPosts(user)) {
-            // TODO: UPDATE SO THAT POST ID IS THE PARAM FOR DISPLAYPOST
-            // postController.displayPost(post);
-        }
-    }
-
-    /**
-     * Customize a logged-in user's username
-     */
-    private void runCustomizeUsername() {
-        try {
-            String newUsername = this.inOut.getInput("Enter what you'd like your new username to be: ");
-            runChangeUsernameDisplay(this.loginManager.getCurrUser(), newUsername);
-        } catch (IOException e) {
-            inOut.setOutput("There was an error: " + e);
-        }
-    }
-
-    /**
-     * Customize a logged-in user's password
-     */
-    private void runCustomizePassword() {
-        try {
-            String newPassword = this.inOut.getInput("Enter what you'd like your new password to be: ");
-            runChangePasswordDisplay(this.loginManager.getCurrUser(), newPassword);
-        } catch (IOException e) {
-            inOut.setOutput("There was an error: " + e);
-        }
-    }
-
-    /**
-     * Customize a logged-in user's bio
-     */
-    private void runCustomizeBio() {
-        try {
-            String newBio = this.inOut.getInput("Enter what you'd like your new bio to be: ");
-            runChangeBioDisplay(this.loginManager.getCurrUser(), newBio);
-        } catch (IOException e) {
-            inOut.setOutput("There was an error: " + e);
-        }
-    }
 
 }
