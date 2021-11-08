@@ -18,51 +18,10 @@ public class FeedManagerTest {
     private static User friend2;
 
     @BeforeAll
-    static void setupUserFollowing() {
-        currentUser = new User("justin", "1234");
-        friend1 = new User("glen", "1111");
-        friend2 = new User("eric", "2222");
-        currentUser.addFollowing(friend1);
-        currentUser.addFollowing(friend2);
-    }
-
-    @BeforeAll
     static void setupFeedManager() {
-        Post friend1Post1 = new Post(friend1.getId(), LocalDateTime.now(), new Recipe("Szechuan Chicken",
-                new ArrayList<>(), new ArrayList<>()), "Chinese");
-        Post friend1Post2 = new Post(friend1.getId(), LocalDateTime.now(), new Recipe("Beef Burger",
-                new ArrayList<>(), new ArrayList<>()), "American");
-        Post friend2Post1 = new Post(friend2.getId(), LocalDateTime.now(), new Recipe("Tonkotsu Ramen",
-                new ArrayList<>(), new ArrayList<>()), "Japanese");
-        Post friend2Post2 = new Post(friend2.getId(), LocalDateTime.now(), new Recipe("Pepperoni Pizza",
-                new ArrayList<>(), new ArrayList<>()), "Italian");
-        Post randomPost1 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
-                new Recipe("Stir Fry Beef", new ArrayList<>(), new ArrayList<>()), "Chinese");
-        Post randomPost2 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
-                new Recipe("Chicken Burger", new ArrayList<>(), new ArrayList<>()), "American");
-        Post randomPost3 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
-                new Recipe("Butter Chicken", new ArrayList<>(), new ArrayList<>()), "Indian");
-        Post randomPost4 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
-                new Recipe("Mapo Tofu", new ArrayList<>(), new ArrayList<>()), "Chinese");
-        Post randomPost5 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
-                new Recipe("Chicken Lasagna", new ArrayList<>(), new ArrayList<>()), "Italian");
-        Post randomPost6 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
-                new Recipe("Beef Bourguignon", new ArrayList<>(), new ArrayList<>()), "French");
-        Post randomPost7 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
-                new Recipe("Beef Taco", new ArrayList<>(), new ArrayList<>()), "Mexican");
-        randomPost3.addLike(currentUser);
-        randomPost3.addLike(friend1);
-        randomPost3.addLike(friend2);
-        randomPost6.addLike(currentUser);
-        randomPost6.addLike(friend2);
-
-        ArrayList<Post> allPosts = new ArrayList<>(Arrays.asList(friend1Post1, friend1Post2,
-                friend2Post1, friend2Post2, randomPost1, randomPost2, randomPost3, randomPost4,
-                randomPost5, randomPost6, randomPost7));
-
-        Feed currentUsersFeed = new Feed(allPosts);
-
-        feedManager = new FeedManager(currentUser, currentUsersFeed);
+        setupUserFollowing();
+        Feed feed = setupFeed();
+        feedManager = new FeedManager(currentUser, feed);
     }
 
     @Test
@@ -114,6 +73,50 @@ public class FeedManagerTest {
                 "Tonkotsu Ramen", "Pepperoni Pizza"));
 
         assert expected.containsAll(actual);
+    }
+
+    private static void setupUserFollowing() {
+        currentUser = new User("justin", "1234");
+        friend1 = new User("glen", "1111");
+        friend2 = new User("eric", "2222");
+        currentUser.addFollowing(friend1);
+        currentUser.addFollowing(friend2);
+    }
+
+    private static Feed setupFeed() {
+        Post friend1Post1 = new Post(friend1.getId(), LocalDateTime.now(), new Recipe("Szechuan Chicken",
+                new ArrayList<>(), new ArrayList<>(), "r1"), "Chinese", "f1p1");
+        Post friend1Post2 = new Post(friend1.getId(), LocalDateTime.now(), new Recipe("Beef Burger",
+                new ArrayList<>(), new ArrayList<>(), "r2"), "American", "f1p2");
+        Post friend2Post1 = new Post(friend2.getId(), LocalDateTime.now(), new Recipe("Tonkotsu Ramen",
+                new ArrayList<>(), new ArrayList<>(), "r3"), "Japanese", "f2p1");
+        Post friend2Post2 = new Post(friend2.getId(), LocalDateTime.now(), new Recipe("Pepperoni Pizza",
+                new ArrayList<>(), new ArrayList<>(), "r4"), "Italian", "f2p2");
+        Post randomPost1 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
+                new Recipe("Stir Fry Beef", new ArrayList<>(), new ArrayList<>(), "r5"), "Chinese", "rp1");
+        Post randomPost2 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
+                new Recipe("Chicken Burger", new ArrayList<>(), new ArrayList<>(), "r6"), "American", "rp2");
+        Post randomPost3 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
+                new Recipe("Butter Chicken", new ArrayList<>(), new ArrayList<>(), "r7"), "Indian", "rp3");
+        Post randomPost4 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
+                new Recipe("Mapo Tofu", new ArrayList<>(), new ArrayList<>(), "r8"), "Chinese", "rp4");
+        Post randomPost5 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
+                new Recipe("Chicken Lasagna", new ArrayList<>(), new ArrayList<>(), "r9"), "Italian", "rp5");
+        Post randomPost6 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
+                new Recipe("Beef Bourguignon", new ArrayList<>(), new ArrayList<>(), "r10"), "French", "rp6");
+        Post randomPost7 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
+                new Recipe("Beef Taco", new ArrayList<>(), new ArrayList<>(), "r11"), "Mexican", "rp7");
+        randomPost3.addLike(currentUser);
+        randomPost3.addLike(friend1);
+        randomPost3.addLike(friend2);
+        randomPost6.addLike(currentUser);
+        randomPost6.addLike(friend2);
+
+        ArrayList<Post> allPosts = new ArrayList<>(Arrays.asList(friend1Post1, friend1Post2,
+                friend2Post1, friend2Post2, randomPost1, randomPost2, randomPost3, randomPost4,
+                randomPost5, randomPost6, randomPost7));
+
+        return new Feed(allPosts);
     }
 }
 //    @Test

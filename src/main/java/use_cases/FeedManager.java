@@ -19,6 +19,11 @@ public class FeedManager {
         this.currentUsersFeed = currentUsersFeed;
     }
 
+    /**
+     * Apply the chosen filter on the current user's Feed.
+     * @param filterNumInput an ArrayList of ints representing the choice of filter and the type of
+     *                       cuisine (if filtering by cuisine).
+     */
     public void setFeedFilter(ArrayList<Integer> filterNumInput) {
         Filter filterObject;
         if (filterNumInput.get(0) == 0) {
@@ -35,12 +40,24 @@ public class FeedManager {
         this.setCurrentUsersFeed(filteredFeed);
     }
 
+    /**
+     * Get the current User.
+     * @return the current User.
+     */
     public User getCurrentUser() { return currentUser; }
 
+    /**
+     * Get the current User's Feed.
+     * @return the current User's Feed.
+     */
     public Feed getCurrentUsersFeed() {
         return currentUsersFeed;
     }
 
+    /**
+     * Set the current User's Feed with a new Feed.
+     * @param newFeed The new Feed to assign to the current User's Feed.
+     */
     public void setCurrentUsersFeed(Feed newFeed) {
         this.currentUsersFeed = newFeed;
     }
