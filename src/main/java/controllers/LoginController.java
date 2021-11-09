@@ -142,7 +142,7 @@ public class LoginController {
      */
     private void runLogout() {
         this.loginManager.logout();
-        System.out.println("Logged out of the Recipe App.");
+        inOut.setOutput("Logged out of the Recipe App.");
     }
 
 }
