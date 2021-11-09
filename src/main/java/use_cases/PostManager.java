@@ -2,6 +2,7 @@ package use_cases;
 
 import entities.*;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,8 +13,10 @@ import java.util.Arrays;
 public class PostManager {
     private final ArrayList<Post> posts;
     private DatabaseManager databaseManager;
+    private UserManager userManager;
     public PostManager(DatabaseManager databaseManager){
         this.databaseManager = databaseManager;
+        this.userManager = new UserManager(databaseManager);
         Post[] allPosts = this.databaseManager.getAllPosts();
         this.posts = new ArrayList<>(Arrays.asList(allPosts));
     }
@@ -127,13 +130,19 @@ public class PostManager {
     }
 
     /**
-     * Given a post id it returns a list with the comments
+     * Return array of comments with usernames before each comment
      * of that post
      * @param postId id of the post
-     * @return a list of the comments associated to the post
+     * @return an array of the comments associated to the post
      */
-    public ArrayList<Comment> getPostComments(String postId){
-        return this.getSpecificPost(postId).getComments();
+    public String[] getPostComments(String postId){
+
+        ArrayList<Comment> commentObjects = this.getSpecificPost(postId).getComments();
+        String[] comments = new String[commentObjects.size()];
+        for (int i = 0; i < commentObjects.size(); i++) {
+            comments[i] = userManager.getUsernameById(commentObjects.get(i).getAuthorId()) + ": " + commentObjects.get(i).getCommentText();
+        }
+        return comments;
     }
 
     /**

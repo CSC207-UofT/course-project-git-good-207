@@ -145,6 +145,9 @@ public class PostController {
         Recipe postRecipe = postManager.getPostRecipe(id);
         String recipeTitle = recipeManager.getRecipeTitle(postRecipe);
         String[] recipeIngredients = recipeManager.getAllIngredients(postRecipe);
+        ArrayList<String> recipeSteps = recipeManager.getRecipeSteps(postRecipe);
+        String category = postManager.getPostCategory(id);
+        ArrayList<String> comments =
 
     }
 }
