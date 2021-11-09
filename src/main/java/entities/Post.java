@@ -3,14 +3,13 @@ package entities;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * A Post that Users make on Foodstagram.
  */
 public class Post extends PostableItem {
-    private ArrayList<User> likedUsers;
-    private ArrayList<Comment> comments;
+    private final ArrayList<User> likedUsers;
+    private final ArrayList<Comment> comments;
     private Recipe recipe;
     private final String category;
 

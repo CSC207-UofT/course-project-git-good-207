@@ -5,6 +5,7 @@ import entities.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 /*
     add a new post, comment/like a Post
@@ -57,9 +58,9 @@ public class PostManager {
      * @param recipe a recipe object containing the info of the recipe
      * @param category which category it belongs
      */
-    public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category)
+    public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category, String id)
     {
-        Post p = new Post(owner.getId(), postedTime, recipe, category);
+        Post p = new Post(owner.getId(), postedTime, recipe, category, id);
         this.createPost(p);
 
     }

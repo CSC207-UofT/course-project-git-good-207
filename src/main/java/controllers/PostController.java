@@ -35,8 +35,8 @@ public class PostController {
                     promptRecipeSteps = createPostHelper()[0];
 
             try {
-                String inputMeasurable = this.inOut.getInput(promptMeasurable);
-                String inputCountable = this.inOut.getInput(promptCountable);
+                String inputMeasurable = getMeasurableIngredients(promptMeasurable);
+                String inputCountable = getCountableIngredients(promptCountable);
                 ArrayList<Ingredient> allIngredients = createCountableIngredient(inputCountable, createMeasurableIngredient(inputMeasurable));
 
                 String recipeTitle = this.inOut.getInput("Enter title of recipe");
@@ -51,6 +51,35 @@ public class PostController {
             }
 
         }
+    }
+
+    private String getCountableIngredients(String promptCountable) throws IOException {
+        String countableInput = this.inOut.getInput(promptCountable);
+        String[] splitIngredients = countableInput.split(",");
+        String errorMessage = "That was an invalid input. Please enter countable ingredients again in correct format.";
+        for (String ingredient: splitIngredients) {
+            if (ingredient.split(" ").length == 1) {
+                inOut.setOutput(errorMessage);
+                getCountableIngredients(promptCountable);
+            } else if (!Character.isDigit(ingredient.charAt(0))) {
+                inOut.setOutput("Invalid input. Did not specify numerical amount of one of the ingredients. Please enter countable ingredients again in correct format.");
+                getCountableIngredients(promptCountable);
+            }
+        }
+        return countableInput;
+    }
+
+    private String getMeasurableIngredients(String promptMeasurable) throws IOException {
+        String measurableInput = this.inOut.getInput(promptMeasurable);
+        String[] splitIngredients = measurableInput.split(",");
+        String errorMessage = "That was an invalid input. Please enter measurable ingredients again in correct format.";
+        for (String ingredient: splitIngredients) {
+            if (ingredient.split(" ").length != 3) {
+                inOut.setOutput(errorMessage);
+                getMeasurableIngredients(promptMeasurable);
+            }
+        }
+        return measurableInput;
     }
 
     private String[] createPostHelper() {
