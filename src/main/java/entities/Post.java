@@ -13,16 +13,13 @@ public class Post extends PostableItem {
     private ArrayList<Comment> comments;
     private Recipe recipe;
     private final String category;
-    private final String id;
 
-    public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category) {
-        super(authorId, postedTime);
+    public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category, String id) {
+        super(authorId, postedTime, id);
         this.likedUsers = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.recipe = recipe;
         this.category = category;
-        // assigns a random new value each time
-        this.id = UUID.randomUUID().toString();
     }
 
     @Override
