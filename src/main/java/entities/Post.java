@@ -21,6 +21,7 @@ public class Post extends PostableItem {
         this.comments = new ArrayList<>();
         this.recipe = recipe;
         this.category = category;
+        // assigns a random new value each time
         this.id = UUID.randomUUID().toString();
     }
 
