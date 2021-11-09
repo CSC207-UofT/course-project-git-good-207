@@ -329,8 +329,11 @@ public class MySQLController extends DatabaseManager {
                 preparedStmt.setString (2, ingredient.getIngredientName());
                 if (ingredient instanceof CountableIngredient) {
                     preparedStmt.setFloat(3, ((CountableIngredient) ingredient).getIngredientNumber());
+                    preparedStmt.setNull(4, Types.FLOAT);
+                    preparedStmt.setNull(5, Types.VARCHAR);
                 }
                 if (ingredient instanceof MeasurableIngredient) {
+                    preparedStmt.setNull(3, Types.FLOAT);
                     preparedStmt.setFloat(4, ((MeasurableIngredient) ingredient).getIngredientAmount());
                     preparedStmt.setString(5, (
                             (MeasurableIngredient) ingredient).getIngredientMeasurementType());

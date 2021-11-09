@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 
 public class Comment extends PostableItem {
-    private String commentText;
+    private final String commentText;
 
     /**
      * Construct a Comment with text, the user that commented, and
