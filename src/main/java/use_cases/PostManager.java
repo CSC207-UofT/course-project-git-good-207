@@ -10,7 +10,7 @@ import java.util.Arrays;
     add a new post, comment/like a Post
  */
 public class PostManager {
-    private ArrayList<Post> posts;
+    private final ArrayList<Post> posts;
     private DatabaseManager databaseManager;
     public PostManager(DatabaseManager databaseManager){
         this.databaseManager = databaseManager;
@@ -57,9 +57,9 @@ public class PostManager {
      * @param recipe a recipe object containing the info of the recipe
      * @param category which category it belongs
      */
-    public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category)
+    public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category, String id)
     {
-        Post p = new Post(owner.getId(), postedTime, recipe, category);
+        Post p = new Post(owner.getId(), postedTime, recipe, category, id);
         this.createPost(p);
 
     }
