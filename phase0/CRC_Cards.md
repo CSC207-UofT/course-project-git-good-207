@@ -94,7 +94,27 @@ Collaborators: Post, FeedManager, PostPresenter
 Class Name: DatabaseManager  
 Parent Class: N/A  
 Responsibilities: connects to the database at the start of execution, fetches info about users and posts after log out saves the changes made by the user to the database, takes in an interface Payload which can be injected from the SQLiteDatabaseController (dependency inversion)  
-Collaborators: LoginManager, UserManager, FeedManager  
+Collaborators: LoginManager, UserManager, FeedManager
+
+Class Name: Filter  
+Parent Class: N/A  
+Responsibilities: Implements default filtering algorithm, limits the number of displayed posts in a feed, sorts displayed posts in feed from most recent  
+Collaborators: FeedManager, FilterByCuisine, FilterByFollowing, FilterByLikes
+
+Class Name: FilterByCuisine  
+Parent Class: Filter  
+Responsibilities: Implements a filtering algorithm that categorizes posts in a feed by cuisine type  
+Collaborators: FeedManager, Filter
+
+Class Name: FilterByFollowing  
+Parent Class: Filter  
+Responsibilities: Implements a filtering algorithm that categorizes posts by the current user's following list  
+Collaborators: FeedManager, Filter
+
+Class Name: FilterByLikes  
+Parent Class: Filter  
+Responsibilities: Implements a filtering algorithm that categorizes posts by number of likes  
+Collaborators: FeedManager, Filter
 
 ## Controllers
 Class Name: LoginController  

@@ -2,6 +2,7 @@ package entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -67,5 +68,15 @@ public class Post extends PostableItem {
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
+
+    /*Comparator for sorting the list by the number of likes of a post*/
+    public static Comparator<Post> PostLikesComparator = (p1, p2) -> {
+        int p1Likes = p1.getNumLikes();
+        int p2Likes = p2.getNumLikes();
+
+        //descending order
+        return p2Likes - p1Likes;
+
+    };
 }
   
