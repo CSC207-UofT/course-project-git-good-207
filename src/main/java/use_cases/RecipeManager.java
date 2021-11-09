@@ -13,7 +13,7 @@ public class RecipeManager {
         return new MeasurableIngredient(name, amount, units);
     }
 
-    public Ingredient createCountableIngredient(String name, int number){
+    public Ingredient createCountableIngredient(String name, Float number){
         return new CountableIngredient(name, number);
     }
 

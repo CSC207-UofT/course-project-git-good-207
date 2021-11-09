@@ -1,7 +1,7 @@
 package entities;
 
 public class CountableIngredient extends Ingredient {
-    private int ingredientNumber;
+    private float ingredientNumber;
 
     /**
      * Construct a MeasurableIngredient with its name, its amount,
@@ -10,7 +10,7 @@ public class CountableIngredient extends Ingredient {
      * @param name The name of the ingredient needed
      * @param number The number of the ingredient needed
      */
-    public CountableIngredient(String name, int number) {
+    public CountableIngredient(String name, float number) {
         super(name);
         this.ingredientNumber = number;
     }
@@ -19,7 +19,7 @@ public class CountableIngredient extends Ingredient {
      *
      * @return Return the CountableIngredient's number needed
      */
-    public int getIngredientNumber(){
+    public float getIngredientNumber(){
         return this.ingredientNumber;
     }
 }
