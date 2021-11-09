@@ -2,25 +2,19 @@ package controllers;
 
 import entities.InOut;
 import entities.ShellAction;
-import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 
 import java.io.IOException;
 
 public class LoginController {
 
-    private LoginManager loginManager;
-    private String loginMessage = "Please enter your login info.";
-    private String signUpMessage = "Please signup below:";
-    private String welcomeMessage = "Welcome to the Recipe App!";
-    private String welcomeActionPrompt = "Please select an action:\n" +
-            "0 Sign up\n" +
-            "1 Login\n";
-    private InOut inOut;
+    private final LoginManager loginManager;
+    private final InOut inOut;
 
     /**
      * Create a LoginController with the given InOut and LoginManager
-     * @param inOut the InOut interface for managing input/output
+     *
+     * @param inOut        the InOut interface for managing input/output
      * @param loginManager the LoginManager
      */
     public LoginController(InOut inOut, LoginManager loginManager) {
@@ -30,6 +24,7 @@ public class LoginController {
 
     /**
      * Run the appropriate ShellAction
+     *
      * @param action ShellAction corresponding to the action that needs to be run
      */
     public void run(ShellAction action) {
@@ -42,10 +37,16 @@ public class LoginController {
      * Run the welcome page logic.
      */
     public void runWelcomePage() {
+        String welcomeActionPrompt = "Please select an action:\n" +
+                "0 Sign up\n" +
+                "1 Login\n";
 
-        this.inOut.setOutput(this.getWelcomeMessage());
+        String welcomeMessage = "Welcome to the Recipe App!";
+
+        this.inOut.setOutput(welcomeMessage);
 
         try {
+
             String welcomeAction = inOut.getInput(welcomeActionPrompt);
             boolean isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
 
@@ -60,10 +61,12 @@ public class LoginController {
 
     /**
      * Run the login page logic
+     *
      * @return boolean true if the login is successful, false otherwise
      */
     private boolean runLoginPage() {
-        this.inOut.setOutput(this.loginMessage);
+        String loginMessage = "Please enter your login info.";
+        this.inOut.setOutput(loginMessage);
         try {
             //get username and password input
             String username = this.inOut.getInput("Enter username: ");
@@ -90,8 +93,9 @@ public class LoginController {
      * @return boolean true if user successfully signed up, false otherwise.
      */
     private boolean runSignUpPage() {
+        String signUpMessage = "Please signup below:";
         try {
-            this.inOut.setOutput(this.signUpMessage);
+            this.inOut.setOutput(signUpMessage);
             String username = this.inOut.getInput("Set username: ");
             String password = this.inOut.getInput("Set password: ");
             if (this.loginManager.signUp(username, password)) {
@@ -133,11 +137,4 @@ public class LoginController {
         System.out.println("Logged out of the Recipe App.");
     }
 
-    /**
-     *
-     * @return String representing the welcome message
-     */
-    private String getWelcomeMessage() {
-        return this.welcomeMessage;
-    }
 }

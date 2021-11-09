@@ -10,10 +10,11 @@ Manages user login and logout
  */
 public class LoginManager {
     private User currUser;
-    private DatabaseManager databaseManager;
+    private final DatabaseManager databaseManager;
 
     /**
      * Create a LoginManager with a null currUser and a DatabaseManager
+     *
      * @param dbManager DatabaseManager that is used by the LoginManager
      */
     public LoginManager(DatabaseManager dbManager) {
@@ -32,7 +33,6 @@ public class LoginManager {
         boolean isValidLogin = verifyUser(username, password);
         if (isValidLogin) {
             //get User from the Database
-            // TODO: replace this with better code to guarantee we get a User (and not null)
             User[] allUsers = this.databaseManager.getAllUsers();
 
             this.currUser = getExistingUser(username, allUsers);
@@ -50,6 +50,7 @@ public class LoginManager {
     /**
      * Signs up a user with the given username and password and adds new user to the database
      * if username and password are valid
+     *
      * @param username username of the user being signed up
      * @param password password of the user being signed up
      * @return boolean true if signup is successful, false otherwise
@@ -114,10 +115,11 @@ public class LoginManager {
 
     /**
      * Check if the given password is valid
+     *
      * @param password a given password
      * @return true if password is valid, false otherwise
      */
-    private boolean isValidPassword(String password){
+    private boolean isValidPassword(String password) {
         //valid, easier to enter password for testing purposes
         String developerPass = "1234";
 
@@ -128,7 +130,7 @@ public class LoginManager {
         String sixPlusChar = ".{6,}";
 
         //compile and match regex
-        Pattern passReq = Pattern.compile("^"+ oneUpper + oneLower + oneNum + sixPlusChar + "$");
+        Pattern passReq = Pattern.compile("^" + oneUpper + oneLower + oneNum + sixPlusChar + "$");
         Matcher matcher = passReq.matcher(password);
 
         boolean isValidPass = matcher.matches();
@@ -139,10 +141,11 @@ public class LoginManager {
 
     /**
      * Check if the given username is valid
+     *
      * @param username a given username
      * @return true if username is valid, false otherwise
      */
-    private boolean isValidUsername(String username){
+    private boolean isValidUsername(String username) {
 
         //regular expressions denoting different password restrictions
         String onePlusChar = ".+";
@@ -156,12 +159,13 @@ public class LoginManager {
         boolean isUniqueUser = !(databaseManager.getLoginInfo().containsKey(username));
         boolean isValidUser = matcher.matches();
 
-       return isValidUser && isUniqueUser;
+        return isValidUser && isUniqueUser;
 
     }
 
     /**
      * Return the currently logged-in user
+     *
      * @return the currently logged-in user
      */
     public User getCurrUser() {
