@@ -12,7 +12,10 @@ public class LoginManager {
     private User currUser;
     private DatabaseManager databaseManager;
 
-
+    /**
+     * Create a LoginManager with a null currUser and a DatabaseManager
+     * @param dbManager DatabaseManager that is used by the LoginManager
+     */
     public LoginManager(DatabaseManager dbManager) {
         this.currUser = null;
         this.databaseManager = dbManager;
@@ -23,7 +26,7 @@ public class LoginManager {
      *
      * @param username The entered username
      * @param password The entered password
-     * @return Return true if login was successful. Return false otherwise.
+     * @return boolean true if login was successful, false otherwise.
      */
     public boolean login(String username, String password) {
         boolean isValidLogin = verifyUser(username, password);
@@ -38,16 +41,25 @@ public class LoginManager {
     }
 
     /**
-     * Logout current user by resetting currUser.
+     * Logout current user by setting currUser to null.
      */
     public void logout() {
         this.currUser = null;
     }
 
+    /**
+     * Signs up a user with the given username and password and adds new user to the database
+     * if username and password are valid
+     * @param username username of the user being signed up
+     * @param password password of the user being signed up
+     * @return boolean true if signup is successful, false otherwise
+     */
     public boolean signUp(String username, String password) {
 
+        //check for valid username
         boolean isValidUsername = this.isValidUsername(username);
 
+        //check for valid password
         boolean isValidPassword = this.isValidPassword(password);
 
         if (isValidUsername && isValidPassword) {
@@ -55,6 +67,7 @@ public class LoginManager {
             this.databaseManager.addNewUser(new User(username, password));
 
         }
+
         return isValidUsername && isValidPassword;
     }
 
@@ -83,7 +96,7 @@ public class LoginManager {
     }
 
     /**
-     * Get the user from an array of users that has the given username
+     * Get the user that has the given username from an array of users
      *
      * @param username a given username
      * @param allUsers array of all the existing users
@@ -95,16 +108,26 @@ public class LoginManager {
                 return user;
             }
         }
+        //user does not exist
         return null;
     }
 
+    /**
+     * Check if the given password is valid
+     * @param password a given password
+     * @return true if password is valid, false otherwise
+     */
     private boolean isValidPassword(String password){
+        //valid, easier to enter password for testing purposes
         String developerPass = "1234";
+
+        //regular expressions denoting different password restrictions
         String oneUpper = "(?=.*[A-Z])";
         String oneLower = "(?=.*[a-z])";
         String oneNum = "(?=.*\\d)";
         String sixPlusChar = ".{6,}";
 
+        //compile and match regex
         Pattern passReq = Pattern.compile("^"+ oneUpper + oneLower + oneNum + sixPlusChar + "$");
         Matcher matcher = passReq.matcher(password);
 
@@ -114,20 +137,33 @@ public class LoginManager {
         return isValidPass || isDevPass;
     }
 
+    /**
+     * Check if the given username is valid
+     * @param username a given username
+     * @return true if username is valid, false otherwise
+     */
     private boolean isValidUsername(String username){
+
+        //regular expressions denoting different password restrictions
         String onePlusChar = ".+";
         String oneLetter = "(?=.*[a-zA-Z])";
 
+        //compile and match regex
         Pattern userReq = Pattern.compile("^" + oneLetter + onePlusChar + "$");
         Matcher matcher = userReq.matcher(username);
 
-       boolean isUniqueUser = !(databaseManager.getLoginInfo().containsKey(username));
-       boolean isValidUser = matcher.matches();
+        //make sure username isn't take already
+        boolean isUniqueUser = !(databaseManager.getLoginInfo().containsKey(username));
+        boolean isValidUser = matcher.matches();
 
        return isValidUser && isUniqueUser;
 
     }
 
+    /**
+     * Return the currently logged-in user
+     * @return the currently logged-in user
+     */
     public User getCurrUser() {
         return this.currUser;
     }
