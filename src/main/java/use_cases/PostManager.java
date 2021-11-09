@@ -12,7 +12,8 @@ import java.util.Arrays;
 public class PostManager {
     private ArrayList<Post> posts;
     private DatabaseManager databaseManager;
-    public PostManager(){
+    public PostManager(DatabaseManager databaseManager){
+        this.databaseManager = databaseManager;
         Post[] allPosts = this.databaseManager.getAllPosts();
         this.posts = new ArrayList<>(Arrays.asList(allPosts));
     }
