@@ -5,13 +5,12 @@ import entities.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.UUID;
 
 /*
     add a new post, comment/like a Post
  */
 public class PostManager {
-    private ArrayList<Post> posts;
+    private final ArrayList<Post> posts;
     private DatabaseManager databaseManager;
     public PostManager(DatabaseManager databaseManager){
         this.databaseManager = databaseManager;
