@@ -8,7 +8,7 @@ public abstract class PostableItem {
     protected String id;
 
     // The ID of the User that is the author of the PostableItem
-    private String authorId;
+    private final String authorId;
 
     public PostableItem(String authorId, LocalDateTime dateTime, String id){
         this.text = "";
@@ -31,5 +31,5 @@ public abstract class PostableItem {
 
     public String getId() { return this.id; }
 
-    public LocalDateTime getCreatedTime() { return this.createdTime; }
+    public String getCreatedTime() { return this.createdTime.toString(); }
 }

@@ -163,4 +163,14 @@ public class PostManager {
     public String getPostCategory(String postId){
         return this.getSpecificPost(postId).getCategory();
     }
+
+    /**
+     * Given the post id returns the posted time
+     * @param postId id of the post
+     * @return time this post was posted
+     */
+    public String getPostedTime(String postId){
+        return this.getSpecificPost(postId).getCreatedTime();
+    }
+
 }

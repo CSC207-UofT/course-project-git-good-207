@@ -141,6 +141,10 @@ public class PostController {
 
     public void displayPost(String id) {
         String author = userManager.getUsernameById(postManager.getPostAuthor(id));
+        String postedTime = postManager.getPostedTime(id);
         Recipe postRecipe = postManager.getPostRecipe(id);
+        String recipeTitle = recipeManager.getRecipeTitle(postRecipe);
+        String[] recipeIngredients = recipeManager.getAllIngredients(postRecipe);
+
     }
 }
