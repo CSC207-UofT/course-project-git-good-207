@@ -1,9 +1,7 @@
 package controllers;
 
 import entities.*;
-import use_cases.DatabaseManager;
-import use_cases.LoginManager;
-import use_cases.PostManager;
+import use_cases.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -12,18 +10,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import use_cases.RecipeManager;
-
 public class PostController {
     private final InOut inOut;
     private final LoginManager loginManager;
     private final PostManager postManager;
     private final RecipeManager recipeManager;
+    private final UserManager userManager;
     private boolean noMeasurableIngredients;
 
     public PostController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
         this.inOut = inOut;
         this.postManager = new PostManager(dbManager);
+        this.userManager = new UserManager(dbManager);
         this.recipeManager = new RecipeManager();
         this.loginManager = loginManager;
         this.noMeasurableIngredients = false;
@@ -141,5 +139,8 @@ public class PostController {
         return new ArrayList<>();
     }
 
-    public void displayPost(Post post) { /* return formatted post */ }
+    public void displayPost(String id) {
+        String author = userManager.getUsernameById(postManager.getPostAuthor(id));
+        postManager.getPostRecipe(id);
+    }
 }

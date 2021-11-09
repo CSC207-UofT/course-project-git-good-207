@@ -26,7 +26,7 @@ public class PostManager {
     }
 
     /**
-     * Private function in order to interacts with the posts
+     * Private function in order to interact with the posts
      * @param targetPost the post we want to interact
      * @param obj the object in case of a adding a comment is a
      *           comment, but in the case of being a like is the user
@@ -76,7 +76,7 @@ public class PostManager {
 
     /**
      *  likes a post and saves the state
-     * @param post the post is being liked
+     * @param post the post that is being liked
      * @param user the user that is giving the like
      * @return true if the post was liked
      */
@@ -96,7 +96,7 @@ public class PostManager {
 
     /**
      * Return method that returns a list of the posts
-     * @return a list of all the posts currrently available
+     * @return a list of all the posts currently available
      */
     public ArrayList<Post> getPosts() {
         return this.posts;
@@ -108,12 +108,9 @@ public class PostManager {
      * @param id the unique identifier of a post
      * @return the post stored in the postManager
      */
-    public Post getSpecificPost(String id)
-    {
-        for(Post element: this.getPosts())
-        {
-            if (id.equals(element.getId()))
-            {
+    public Post getSpecificPost(String id) {
+        for(Post element: this.getPosts()) {
+            if (id.equals(element.getId())) {
                 return element;
             }
         }
@@ -147,6 +144,15 @@ public class PostManager {
      */
     public Recipe getPostRecipe(String postId){
         return this.getSpecificPost(postId).getRecipe();
+    }
+
+    /**
+     * Return author id of the post
+     * @param postId id of the post
+     * @return author of the post
+     */
+    public String getPostAuthor(String postId){
+        return this.getSpecificPost(postId).getAuthorId();
     }
 
     /**

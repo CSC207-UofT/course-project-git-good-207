@@ -248,6 +248,13 @@ public class UserManager {
     }
 
     /**
+     * Return user's username after passing in user's id
+     */
+    public String getUsernameById(String id) {
+        return getUsername(getUserById(id));
+    }
+
+    /**
      * Return user's username
      */
     public String getUsername(User user) {
