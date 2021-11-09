@@ -103,7 +103,7 @@ public class PostManager {
     }
 
     /**
-     * Given a post as parameter, returns the same post
+     * Given a post id as a parameter, returns the same post
      * that is stored in the PostManager
      * @param id the unique identifier of a post
      * @return the post stored in the postManager
