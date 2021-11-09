@@ -4,7 +4,6 @@ import entities.*;
 import use_cases.*;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -145,21 +144,21 @@ public class PostController {
         String recipeInfo = getRecipeInfo(id);
         String comments = getPostComments(id);
         String likes = getPostLikes(id);
-        /*
-        try {
 
-
-
-        } catch (IOException e) {
-            inOut.setOutput("There was an error: " + e);
-        }
-
-         */
+        this.inOut.setOutput(header);
+        this.inOut.setOutput(recipeInfo);
+        this.inOut.setOutput(likes);
+        this.inOut.setOutput(comments);
 
     }
 
     private String getPostLikes(String id) {
-
+        String[] likesInfo = postManager.getPostLikedUsers(id);
+        StringBuilder likesDisplay = new StringBuilder("Liked by (").append(likesInfo.length).append("):\n");
+        for (String likedUser: likesInfo){
+            likesDisplay.append(likedUser).append("\n");
+        }
+        return likesDisplay.append("\n\n").toString();
     }
 
     private String getPostComments(String id) {
@@ -184,16 +183,15 @@ public class PostController {
         }
         recipeInfo.append("\nSteps:\n");
         for (int i = 0; i < recipeSteps.size(); i++) {
-            recipeInfo.append(Integer.toString(i + 1)).append(". ").append(recipeSteps.get(i)).append("\n");
+            recipeInfo.append(i + 1).append(". ").append(recipeSteps.get(i)).append("\n");
         }
-        recipeInfo.append("\nCategory: ").append(category).append("\n");
-        return recipeInfo.toString();
+        return recipeInfo.append("\nCategory: ").append(category).append("\n\n").toString();
     }
 
     private String getPostHeader(String id) {
         String author = userManager.getUsernameById(postManager.getPostAuthor(id));
         String postedTime = postManager.getPostedTime(id);
-        return author + "\n" + postedTime;
+        return author + "\n" + postedTime + "\n\n";
     }
 
 }
