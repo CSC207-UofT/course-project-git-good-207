@@ -125,7 +125,7 @@ public class PostManager {
      * @param postId id of the post
      * @return a list of the liked users
      */
-    public ArrayList<User> getLikedUsers(String postId){
+    public ArrayList<User> getPostLikedUsers(String postId){
         return this.getSpecificPost(postId).getLikedUsers();
     }
 
@@ -135,7 +135,7 @@ public class PostManager {
      * @param postId id of the post
      * @return a list of the comments associated to the post
      */
-    public ArrayList<Comment> getComments(String postId){
+    public ArrayList<Comment> getPostComments(String postId){
         return this.getSpecificPost(postId).getComments();
     }
 
@@ -145,7 +145,7 @@ public class PostManager {
      * @param postId id of the post
      * @return the recipe object of the post
      */
-    public Recipe getRecipe(String postId){
+    public Recipe getPostRecipe(String postId){
         return this.getSpecificPost(postId).getRecipe();
     }
 
@@ -154,7 +154,7 @@ public class PostManager {
      * @param postId id of the post
      * @return category of the post
      */
-    public String getCategory(String postId){
+    public String getPostCategory(String postId){
         return this.getSpecificPost(postId).getCategory();
     }
 }
