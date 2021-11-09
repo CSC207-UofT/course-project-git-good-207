@@ -68,7 +68,7 @@ public class PostManager {
      * Comments a post iff could be done returns true
      * @param post The post object itself
      * @param comment The comment is being added
-     * @return true iff it could be added the comment
+     * @return true if the comment was added to the Post
      */
     public boolean commentPost(Post post, Comment comment){
         return interactPost(post, comment, true);
