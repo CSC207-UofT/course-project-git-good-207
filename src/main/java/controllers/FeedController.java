@@ -14,15 +14,16 @@ public class FeedController {
     private FeedManager feedManager;
     private LoginManager loginManager;
     private InOut inOut;
-    private DatabaseManager databaseManager = new DatabaseManager();
+    private DatabaseManager databaseManager;
     private String postsString;
     private HashMap<Integer, Post> postsActionMap = new HashMap<>();
     private String postActionPrompt = "Please select an action for this post: \n"
             + "0 Like the Post";
 
-    public FeedController(InOut inOut, LoginManager loginManager) {
+    public FeedController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
         this.inOut = inOut;
         this.loginManager = loginManager;
+        this.databaseManager = dbManager;
         User currUser = this.loginManager.getCurrUser();
         Post[] posts = this.databaseManager.getAllPosts();
         Feed currUserFeed = new Feed(new ArrayList<>(Arrays.asList(posts)));
@@ -74,12 +75,12 @@ public class FeedController {
 
     private String generateFeedActions(ArrayList<Post> posts) {
         this.postsActionMap = new HashMap<>();
-        String postsString = "Enter a number for a detailed view of a post: ";
+        StringBuilder postsString = new StringBuilder("Enter a number for a detailed view of a post: ");
 
         for (int i=0; i < posts.size(); i++) {
             this.postsActionMap.put(i, posts.get(i));
-            postsString += "\n" + i + " " + posts.get(i).getRecipe().getTitle();
+            postsString.append("\n").append(i).append(" ").append(posts.get(i).getRecipe().getTitle());
         }
-        return postsString;
+        return postsString.toString();
     }
 }
