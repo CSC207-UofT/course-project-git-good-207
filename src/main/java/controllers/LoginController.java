@@ -94,8 +94,16 @@ public class LoginController {
      */
     private boolean runSignUpPage() {
         String signUpMessage = "Please signup below:";
+        String signUpRulesMessage = "Username must contain:\n " +
+                "at least one letter\n" +
+                "Password must contain:\n " +
+                "6 or more characters,\n " +
+                "at least one lowercase letter,\n " +
+                "at least one uppercase letter,\n " +
+                "and at least one number\n";
         try {
             this.inOut.setOutput(signUpMessage);
+            this.inOut.setOutput(signUpRulesMessage);
             String username = this.inOut.getInput("Set username: ");
             String password = this.inOut.getInput("Set password: ");
             if (this.loginManager.signUp(username, password)) {
