@@ -2,6 +2,7 @@ package use_cases;
 
 import entities.User;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
@@ -102,10 +103,12 @@ public class LoginManager {
         String oneUpper = "(?=.*[A-Z])";
         String oneLower = "(?=.*[a-z])";
         String oneNum = "(?=.*\\d)";
-        String sixPlusChar = ".{6, }";
+        String sixPlusChar = ".{6,}";
 
-        String passReq ="^"+ oneUpper + oneLower + oneNum + sixPlusChar + "$";
-        boolean isValidPass = Pattern.matches(passReq, password);
+        Pattern passReq = Pattern.compile("^"+ oneUpper + oneLower + oneNum + sixPlusChar + "$");
+        Matcher matcher = passReq.matcher(password);
+
+        boolean isValidPass = matcher.matches();
         boolean isDevPass = password.equals(developerPass);
 
         return isValidPass || isDevPass;
@@ -113,8 +116,13 @@ public class LoginManager {
 
     private boolean isValidUsername(String username){
         String onePlusChar = ".+";
+        String oneLetter = "(?=.*[a-zA-Z])";
+
+        Pattern userReq = Pattern.compile("^" + oneLetter + onePlusChar + "$");
+        Matcher matcher = userReq.matcher(username);
+
        boolean isUniqueUser = !(databaseManager.getLoginInfo().containsKey(username));
-       boolean isValidUser = Pattern.matches(onePlusChar, username);
+       boolean isValidUser = matcher.matches();
 
        return isValidUser && isUniqueUser;
 
