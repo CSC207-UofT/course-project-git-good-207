@@ -2,6 +2,7 @@ package controllers;
 
 import entities.InOut;
 import entities.ShellAction;
+import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 
 import java.io.IOException;
@@ -11,9 +12,9 @@ public class LoginController {
     private String loginMessage = "Please enter your login info.";
     private String signUpMessage = "Please signup below:";
     private String welcomeMessage = "Welcome to the Recipe App!";
-    private String welcomeActionPrompt = "Please select an action: \n"
-            + "0 Sign up\n"
-            + "1 Login";
+    private String welcomeActionPrompt = "Please select an action:\n" +
+            "0 Sign up\n" +
+            "1 Login\n";
     private InOut inOut;
 
     public LoginController(InOut inOut, LoginManager loginManager) {

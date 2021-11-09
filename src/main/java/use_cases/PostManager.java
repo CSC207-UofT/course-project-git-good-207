@@ -11,9 +11,7 @@ import java.util.Arrays;
  */
 public class PostManager {
     private ArrayList<Post> posts;
-    private DatabaseManager databaseManager = new DatabaseManager();
-
-
+    private DatabaseManager databaseManager;
     public PostManager(){
         Post[] allPosts = this.databaseManager.getAllPosts();
         this.posts = new ArrayList<>(Arrays.asList(allPosts));
@@ -62,6 +60,7 @@ public class PostManager {
     {
         Post p = new Post(owner.getId(), postedTime, recipe, category);
         this.createPost(p);
+
     }
 
     /**

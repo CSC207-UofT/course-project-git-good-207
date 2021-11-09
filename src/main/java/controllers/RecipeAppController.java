@@ -9,16 +9,14 @@ import use_cases.UserManager;
 import java.io.IOException;
 
 public class RecipeAppController {
-    private InOut inOut;
-    private LoginController loginController;
-    private FeedController feedController;
-    private PostController postController;
-    private UserProfileController userProfileController;
-    private LoginManager loginManager;
-    private PostManager postManager = new PostManager();
-    private RecipeManager recipeManager = new RecipeManager();
-    private String shellActionPrompt =
-            "Enter an action:\n" +
+    private final InOut inOut;
+    private final MySQLController mySQLController;
+    private final LoginController loginController;
+    private final FeedController feedController;
+    private final PostController postController;
+    private final UserProfileController userProfileController;
+    private final LoginManager loginManager;
+    private final String shellActionPrompt = "Enter an action: \n" +
             "0 Browse your Feed\n" +
             "1 Browse a User Profile\n" +
             "2 Post a Recipe\n" +
@@ -27,11 +25,12 @@ public class RecipeAppController {
 
     public RecipeAppController(InOut inOut) {
         this.inOut = inOut;
-        this.loginManager = new LoginManager(new UserManager());
-        this.feedController = new FeedController(inOut, loginManager);
+        this.mySQLController = new MySQLController();
+        this.loginManager = new LoginManager(this.mySQLController);
+        this.feedController = new FeedController(inOut, this.mySQLController, this.loginManager);
         this.loginController = new LoginController(inOut, this.loginManager);
-        this.userProfileController = new UserProfileController(inOut, this.loginManager);
-        this.postController = new PostController(inOut, this.postManager, this.loginManager, this.recipeManager);
+        this.userProfileController = new UserProfileController(inOut, this.mySQLController, this.loginManager);
+        this.postController = new PostController(inOut, this.mySQLController, this.loginManager);
     }
 
     public void run() {

@@ -4,45 +4,35 @@ import entities.*;
 
 import java.lang.reflect.Executable;
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DatabaseManager {
+public abstract class DatabaseManager {
     //Temp user storage for loginManager testing
-    private HashMap<String, String> loginInfo = new HashMap<>();
-    private Connection connection;
+    protected HashMap<String, String> loginInfo = new HashMap<>();
+    protected Connection connection;
 
-    public DatabaseManager(){
-        try {
-            this.connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:8889/foodstagram",
-                "admin",
-                "1234");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.loginInfo.put("eric", "123");
-        this.loginInfo.put("shawn", "1234");
-    }
-
-    public HashMap<String, String> getLoginInfo(){
-        return loginInfo;
-    }
+    public abstract HashMap<String, String> getLoginInfo();
 
 
     /**
      * Save a new post to the database.
      * @param newPost The Post to save to the database.
      */
-    public void addNewPost(Post newPost) {
-        this.insertPostDB(newPost);
-        this.insertRecipeDB(newPost, newPost.getRecipe());
-        this.insertRecipeStepsDB(newPost.getRecipe());
-        this.insertRecipeIngredientsDB(newPost.getRecipe());
-        this.insertCommentsDB(newPost, newPost.getComments());
-        this.insertLikesDB(newPost, newPost.getLikedUsers());
-    }
+    public abstract void addNewPost(Post newPost);
+
+    /**
+     * Edit the Post saved in the Database
+     * @param newPost The Post to save to the database.
+     */
+    public abstract void editPost(Post newPost);
+
+
+    /**
+     * Delete a Post in the database.
+     * @param postId The ID of the Post to delete.
+     */
+    public abstract void deletePost(String postId);
+
 
     /**
      * Save a new user to the database.
@@ -51,72 +41,17 @@ public class DatabaseManager {
      * added (there was no user with the same username). False if
      * unsuccessful.
      */
-    public boolean addNewUser(User newUser) {
-        try {
-            String query = "INSERT INTO `user_info`(`user_id`, `username`, `password`, `bio`) " +
-                    "VALUES (?,?,?,?)";
-
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setString(1, newUser.getId());
-            preparedStmt.setString(2, newUser.getUsername());
-            preparedStmt.setString(3, newUser.getPassword());
-            preparedStmt.setString(4, newUser.getBio());
-
-            preparedStmt.execute();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+    public abstract boolean addNewUser(User newUser);
 
     /**
      * Gets all the posts stored in the database.
      * @return an Array of all the posts stored in the database.
      */
-    public Post[] getAllPosts() {
-        try {
-            HashMap<String, Post> postData = new HashMap<>();
-            HashMap<String, String> postIdsToRecipeIds = new HashMap<>();
-            String postsQuery = "SELECT * FROM `posts` WHERE 1";
-            ResultSet postsResult = this.connection.createStatement().executeQuery(postsQuery);
-            while(postsResult.next()) {
-                String postId = postsResult.getString("post_id");
-                String userId = postsResult.getString("user_id");
-                String recipeId = postsResult.getString("recipe_id");
-                String category = postsResult.getString("category");
-                LocalDateTime postedTime = postsResult.getTimestamp("posted_time").toLocalDateTime();
-                postData.put(
-                        postId,
-                        new Post(userId,
-                            postedTime,
-                            new Recipe("", new ArrayList<>(), new ArrayList<>()),
-                            category)
-                    );
-            }
+    public abstract Post[] getAllPosts();
 
-            // TODO: add recipe data
+    public abstract boolean updatePost(Post updatedPost);
 
-            Post[] posts = new Post[postData.size()];
-            int postsCounter = 0;
-            for (String postId: postData.keySet()) {
-                posts[postsCounter] = postData.get(postId);
-                postsCounter ++;
-            }
-            return posts;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Post[0];
-        }
-    }
-
-    public boolean updatePost(Post updatedPost) {
-        return true;
-    }
-
-    public boolean updateUser(User updatedUser) {
-        return true;
-    }
+    public abstract boolean updateUser(User updatedUser);
 
     /**
      * Gets an array of all the Users saved in the database.
@@ -454,4 +389,5 @@ public class DatabaseManager {
             System.out.println("users username is: " + user.getUsername());
         }
     }
+    public abstract User[] getAllUsers();
 }
