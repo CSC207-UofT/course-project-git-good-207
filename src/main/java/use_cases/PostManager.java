@@ -120,13 +120,19 @@ public class PostManager {
         return null;
     }
     /**
-     * Given a post id it returns a list with the liked users
+     * Given a post id it returns a list with the liked users' usernames
      * of that post
      * @param postId id of the post
-     * @return a list of the liked users
+     * @return a list of the liked users' usernames
      */
-    public ArrayList<User> getPostLikedUsers(String postId){
-        return this.getSpecificPost(postId).getLikedUsers();
+    public String[] getPostLikedUsers(String postId){
+
+        ArrayList<User> likedUsers = this.getSpecificPost(postId).getLikedUsers();
+        String[] likes = new String[likedUsers.size()];
+        for (int i = 0; i < likedUsers.size(); i++) {
+            likes[i] = userManager.getUsername(likedUsers.get(i));
+        }
+        return likes;
     }
 
     /**

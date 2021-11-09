@@ -4,6 +4,7 @@ import entities.*;
 import use_cases.*;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -140,14 +141,59 @@ public class PostController {
     }
 
     public void displayPost(String id) {
-        String author = userManager.getUsernameById(postManager.getPostAuthor(id));
-        String postedTime = postManager.getPostedTime(id);
+        String header = getPostHeader(id);
+        String recipeInfo = getRecipeInfo(id);
+        String comments = getPostComments(id);
+        String likes = getPostLikes(id);
+        /*
+        try {
+
+
+
+        } catch (IOException e) {
+            inOut.setOutput("There was an error: " + e);
+        }
+
+         */
+
+    }
+
+    private String getPostLikes(String id) {
+
+    }
+
+    private String getPostComments(String id) {
+        String[] comments = postManager.getPostComments(id);
+        StringBuilder formattedComments = new StringBuilder("Comments:\n\n");
+        for (String comment: comments) {
+            formattedComments.append(comment).append("\n");
+        }
+        return formattedComments.toString();
+    }
+
+    private String getRecipeInfo(String id) {
         Recipe postRecipe = postManager.getPostRecipe(id);
         String recipeTitle = recipeManager.getRecipeTitle(postRecipe);
         String[] recipeIngredients = recipeManager.getAllIngredients(postRecipe);
         ArrayList<String> recipeSteps = recipeManager.getRecipeSteps(postRecipe);
         String category = postManager.getPostCategory(id);
-        ArrayList<String> comments =
 
+        StringBuilder recipeInfo = new StringBuilder(recipeTitle + "\n" + "\nIngredients:\n");
+        for (String ingredient: recipeIngredients) {
+            recipeInfo.append(ingredient).append("\n");
+        }
+        recipeInfo.append("\nSteps:\n");
+        for (int i = 0; i < recipeSteps.size(); i++) {
+            recipeInfo.append(Integer.toString(i + 1)).append(". ").append(recipeSteps.get(i)).append("\n");
+        }
+        recipeInfo.append("\nCategory: ").append(category).append("\n");
+        return recipeInfo.toString();
     }
+
+    private String getPostHeader(String id) {
+        String author = userManager.getUsernameById(postManager.getPostAuthor(id));
+        String postedTime = postManager.getPostedTime(id);
+        return author + "\n" + postedTime;
+    }
+
 }
