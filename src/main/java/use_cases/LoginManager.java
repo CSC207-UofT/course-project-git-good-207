@@ -2,6 +2,8 @@ package use_cases;
 
 import entities.User;
 
+import java.util.regex.Pattern;
+
 /*
 Manages user login and logout
  */
@@ -43,11 +45,9 @@ public class LoginManager {
 
     public boolean signUp(String username, String password) {
 
-        boolean isValidUsername = !(databaseManager.getLoginInfo().containsKey(username));
+        boolean isValidUsername = this.isValidUsername(username);
 
-        //TODO can add future restrictions on what is a valid password
-        //for now all passwords are valid
-        boolean isValidPassword = true;
+        boolean isValidPassword = this.isValidPassword(password);
 
         if (isValidUsername && isValidPassword) {
             //use databaseManager to add new user to the database
@@ -95,6 +95,29 @@ public class LoginManager {
             }
         }
         return null;
+    }
+
+    private boolean isValidPassword(String password){
+        String developerPass = "1234";
+        String oneUpper = "(?=.*[A-Z])";
+        String oneLower = "(?=.*[a-z])";
+        String oneNum = "(?=.*\\d)";
+        String sixPlusChar = ".{6, }";
+
+        String passReq ="^"+ oneUpper + oneLower + oneNum + sixPlusChar + "$";
+        boolean isValidPass = Pattern.matches(passReq, password);
+        boolean isDevPass = password.equals(developerPass);
+
+        return isValidPass || isDevPass;
+    }
+
+    private boolean isValidUsername(String username){
+        String onePlusChar = ".+";
+       boolean isUniqueUser = !(databaseManager.getLoginInfo().containsKey(username));
+       boolean isValidUser = Pattern.matches(onePlusChar, username);
+
+       return isValidUser && isUniqueUser;
+
     }
 
     public User getCurrUser() {
