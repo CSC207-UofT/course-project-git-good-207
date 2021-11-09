@@ -3,6 +3,7 @@ package entities;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * A Post that Users make on Foodstagram.
@@ -11,7 +12,8 @@ public class Post extends PostableItem {
     private ArrayList<User> likedUsers;
     private ArrayList<Comment> comments;
     private Recipe recipe;
-    private String category;
+    private final String category;
+    private final String id;
 
     public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category, String id) {
         super(authorId, postedTime, id);
@@ -19,6 +21,7 @@ public class Post extends PostableItem {
         this.comments = new ArrayList<>();
         this.recipe = recipe;
         this.category = category;
+        this.id = UUID.randomUUID().toString();
     }
 
     @Override
@@ -37,6 +40,8 @@ public class Post extends PostableItem {
     public Recipe getRecipe() {
         return this.recipe;
     }
+
+    public String getId() { return this.id; }
 
     public void addComment(Comment comment) {
         this.comments.add(comment);

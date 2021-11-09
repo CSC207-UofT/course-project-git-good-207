@@ -32,15 +32,12 @@ Parent Class: N/A
 Responsibilities: Stores a list of posts and a list of displayed posts, get/set the current displayed posts, sets a filter for posts based on cuisine category  
 Collaborators: Post
 
-Class Name: PostableItem (abstract class)  
-Parent Class: N/A  
-Responsibilities: contains the PostableItem's id, text and author associated with it 
-Collaborators: Post, Comment
 
 Class Name: Post  
 Parent Class: PostableItem  
 Responsibilities: Stores a list of Users ids who have liked the post, created time, comments on the post, associated User id, a Recipe, a String which is the category of the post (i.e. “Chinese”, “Indian”, “Italian”)
 Collaborators: Comment, Recipe, User 
+>>>>>>> main
 
 Class Name: Comment  
 Parent Class: PostableItem 
