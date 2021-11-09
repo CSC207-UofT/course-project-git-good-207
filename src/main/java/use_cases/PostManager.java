@@ -78,7 +78,7 @@ public class PostManager {
      *  likes a post and saves the state
      * @param post the post is being liked
      * @param user the user that is giving the like
-     * @return true if the post could be liked
+     * @return true if the post was liked
      */
     public boolean likePost(Post post, User user) {
         return interactPost(post, user, false);
