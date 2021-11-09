@@ -141,6 +141,6 @@ public class PostController {
 
     public void displayPost(String id) {
         String author = userManager.getUsernameById(postManager.getPostAuthor(id));
-        postManager.getPostRecipe(id);
+        Recipe postRecipe = postManager.getPostRecipe(id);
     }
 }

@@ -21,6 +21,15 @@ public class RecipeManager {
         return new Recipe(title, ingredients, steps, id);
     }
 
+    public String getRecipeTitle(Recipe recipe) {
+        return recipe.getTitle();
+    }
+
+    public ArrayList<String> getRecipeSteps(Recipe recipe) {
+        return recipe.getSteps();
+    }
+
+
     public void deleteStep(Recipe recipe) {
         recipe.deleteLastStep();
     }

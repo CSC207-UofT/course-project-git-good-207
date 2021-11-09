@@ -19,4 +19,5 @@ public class Ingredient {
     public String getIngredientName(){
         return this.ingredientName;
     }
+
 }
