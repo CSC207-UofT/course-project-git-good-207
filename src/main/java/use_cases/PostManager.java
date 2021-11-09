@@ -89,7 +89,9 @@ public class PostManager {
      * @param post the post object is being added
      */
     public void createPost(Post post){
+
         this.posts.add(post);
+        this.databaseManager.addNewPost(post);
     }
 
     /**
@@ -116,5 +118,43 @@ public class PostManager {
             }
         }
         return null;
+    }
+    /**
+     * Given a post id it returns a list with the liked users
+     * of that post
+     * @param postId id of the post
+     * @return a list of the liked users
+     */
+    public ArrayList<User> getLikedUsers(String postId){
+        return this.getSpecificPost(postId).getLikedUsers();
+    }
+
+    /**
+     * Given a post id it returns a list with the comments
+     * of that post
+     * @param postId id of the post
+     * @return a list of the comments associated to the post
+     */
+    public ArrayList<Comment> getComments(String postId){
+        return this.getSpecificPost(postId).getComments();
+    }
+
+    /**
+     * Given the post id it returns the recipe associated to
+     * it
+     * @param postId id of the post
+     * @return the recipe object of the post
+     */
+    public Recipe getRecipe(String postId){
+        return this.getSpecificPost(postId).getRecipe();
+    }
+
+    /**
+     * Given the post id returns the category of it
+     * @param postId id of the post
+     * @return category of the post
+     */
+    public String getCategory(String postId){
+        return this.getSpecificPost(postId).getCategory();
     }
 }
