@@ -184,9 +184,15 @@ public class PostControllerPresenter {
      * Add like or comment to a target post.
      *
      * @param id the id of target post
+     * @param obj the User if liking the post; the Comment if commenting on post
+     * @param type true if commenting; false if liking the post
      */
     public void interactPost(String id, Object obj, boolean type){
-        postManager.interactPost(postManager.getSpecificPost(id), obj, type);
+        if (type) {
+            postManager.commentPost(postManager.getSpecificPost(id), (Comment) obj);
+        } else {
+            postManager.likePost(postManager.getSpecificPost(id), (User) obj);
+        }
     }
 
     /**

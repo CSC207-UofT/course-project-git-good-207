@@ -37,7 +37,7 @@ public class PostManager {
      *            then it would change the behavior
      * @return true iff the post was founded and could be interacted with
      */
-    public boolean interactPost(Post targetPost, Object obj, boolean type){
+    private boolean interactPost(Post targetPost, Object obj, boolean type){
         for (Post post: this.posts) {
             if (post.getId().equals(targetPost.getId())) {
                 if (type) {
