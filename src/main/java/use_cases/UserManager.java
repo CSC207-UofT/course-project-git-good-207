@@ -1,6 +1,7 @@
 package use_cases;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import entities.Post;
 import entities.User;
@@ -20,7 +21,16 @@ public class UserManager {
     }
 
     /**
-     * Get the User with the given ID. Return null if no user with
+     * Return a User object given the user's username and password
+     */
+    public User createUser(String username, String password) {
+        User user = new User(username, password, "", UUID.randomUUID().toString());
+        this.databaseManager.addNewUser(user);
+        return user;
+    }
+
+    /**
+     * Get the User with the given ID. Returns null if no user with
      * the given ID exists.
      *
      * @param id The ID of the User to find.
