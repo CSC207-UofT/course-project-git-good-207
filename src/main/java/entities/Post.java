@@ -2,16 +2,17 @@ package entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
  * A Post that Users make on Foodstagram.
  */
 public class Post extends PostableItem {
-    private ArrayList<User> likedUsers;
-    private ArrayList<Comment> comments;
+    private final ArrayList<User> likedUsers;
+    private final ArrayList<Comment> comments;
     private Recipe recipe;
-    private String category;
+    private final String category;
 
     public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category) {
         super(authorId, postedTime);
@@ -37,6 +38,8 @@ public class Post extends PostableItem {
     public Recipe getRecipe() {
         return this.recipe;
     }
+
+    public String getId() { return this.id; }
 
     public void addComment(Comment comment) {
         this.comments.add(comment);
@@ -65,5 +68,15 @@ public class Post extends PostableItem {
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
+
+    /*Comparator for sorting the list by the number of likes of a post*/
+    public static Comparator<Post> PostLikesComparator = (p1, p2) -> {
+        int p1Likes = p1.getNumLikes();
+        int p2Likes = p2.getNumLikes();
+
+        //descending order
+        return p2Likes - p1Likes;
+
+    };
 }
   
