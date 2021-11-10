@@ -6,12 +6,12 @@ import entities.Post;
 import entities.User;
 
 public class UserManager {
-    private DatabaseManager databaseManager;
-    private User[] allUsers;
+    private final DatabaseManager databaseManager;
+    private final User[] allUsers;
 
     // Constructor
-    public UserManager() {
-        this.databaseManager = new DatabaseManager();
+    public UserManager(DatabaseManager dbManager) {
+        this.databaseManager = dbManager;
         this.allUsers = this.databaseManager.getAllUsers();
     }
 

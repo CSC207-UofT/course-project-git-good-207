@@ -14,7 +14,7 @@ public class User {
     private HashMap<String, Integer> likeHistory;
     private ArrayList<User> followers, following;
     private ArrayList<Post> posts;
-    private String id;
+    private final String id;
 
     // constructors
     public User(String username, String password){

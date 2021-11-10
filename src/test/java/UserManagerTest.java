@@ -11,12 +11,12 @@ public class UserManagerTest {
     private UserManager userManager;
     private DatabaseManager databaseManager;
 
-    @BeforeEach
-    void setupFeedTest() {
-        this.user = new User("eren_yeager", "#1titan_slayer");
-        this.userManager = new UserManager();
-        this.databaseManager = new DatabaseManager();
-    }
+//    @BeforeEach
+//    void setupFeedTest() {
+//        this.user = new User("eren_yeager", "#1titan_slayer");
+//        this.userManager = new UserManager();
+//        this.databaseManager = new DatabaseManager();
+//    }
 
     @Test
     void testUpdateUsername() {
@@ -38,7 +38,7 @@ public class UserManagerTest {
 
     @Test
     void testAddLike() {
-        HashMap<String, Integer> like_history = new HashMap<String, Integer>();
+        HashMap<String, Integer> like_history = new HashMap<>();
         like_history.put("Russian Food", 4);
         like_history.put("Burnt Food", 1);
         this.user.setLikeHistory(like_history);
@@ -57,7 +57,7 @@ public class UserManagerTest {
     }
 
     @Test
-    void testFollowUserThatsAlreadyFollowed() {
+    void testFollowUserThatAlreadyFollowed() {
         User john_jones = new User("john_jones","123");
         this.userManager.followUser(this.user, john_jones);
         assert !this.userManager.followUser(this.user, john_jones);
@@ -91,7 +91,7 @@ public class UserManagerTest {
     }
 
     @Test
-    void testAddFollowerThatsAlreadyInFollowing() {
+    void testAddFollowerThatAlreadyInFollowing() {
         User john_jones = new User("john_jones","123");
         this.userManager.addFollower(this.user,john_jones);
         assert !this.userManager.addFollower(this.user, john_jones);
@@ -136,13 +136,11 @@ public class UserManagerTest {
 
     @Test
     void testFindUserSuccess() {
-        User[] users = this.databaseManager.getAllUsers();
         assert this.userManager.findUser("shawn") != null;
     }
 
     @Test
     void testFindUserFail() {
-        User[] users = this.databaseManager.getAllUsers();
         assert this.userManager.findUser("Tom and Jerry") == null;
     }
 }

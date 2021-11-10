@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import entities.InOut;
 import entities.ShellAction;
@@ -13,22 +12,17 @@ import use_cases.PostManager;
 import use_cases.UserManager;
 
 public class UserProfileController {
-    private InOut inOut;
-    private String customizeProfileScreen = "Select which option you'd like to customize:" +
-            "\n0 Username \n1 Password \n2 Bio \n3 Posts \n4 Following list";
-    private String otherUserScreen = "Select which action you'd like to take:" +
-            "\n0 Follow user \n1 Browse user's posts";
-    private String userToBrowsePrompt = "Enter the username of the person you'd like to view: ";
-    private LoginManager loginManager;
-    private UserManager userManager;
-    private DatabaseManager databaseManager;
+    private final InOut inOut;
+    private final LoginManager loginManager;
+    private final UserManager userManager;
+    private final DatabaseManager databaseManager;
 
     // Constructor
-    public UserProfileController(InOut inOut, LoginManager loginManager) {
+    public UserProfileController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
         this.inOut = inOut;
         this.loginManager = loginManager;
-        this.databaseManager = new DatabaseManager();
-        this.userManager = new UserManager();
+        this.databaseManager = dbManager;
+        this.userManager = new UserManager(dbManager);
     }
 
 
@@ -45,7 +39,12 @@ public class UserProfileController {
      * Return the choices available for user
      */
     private String getCustomizeProfileScreen() {
-        return this.customizeProfileScreen;
+        return "Select which option you'd like to customize:\n" +
+                    "0 Username\n" +
+                    "1 Password\n" +
+                    "2 Bio\n" +
+                    "3 Posts\n" +
+                    "4 Following list\n";
     }
 
     /**
@@ -65,7 +64,10 @@ public class UserProfileController {
                 User targetUser = this.userManager.findUser(userToBrowse);
                 this.inOut.setOutput(this.userManager.runBrowseOtherProfile(targetUser));
                 // Give the choice of following user or looking into user's post
-                int choice = Integer.parseInt(this.inOut.getInput(this.otherUserScreen));
+                String otherUserScreen = "Select which action you'd like to take:\n" +
+                        "0 Follow user\n" +
+                        "1 Browse user's posts\n";
+                int choice = Integer.parseInt(this.inOut.getInput(otherUserScreen));
                 if (choice == 0) {
                     this.runFollowUser(this.loginManager.getCurrUser(), targetUser);
                 } else if (choice == 1) {
@@ -101,7 +103,7 @@ public class UserProfileController {
                 // Show following list
                 this.inOut.setOutput(this.userManager.getFollowingListString(this.loginManager.getCurrUser()));
                 String action = this.inOut.getInput("Would you like to unfollow one of these users? (y/n): ");
-                if (action.toLowerCase().equals("y")) {
+                if (action.equalsIgnoreCase("y")) {
                     this.runUnfollowUser();
                 }
             }
@@ -182,25 +184,13 @@ public class UserProfileController {
     }
 
     /**
-     * return user's following list
-     */
-    private String displayFollowingList(User user) {
-        ArrayList<String> followingListUsernames = this.userManager.getFollowingListUsernames(user);
-        String followingList = "";
-        for (String username : followingListUsernames) {
-            followingList.concat(username + ", ");
-        }
-        return followingList;
-    }
-
-    /**
      * Display all currently registered usernames
      */
     private void runDisplayAllUsers() {
         User[] users = this.databaseManager.getAllUsers();
-        String allUsernames = "";
+        StringBuilder allUsernames = new StringBuilder();
         for (User user : users) {
-            allUsernames += " " + this.userManager.getUsername(user) + ", ";
+            allUsernames.append(" ").append(this.userManager.getUsername(user)).append(", ");
         }
         this.inOut.setOutput("Currently registered users:" + allUsernames.substring(0, allUsernames.length() - 2));
     }
