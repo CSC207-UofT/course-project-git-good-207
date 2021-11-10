@@ -49,7 +49,7 @@ public class FeedController {
             feedManager.setFeedFilter(filterInput);
             Feed feed = feedManager.getCurrentUsersFeed();
 
-            // Generate the posts and ask to select one to like/comment
+            // Generate the posts and ask to select one to like/comment or go back
             String postsString = this.generateDisplayedPosts(feed.getDisplayedPosts());
             this.selectOnePost(postsString, feed.getDisplayedPosts().size());
         }
@@ -69,7 +69,6 @@ public class FeedController {
             this.postsActionMap.put(i, posts.get(i));
             postsString.append("\n");
             postsString.append(i).append(" ");
-            // Change getAuthorId to getAuthor
             User user = this.userManager.getUserById(posts.get(i).getAuthorId());
             if (user != null) {
                 postsString.append(user.getUsername()).append("'s ");
