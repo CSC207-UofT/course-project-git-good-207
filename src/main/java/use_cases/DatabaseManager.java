@@ -48,9 +48,32 @@ public abstract class DatabaseManager {
      */
     public abstract Post[] getAllPosts();
 
+    /**
+     * Given a post it changes the values of the previous post so that
+     * are the same to the new one
+     * @param updatedPost stores the new attributes of the post
+     * @return true if the post could be updated
+     */
     public abstract boolean updatePost(Post updatedPost);
 
+    /**
+     * Updates the attributes of the user to the new attributes
+     * given the parameter
+     * @param updatedUser user object with the updated values
+     * @return true if the attributes were changed
+     */
     public abstract boolean updateUser(User updatedUser);
+
+    /**
+     * deletes all the information except for recipes related
+     * to the given user in the database
+     * @param user user object that contains information about
+     *             the user
+     * @return true if it could delete all the information related
+     * to the user
+     */
+    public abstract boolean deleteUser(User user);
+
 
     /**
      * Gets an array of all the Users saved in the database.
