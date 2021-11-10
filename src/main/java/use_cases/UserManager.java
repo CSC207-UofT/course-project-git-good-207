@@ -99,7 +99,7 @@ public class UserManager {
     }
 
     /**
-     * unfollow User want_to_unfollow, removing want_to_unfollow from the logged-in user's following list
+     * unfollow User want to unfollow, removing want to unfollow from the logged-in user's following list
      *
      * @param currentUser The currently logged-in user
      * @param wantToUnfollow The user that the currently logged-in user wishes to unfollow

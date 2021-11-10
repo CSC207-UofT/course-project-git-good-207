@@ -209,7 +209,7 @@ public class UserProfileController {
     private void runDisplayUserPosts(User user) {
         PostController postController = new PostController(this.inOut, this.databaseManager, this.loginManager);
         PostManager postManager = new PostManager(this.userManager.getUserPosts(user));
-        for(Post post: this.userManager.getUserPosts(user)) {
+        for (Post post: this.userManager.getUserPosts(user)) {
             postController.displayPost(postManager.getPostId(post));
         }
     }
@@ -232,7 +232,7 @@ public class UserProfileController {
     private void runCustomizePassword() {
         try {
             String newPassword = this.inOut.getInput("Enter what you'd like your new password to be: ");
-            runChangePasswordDisplay(this.loginManager.getCurrUser(), newPassword);
+            this.runChangePasswordDisplay(this.loginManager.getCurrUser(), newPassword);
         } catch (IOException e) {
             inOut.setOutput("There was an error: " + e);
         }
