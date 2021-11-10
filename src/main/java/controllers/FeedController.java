@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class FeedController {
-    private final FeedManager feedManager;
     private final LoginManager loginManager;
     private final PostController postController;
     private final InOut inOut;
@@ -26,10 +25,6 @@ public class FeedController {
         this.loginManager = loginManager;
         this.postController = postController;
         this.databaseManager = dbManager;
-        User currUser = this.loginManager.getCurrUser();
-        Post[] posts = this.databaseManager.getAllPosts();
-        Feed currUserFeed = new Feed(new ArrayList<>(Arrays.asList(posts)));
-        this.feedManager = new FeedManager(currUser, currUserFeed);
         this.userManager = new UserManager(this.databaseManager);
     }
 
@@ -43,13 +38,16 @@ public class FeedController {
      * Run to allow the user to browse the Feed.
      */
     private void runBrowseFeed() {
+        Post[] posts = this.databaseManager.getAllPosts();
+        Feed currUserFeed = new Feed(new ArrayList<>(Arrays.asList(posts)));
+        FeedManager feedManager = new FeedManager(this.loginManager.getCurrUser(), currUserFeed);
         // Ask for a filter option for the feed
         ArrayList<Integer> filterInput = this.getFilterInput();
         if (filterInput.get(0) == 99) {
             this.inOut.setOutput("Returning to main menu.");
         } else {
-            this.feedManager.setFeedFilter(filterInput);
-            Feed feed = this.feedManager.getCurrentUsersFeed();
+            feedManager.setFeedFilter(filterInput);
+            Feed feed = feedManager.getCurrentUsersFeed();
 
             // Generate the posts and ask to select one to like/comment
             String postsString = this.generateDisplayedPosts(feed.getDisplayedPosts());
