@@ -2,6 +2,7 @@ package use_cases;
 
 import entities.User;
 
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,7 +66,7 @@ public class LoginManager {
 
         if (isValidUsername && isValidPassword) {
             //use databaseManager to add new user to the database
-            this.databaseManager.addNewUser(new User(username, password));
+            this.databaseManager.addNewUser(new User(username, password, "", UUID.randomUUID().toString()));
 
         }
 
