@@ -1,3 +1,5 @@
+package use_cases;
+
 import entities.User;
 import use_cases.DatabaseManager;
 import use_cases.UserManager;
