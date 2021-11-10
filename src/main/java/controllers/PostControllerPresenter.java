@@ -181,6 +181,15 @@ public class PostControllerPresenter {
     }
 
     /**
+     * Add like or comment to a post
+     *
+     * @param id the id of target post
+     */
+    public void interactPost(String id, Object obj, boolean type){
+        postManager.interactPost(postManager.getSpecificPost(id), obj, type);
+    }
+
+    /**
      * Displays the post to the user
      *
      * @param id the id of the post to be displayed

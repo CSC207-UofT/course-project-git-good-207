@@ -29,7 +29,7 @@ public class PostManager {
     }
 
     /**
-     * Private function in order to interact with the posts
+     * Return true if like or comment is added to target post, false otherwise
      * @param targetPost the post we want to interact
      * @param obj the object in case of a adding a comment is a
      *           comment, but in the case of being a like is the user
@@ -37,7 +37,7 @@ public class PostManager {
      *            then it would change the behavior
      * @return true iff the post was founded and could be interacted with
      */
-    private boolean interactPost(Post targetPost, Object obj, boolean type){
+    public boolean interactPost(Post targetPost, Object obj, boolean type){
         for (Post post: this.posts) {
             if (post.getId().equals(targetPost.getId())) {
                 if (type) {
