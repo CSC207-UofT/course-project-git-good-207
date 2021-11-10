@@ -16,7 +16,7 @@ public class PostController {
     private final PostManager postManager;
     private final RecipeManager recipeManager;
     private final UserManager userManager;
-    private boolean noMeasurableIngredients;
+    private static boolean noMeasurableIngredients;
 
     public PostController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
         this.inOut = inOut;
@@ -24,7 +24,7 @@ public class PostController {
         this.userManager = new UserManager(dbManager);
         this.recipeManager = new RecipeManager();
         this.loginManager = loginManager;
-        this.noMeasurableIngredients = false;
+        noMeasurableIngredients = false;
     }
 
     /**
@@ -48,14 +48,26 @@ public class PostController {
                 String recipeSteps = this.inOut.getInput(promptRecipeSteps);
 
                 Recipe recipe = recipeManager.createRecipe(recipeTitle, allIngredients, getRecipeStepsList(recipeSteps), UUID.randomUUID().toString());
-                String category = this.inOut.getInput("What is the recipe category?");
-                postManager.createPost(currUser, timeNow, recipe, category, UUID.randomUUID().toString());
+                String category = this.inOut.getInput("What is the recipe category? (Type 'back' to discard draft and return to main menu)");
+                if (category.toLowerCase().contains("back")) {
+                    this.inOut.setOutput("Post deleted. Returning to main menu.");
+                } else {
+                    postManager.createPost(currUser, timeNow, recipe, category, UUID.randomUUID().toString());
+                    this.inOut.setOutput("Post successfully created!");
+
+
+                }
 
             } catch (IOException e) {
                 inOut.setOutput("There was an error: " + e);
             }
-
         }
+    }
+
+    protected void browsePost(Post selectedPost) {
+        this.displayPost(selectedPost.getId());
+        int postAction = this.getPostActionInput();
+        this.runPostAction(selectedPost, postAction);
     }
 
     /**
@@ -66,9 +78,9 @@ public class PostController {
      */
     private String getCountableIngredients(String promptCountable) throws IOException {
         String countableInput = this.inOut.getInput(promptCountable);
-        if (countableInput.contains("N/A") && this.noMeasurableIngredients) {
+        if (countableInput.contains("N/A") && noMeasurableIngredients) {
             inOut.setOutput("Must enter at least one ingredient");
-            getCountableIngredients(promptCountable);
+            countableInput = getCountableIngredients(promptCountable);
         } else if (countableInput.contains("N/A")) {
             return "N/A";
         }
@@ -96,9 +108,9 @@ public class PostController {
     private String getMeasurableIngredients(String promptMeasurable) throws IOException {
         String measurableInput = this.inOut.getInput(promptMeasurable);
         if (measurableInput.contains("N/A")) {
-            this.noMeasurableIngredients = true;
+            noMeasurableIngredients = true;
             return "N/A";
-        }
+        } else { noMeasurableIngredients = false; }
         String[] splitIngredients = measurableInput.split(",");
         String errorMessage = "That was an invalid input. Please enter measurable ingredients again in correct format.";
         for (String ingredient: splitIngredients) {
@@ -108,7 +120,7 @@ public class PostController {
                 getMeasurableIngredients(promptMeasurable);
             } else if (strippedIngredient.split(" ").length != 3) {
                 inOut.setOutput(errorMessage);
-                getMeasurableIngredients(promptMeasurable);
+                measurableInput = getMeasurableIngredients(promptMeasurable);
             }
         }
         return measurableInput;
@@ -196,7 +208,7 @@ public class PostController {
     }
 
     /**
-     * Displays the post to the user
+     * Displays the post to the user given id of the post to be displayed
      *
      * @param id the id of the post to be displayed
      */
@@ -275,8 +287,73 @@ public class PostController {
      */
     private String getPostHeader(String id) {
         String author = userManager.getUsernameById(postManager.getPostAuthor(id));
-        String postedTime = postManager.getPostedTime(id);
+        String postedTime = postManager.getPostedTime(id).toString();
         return author + "\n" + postedTime + "\n\n";
     }
 
+    /**
+     * Run the action chosen (add a like, add a comment) on the selected post.
+     * @param selectedPost The Post selected to act on.
+     * @param postAction The int representing the action to do to a Post.
+     */
+    private void runPostAction(Post selectedPost, Integer postAction) {
+        switch (postAction) {
+            case 0:
+                // Call PostController to add like
+                this.interactPost(selectedPost.getId(), this.loginManager.getCurrUser(), false);
+                this.displayPost(selectedPost.getId());
+                break;
+            case 1:
+                // Call PostController to add comment
+                Comment newComment = this.getUserComment();
+                this.interactPost(selectedPost.getId(), newComment, true);
+                this.displayPost(selectedPost.getId());
+                break;
+            case 99:
+                this.inOut.setOutput("Returning to main menu.");
+                break;
+            default:
+                this.inOut.setOutput("You entered an invalid action.");
+        }
+    }
+
+    /**
+     * Get the Comment that the user wants to add on a Post.
+     * @return a new Comment that the user has decided to add on a Post.
+     */
+    private Comment getUserComment() {
+        Comment comment = new Comment("", this.loginManager.getCurrUser().getId(),
+                LocalDateTime.now(), UUID.randomUUID().toString());
+        String commentText;
+        try {
+            do {
+                commentText = this.inOut.getInput("Please write your comment:");
+            } while (commentText.isEmpty());
+            comment.setText(commentText);
+        } catch (IOException e) {
+            this.inOut.setOutput("An error occurred: " + e);
+        }
+        return comment;
+    }
+
+    /**
+     * Get the user to select an action to do to a post.
+     * @return an int representing the action that the user wants to do to a Post.
+     */
+    private int getPostActionInput() {
+        int postAction = -1;
+        while (postAction < 0 || (postAction > 2 && postAction != 99)) {
+            try {
+                String postActionPrompt = "Please select an action for this post: \n"
+                        + "0 Like the Post \n" + "1 Comment on the Post \n" + "99 Return to main menu";
+                String postActionString = this.inOut.getInput(postActionPrompt);
+                postAction = Integer.parseInt(postActionString);
+            } catch (IOException e) {
+                this.inOut.setOutput("An error occurred: " + e);
+            } catch (NumberFormatException nfe) {
+                this.inOut.setOutput("You entered an invalid action input.");
+            }
+        }
+        return postAction;
+    }
 }
