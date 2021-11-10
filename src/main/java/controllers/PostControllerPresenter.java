@@ -181,7 +181,7 @@ public class PostControllerPresenter {
     }
 
     /**
-     * Add like or comment to a post
+     * Add like or comment to a target post.
      *
      * @param id the id of target post
      */
