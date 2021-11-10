@@ -3,8 +3,6 @@ package controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import entities.InOut;
-import entities.ShellAction;
 import entities.User;
 import use_cases.DatabaseManager;
 import use_cases.LoginManager;

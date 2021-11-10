@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.*;
 import use_cases.LoginManager;
 
 import java.io.IOException;
