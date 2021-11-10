@@ -27,6 +27,11 @@ public class PostController {
         this.noMeasurableIngredients = false;
     }
 
+    /**
+     * Run the appropriate shell action to create a new post
+     *
+     * @param action The entered action from welcome page
+     */
     public void run(ShellAction action) {
         if (action == ShellAction.POST) {
             User currUser = this.loginManager.getCurrUser();
@@ -37,7 +42,7 @@ public class PostController {
             try {
                 String inputMeasurable = getMeasurableIngredients(promptMeasurable);
                 String inputCountable = getCountableIngredients(promptCountable);
-                ArrayList<Ingredient> allIngredients = createCountableIngredient(inputCountable, createMeasurableIngredient(inputMeasurable));
+                ArrayList<Ingredient> allIngredients = createAllIngredientList(inputCountable, createMeasurableIngredient(inputMeasurable));
 
                 String recipeTitle = this.inOut.getInput("Enter title of recipe");
                 String recipeSteps = this.inOut.getInput(promptRecipeSteps);
@@ -53,6 +58,12 @@ public class PostController {
         }
     }
 
+    /**
+     * Return String of countable ingredients from user input.
+     *
+     * @param promptCountable prompt for countable ingredients
+     * @return String countable ingredients that user entered
+     */
     private String getCountableIngredients(String promptCountable) throws IOException {
         String countableInput = this.inOut.getInput(promptCountable);
         if (countableInput.contains("N/A") && this.noMeasurableIngredients) {
@@ -76,6 +87,12 @@ public class PostController {
         return countableInput;
     }
 
+    /**
+     * Return String of measurable ingredients from user input.
+     *
+     * @param promptMeasurable prompt for measurable ingredients
+     * @return String measurable ingredients that user entered
+     */
     private String getMeasurableIngredients(String promptMeasurable) throws IOException {
         String measurableInput = this.inOut.getInput(promptMeasurable);
         if (measurableInput.contains("N/A")) {
@@ -97,6 +114,11 @@ public class PostController {
         return measurableInput;
     }
 
+    /**
+     * Return array of prompts to user while creating a post
+     *
+     * @return String countable ingredients that user entered
+     */
     private String[] createPostHelper() {
         String promptRecipeSteps = "Enter recipe steps in this comma-separated format: 'Add the water, mix flour'";
         String promptMeasurable = "Enter measurable ingredients (in grams, ounces etc) in format '50 grams sugar, 1 cup flour, etc.' or N/A if no measurable ingredients";
@@ -104,13 +126,26 @@ public class PostController {
         return new String[]{promptRecipeSteps, promptMeasurable, promptCountable};
     }
 
+    /**
+     * Return an ArrayList of recipe steps.
+     *
+     * @param recipeSteps String of recipe steps
+     * @return Returns ArrayList of recipe steps
+     */
     private ArrayList<String> getRecipeStepsList(String recipeSteps) {
         String[] stepsList = recipeSteps.split(", ");
         List<String> list = Arrays.asList(stepsList);
         return new ArrayList<>(list);
     }
 
-    private ArrayList<Ingredient> createCountableIngredient(String inputCountable, ArrayList<Ingredient> measurable) {
+    /**
+     * Return ArrayList of all ingredients user entered
+     *
+     * @param inputCountable String input of countable ingredients from user
+     * @param measurable the measurable ingredients that user entered
+     * @return ArrayList<Ingredient> the ArrayList of all ingredients user entered
+     */
+    private ArrayList<Ingredient> createAllIngredientList(String inputCountable, ArrayList<Ingredient> measurable) {
         ArrayList<Ingredient> ingredientList = new ArrayList<>();
         if (!inputCountable.equals("N/A")) {
             String[] countable = inputCountable.split(", ");
@@ -125,6 +160,12 @@ public class PostController {
         return ingredientList;
     }
 
+    /**
+     * Return ArrayList of all measurable ingredients user entered
+     *
+     * @param inputMeasurable String input of measurable ingredients from user
+     * @return ArrayList<Ingredient> the ArrayList of all measurable ingredients user entered
+     */
     private ArrayList<Ingredient> createMeasurableIngredient(String inputMeasurable) {
         if (!inputMeasurable.equals("N/A")) {
             String[] measurable = inputMeasurable.split(", ");
@@ -139,6 +180,11 @@ public class PostController {
         return new ArrayList<>();
     }
 
+    /**
+     * Displays the post to the user
+     *
+     * @param id the id of the post to be displayed
+     */
     public void displayPost(String id) {
         String header = getPostHeader(id);
         String recipeInfo = getRecipeInfo(id);
@@ -152,6 +198,12 @@ public class PostController {
 
     }
 
+    /**
+     * Return the "Likes" section of post
+     *
+     * @param id the id of target post
+     * @return String the formatted "likes" section of post
+     */
     private String getPostLikes(String id) {
         String[] likesInfo = postManager.getPostLikedUsers(id);
         StringBuilder likesDisplay = new StringBuilder("Liked by (").append(likesInfo.length).append("):\n");
@@ -161,6 +213,12 @@ public class PostController {
         return likesDisplay.append("\n\n").toString();
     }
 
+    /**
+     * Return the "Comments" section of post
+     *
+     * @param id the id of target post
+     * @return String the formatted "Comments" section of post
+     */
     private String getPostComments(String id) {
         String[] comments = postManager.getPostComments(id);
         StringBuilder formattedComments = new StringBuilder("Comments:\n\n");
@@ -170,6 +228,12 @@ public class PostController {
         return formattedComments.toString();
     }
 
+    /**
+     * Return the "Recipe" section of post
+     *
+     * @param id the id of target post
+     * @return String the formatted "Recipe" section of post
+     */
     private String getRecipeInfo(String id) {
         Recipe postRecipe = postManager.getPostRecipe(id);
         String recipeTitle = recipeManager.getRecipeTitle(postRecipe);
@@ -188,6 +252,12 @@ public class PostController {
         return recipeInfo.append("\nCategory: ").append(category).append("\n\n").toString();
     }
 
+    /**
+     * Return the post header
+     *
+     * @param id the id of target post
+     * @return String the formatted post header
+     */
     private String getPostHeader(String id) {
         String author = userManager.getUsernameById(postManager.getPostAuthor(id));
         String postedTime = postManager.getPostedTime(id);
