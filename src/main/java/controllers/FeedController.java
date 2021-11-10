@@ -61,12 +61,12 @@ public class FeedController {
         switch (postAction) {
             case 0:
                 // Call PostController to add like
-
+                this.postController.interactPost(selectedPost.getId(), this.loginManager.getCurrUser(), false);
                 break;
             case 1:
                 // Call PostController to add comment
                 Comment newComment = this.getUserComment();
-
+                this.postController.interactPost(selectedPost.getId(), newComment, true);
                 break;
             default:
                 this.inOut.setOutput("You entered an invalid action.");
@@ -101,12 +101,12 @@ public class FeedController {
     private void selectOnePost(String postsString, int numOfDisplayedPosts) {
         int postNumber = this.getSelectedPostInput(postsString, numOfDisplayedPosts);
         Post selectedPost = this.postsActionMap.get(postNumber);
-        postController.displayPost(selectedPost);
+        postController.displayPost(selectedPost.getId());
 
         int postAction = this.getPostActionInput();
 
         this.runPostAction(selectedPost, postAction);
-        postController.displayPost(selectedPost);
+        postController.displayPost(selectedPost.getId());
     }
 
     /**

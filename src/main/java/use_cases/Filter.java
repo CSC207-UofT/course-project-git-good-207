@@ -3,6 +3,8 @@ package use_cases;
 import entities.Feed;
 import entities.Post;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,11 +50,12 @@ public class Filter {
      * @return an ArrayList of Posts sorted from the most recent to the least.
      */
     private ArrayList<Post> sortByPostedTime(ArrayList<Post> maxDisplayedPosts) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         // Sort from most recent to oldest
         Comparator<Post> byPostedTime = (p1, p2) -> {
-            if (p1.getCreatedTime().isBefore(p2.getCreatedTime())) {
+            if (LocalDateTime.parse(p1.getCreatedTime(), formatter).isBefore(LocalDateTime.parse(p2.getCreatedTime(), formatter))) {
                 return 1;
-            } else if (p1.getCreatedTime().isEqual(p2.getCreatedTime())) {
+            } else if (LocalDateTime.parse(p1.getCreatedTime(), formatter).isEqual(LocalDateTime.parse(p2.getCreatedTime(), formatter))) {
                 return 0;
             } else {
                 return -1;
