@@ -2,8 +2,6 @@ package controllers;
 
 import java.io.IOException;
 
-import entities.InOut;
-import entities.ShellAction;
 import entities.User;
 import entities.Post;
 import use_cases.DatabaseManager;

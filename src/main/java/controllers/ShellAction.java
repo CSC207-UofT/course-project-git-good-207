@@ -1,4 +1,4 @@
-package entities;
+package controllers;
 
 public enum ShellAction {
     BROWSEFEED,
