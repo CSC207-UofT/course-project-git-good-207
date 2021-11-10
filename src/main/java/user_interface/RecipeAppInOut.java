@@ -1,6 +1,6 @@
 package user_interface;
 
-import entities.InOut;
+import controllers.InOut;
 import java.util.Scanner;
 
 public class RecipeAppInOut implements InOut {
