@@ -46,14 +46,14 @@ public class FeedManager {
      * Get the current User.
      * @return the current User.
      */
-    public User getCurrentUser() { return currentUser; }
+    public User getCurrentUser() { return this.currentUser; }
 
     /**
      * Get the current User's Feed.
      * @return the current User's Feed.
      */
     public Feed getCurrentUsersFeed() {
-        return currentUsersFeed;
+        return this.currentUsersFeed;
     }
 
     /**

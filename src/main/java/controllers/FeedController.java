@@ -6,11 +6,9 @@ import use_cases.FeedManager;
 import use_cases.LoginManager;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class FeedController {
     private final FeedManager feedManager;
@@ -44,32 +42,15 @@ public class FeedController {
     private void runBrowseFeed() {
         // Ask for a filter option for the feed
         ArrayList<Integer> filterInput = this.getFilterInput();
-        this.feedManager.setFeedFilter(filterInput);
-        Feed feed = this.feedManager.getCurrentUsersFeed();
+        if (filterInput.get(0) == 99) {
+            this.inOut.setOutput("Returning to main menu.");
+        } else {
+            this.feedManager.setFeedFilter(filterInput);
+            Feed feed = this.feedManager.getCurrentUsersFeed();
 
-        // Generate the posts and ask to select one to like/comment
-        String postsString = this.generateDisplayedPosts(feed.getDisplayedPosts());
-        this.selectOnePost(postsString, feed.getDisplayedPosts().size());
-    }
-
-    /**
-     * Run the action chosen (add a like, add a comment) on the selected post.
-     * @param selectedPost The Post selected to act on.
-     * @param postAction The int representing the action to do to a Post.
-     */
-    private void runPostAction(Post selectedPost, Integer postAction) {
-        switch (postAction) {
-            case 0:
-                // Call PostController to add like
-                this.postController.interactPost(selectedPost.getId(), this.loginManager.getCurrUser(), false);
-                break;
-            case 1:
-                // Call PostController to add comment
-                Comment newComment = this.getUserComment();
-                this.postController.interactPost(selectedPost.getId(), newComment, true);
-                break;
-            default:
-                this.inOut.setOutput("You entered an invalid action.");
+            // Generate the posts and ask to select one to like/comment
+            String postsString = this.generateDisplayedPosts(feed.getDisplayedPosts());
+            this.selectOnePost(postsString, feed.getDisplayedPosts().size());
         }
     }
 
@@ -80,7 +61,8 @@ public class FeedController {
      */
     private String generateDisplayedPosts(ArrayList<Post> posts) {
         this.postsActionMap = new HashMap<>();
-        StringBuilder postsString = new StringBuilder("Enter a post number for a detailed view of that post: ");
+        StringBuilder postsString = new StringBuilder("Enter a post number for a detailed view of " +
+                "that post or enter 99 to choose a different feed filter: ");
 
         for (int i = 0; i < posts.size(); i++) {
             this.postsActionMap.put(i, posts.get(i));
@@ -100,13 +82,12 @@ public class FeedController {
      */
     private void selectOnePost(String postsString, int numOfDisplayedPosts) {
         int postNumber = this.getSelectedPostInput(postsString, numOfDisplayedPosts);
-        Post selectedPost = this.postsActionMap.get(postNumber);
-        postController.displayPost(selectedPost.getId());
-
-        int postAction = this.getPostActionInput();
-
-        this.runPostAction(selectedPost, postAction);
-        postController.displayPost(selectedPost.getId());
+        if (postNumber == 99) {
+            this.runBrowseFeed();
+        } else {
+            Post selectedPost = this.postsActionMap.get(postNumber);
+            this.postController.browsePost(selectedPost);
+        }
     }
 
     /**
@@ -116,58 +97,20 @@ public class FeedController {
      * @return an int representing the Post that the user selects.
      */
     private int getSelectedPostInput(String postsString, int numOfDisplayedPosts) {
-        int postNumber = 0;
-        try {
-            do {
+        int postNumber = -1;
+
+        while (postNumber < 0 || (postNumber > numOfDisplayedPosts - 1 && postNumber != 99)) {
+            try {
                 String postSelection = this.inOut.getInput(postsString);
                 postNumber = Integer.parseInt(postSelection);
-            } while (postNumber < 0 || postNumber > numOfDisplayedPosts - 1);
-        } catch (IOException e) {
-            this.inOut.setOutput("An error occurred: " + e);
-        } catch (NumberFormatException nfe) {
-            this.inOut.setOutput("You entered an invalid action input.");
+            } catch (IOException e) {
+                this.inOut.setOutput("An error occurred: " + e);
+            } catch (NumberFormatException nfe) {
+                this.inOut.setOutput("You entered an invalid action input.");
+            }
         }
+
         return postNumber;
-    }
-
-    /**
-     * Get the user to select an action to do to a post.
-     * @return an int representing the action that the user wants to do to a Post.
-     */
-    private int getPostActionInput() {
-        int postAction = 0;
-        try {
-            do {
-                String postActionPrompt = "Please select an action for this post: \n"
-                        + "0 Like the Post \n" + "1 Comment on the Post";
-                String postActionString = this.inOut.getInput(postActionPrompt);
-                postAction = Integer.parseInt(postActionString);
-            } while (postAction < 0 || postAction > 1);
-        } catch (IOException e) {
-            this.inOut.setOutput("An error occurred: " + e);
-        } catch (NumberFormatException nfe) {
-            this.inOut.setOutput("You entered an invalid action input.");
-        }
-        return postAction;
-    }
-
-    /**
-     * Get the Comment that the user wants to add on a Post.
-     * @return a new Comment that the user has decided to add on a Post.
-     */
-    private Comment getUserComment() {
-        Comment comment = new Comment("", this.loginManager.getCurrUser().getId(),
-                LocalDateTime.now(), UUID.randomUUID().toString());
-        String commentText;
-        try {
-            do {
-                commentText = this.inOut.getInput("Please write your comment:");
-            } while (commentText.isEmpty());
-            comment.setText(commentText);
-        } catch (IOException e) {
-            this.inOut.setOutput("An error occurred: " + e);
-        }
-        return comment;
     }
 
     /**
@@ -175,23 +118,27 @@ public class FeedController {
      * @return an ArrayList of ints representing the choice of filter and the type of cuisine (if filtering by cuisine).
      */
     private ArrayList<Integer> getFilterInput() {
-        int filterInput = 0;
+        int filterInput = -1;
         int cuisineInput = 0;
-        try {
-            do {
+
+        while (filterInput < 0 || (filterInput > 4 && filterInput != 99)) {
+            try {
                 String filterInputString = this.inOut.getInput("Please enter a valid number that corresponds " +
                         "to how you want to filter your feed: \n" + "0 No filter \n" + "1 Filter by cuisine \n" +
                         "2 Filter by likes \n" + "3 Filter by your following list \n" + "4 Filter by recommendations");
                 filterInput = Integer.parseInt(filterInputString);
-            } while (filterInput < 0 || filterInput > 4);
 
-            if (filterInput == 1) {
-                cuisineInput = this.getCuisineInput();
+                if (filterInput == 1) {
+                    cuisineInput = this.getCuisineInput();
+                    if (cuisineInput == 99) {
+                        this.runBrowseFeed();
+                    }
+                }
+            } catch (IOException e) {
+                this.inOut.setOutput("An error occurred: " + e);
+            } catch (NumberFormatException nfe) {
+                this.inOut.setOutput("You entered an invalid action input.");
             }
-        } catch (IOException e) {
-            this.inOut.setOutput("An error occurred: " + e);
-        } catch (NumberFormatException nfe) {
-            this.inOut.setOutput("You entered an invalid action input.");
         }
 
         return new ArrayList<>(Arrays.asList(filterInput, cuisineInput));
@@ -202,18 +149,20 @@ public class FeedController {
      * @return an int representing the cuisine type that the user chooses to filter the Feed with.
      */
     private int getCuisineInput() {
-        int cuisineInput = 0;
-        try {
-            do {
+        int cuisineInput = -1;
+
+        while (cuisineInput < 0 || (cuisineInput > 6 && cuisineInput != 99)) {
+            try {
                 String cuisineInputString = this.inOut.getInput("Enter the number that corresponds " +
                         "to the cuisine you would like to see: \n" + "0 Chinese \n" + "1 American \n" +
-                        "2 Japanese \n" + "3 Italian \n" + "4 French \n" + "5 Mexican \n" + "6 Others");
+                        "2 Japanese \n" + "3 Italian \n" + "4 French \n" + "5 Mexican \n" + "6 Others \n" +
+                        "99 Return to choose a different feed filter");
                 cuisineInput = Integer.parseInt(cuisineInputString);
-            } while (cuisineInput < 0 || cuisineInput > 6);
-        } catch (IOException e) {
-            this.inOut.setOutput("An error occurred: " + e);
-        } catch (NumberFormatException nfe) {
-            this.inOut.setOutput("You entered an invalid action input.");
+            } catch (IOException e) {
+                this.inOut.setOutput("An error occurred: " + e);
+            } catch (NumberFormatException nfe) {
+                this.inOut.setOutput("You entered an invalid action input.");
+            }
         }
         return cuisineInput;
     }
