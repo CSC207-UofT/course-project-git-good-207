@@ -188,4 +188,12 @@ public class PostManager {
         return this.getSpecificPost(postId).getCreatedTime();
     }
 
+    /**
+     * Given the post object returns the post id
+     * @param post post object to return the id of
+     * @return postId id of the post
+     */
+    public String getPostId(Post post) {
+        return this.getPostId(post);
+    }
 }

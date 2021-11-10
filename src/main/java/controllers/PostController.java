@@ -201,7 +201,7 @@ public class PostController {
     }
 
     /**
-     * Displays the post to the user
+     * Displays the post to the user given id of the post to be displayed
      *
      * @param id the id of the post to be displayed
      */

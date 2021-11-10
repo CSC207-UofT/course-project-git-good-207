@@ -3,9 +3,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.UUID;
 
-// import other required classes
-// import list of cuisine categories (?)
-
 /**
  * User class stores: username, password, HashMap mapping cuisine to number of likes (Integer) user put for that
  * cuisine (String), a String bio, a list of Users that follow User (followers), a list of Users the user is following,
@@ -17,11 +14,8 @@ public class User {
     private HashMap<String, Integer> likeHistory;
     private ArrayList<User> followers, following;
     private ArrayList<Post> posts;
-    private String id;
+    private final String id;
 
-    /**
-     * explanation of User
-     */
     // constructors
 
     public User(String username, String password, String bio, String id) {
