@@ -1,6 +1,7 @@
 package use_cases;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import entities.User;
 
@@ -19,7 +20,7 @@ public class UserManager {
      * Return a User object given the user's username and password
      */
     public User createUser(String username, String password) {
-        User user = new User(username, password);
+        User user = new User(username, password, "", UUID.randomUUID().toString());
         this.databaseManager.addNewUser(user);
         return user;
     }
@@ -74,9 +75,6 @@ public class UserManager {
      * follow User want_to_follow, adding want_to_follow into the logged-in user's following list
      */
     public boolean followUser(User currentUser, User wantToFollow) {
-        /**
-         * Return false if user is already followed, true otherwise.
-         */
         // check whether User want_to_follow is already followed by current_user
         if (currentUser.getFollowing().contains(wantToFollow)) {
             return false;
@@ -85,9 +83,7 @@ public class UserManager {
             // update current_user's following list: following
             ArrayList<User> updatedFollowingList = new ArrayList<>();
             updatedFollowingList.add(wantToFollow);
-            for (User user: currentUser.getFollowing()) {
-                updatedFollowingList.add(user);
-            }
+            updatedFollowingList.addAll(currentUser.getFollowing());
             currentUser.setFollowing(updatedFollowingList);
             return true;
         }
@@ -99,10 +95,7 @@ public class UserManager {
      */
     public boolean unfollowUser(User currentUser, User wantToUnfollow) {
         if (currentUser.getFollowing().contains(wantToUnfollow)) {
-            ArrayList<User> updatedFollowingList = new ArrayList<>();
-            for (User user: currentUser.getFollowing()) {
-                updatedFollowingList.add(user);
-            }
+            ArrayList<User> updatedFollowingList = new ArrayList<>(currentUser.getFollowing());
             updatedFollowingList.remove(wantToUnfollow);
             currentUser.setFollowing(updatedFollowingList);
             return true;
@@ -114,9 +107,6 @@ public class UserManager {
      * add a follower to User's followers' list
      */
     public boolean addFollower(User user, User new_follower){
-        /**
-         * Return false if new_follower is already following user, true otherwise.
-         */
         if (user.getFollowers().contains(new_follower)){
             return false;
         }
@@ -235,16 +225,16 @@ public class UserManager {
      * Return user's following list as strings
      */
     public String getFollowingListString(User user) {
-        String followingList = "";
+        StringBuilder followingList = new StringBuilder();
         for (String username: this.getFollowingListUsernames(user)) {
-            if (followingList == "") {
-                followingList = username;
+            if (followingList.toString().equals("")) {
+                followingList = new StringBuilder(username);
             }
             else {
-                followingList = followingList + ", " + username;
+                followingList.append(", ").append(username);
             }
         }
-        return followingList;
+        return followingList.toString();
     }
 
     /**

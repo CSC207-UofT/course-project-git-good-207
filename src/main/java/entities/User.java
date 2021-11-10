@@ -23,33 +23,12 @@ public class User {
      * explanation of User
      */
     // constructors
-    public User(String username, String password){
-        this.username = username;
-        this.password = password;
-        this.bio = "";
-        this.likeHistory = new HashMap<>();
-        this.followers = new ArrayList<>();
-        this.following = new ArrayList<>();
-        this.posts = new ArrayList<>();
-        this.id = UUID.randomUUID().toString();
-    }
-
-    public User(String username, String password, String bio) {
-        this.username = username;
-        this.password = password;
-        this.bio = bio;
-        this.id = UUID.randomUUID().toString();
-        this.likeHistory = new HashMap<>();
-        this.followers = new ArrayList<>();
-        this.following = new ArrayList<>();
-        this.posts = new ArrayList<>();
-    }
 
     public User(String username, String password, String bio, String id) {
         this.username = username;
         this.password = password;
         this.bio = bio;
-        this.id = UUID.nameUUIDFromBytes(id.getBytes()).toString();
+        this.id = id;
         this.likeHistory = new HashMap<>();
         this.followers = new ArrayList<>();
         this.following = new ArrayList<>();
