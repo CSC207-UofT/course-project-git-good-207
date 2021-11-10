@@ -184,7 +184,7 @@ public class PostManager {
      * @param postId id of the post
      * @return time this post was posted
      */
-    public String getPostedTime(String postId){
+    public LocalDateTime getPostedTime(String postId){
         return this.getSpecificPost(postId).getCreatedTime();
     }
 

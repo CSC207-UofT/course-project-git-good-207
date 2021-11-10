@@ -3,7 +3,6 @@ package use_cases;
 import entities.Feed;
 import entities.Post;
 import entities.User;
-import use_cases.Filter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,12 +28,14 @@ public class FilterByFollowing extends Filter {
         ArrayList<String> usersFollowingInStrings = this.getUsersFollowingList();
         ArrayList<Post> allPosts = this.currentUserFeed.getPosts();
         ArrayList<Post> followingPosts = new ArrayList<>();
-        for (Post p : allPosts) {
-            if (usersFollowingInStrings.contains(p.getAuthorId())) {
-                followingPosts.add(p);
+        if (usersFollowingInStrings.size() != 0) {
+            for (Post p : allPosts) {
+                if (usersFollowingInStrings.contains(p.getAuthorId())) {
+                    followingPosts.add(p);
+                }
             }
+            Collections.shuffle(followingPosts);
         }
-        Collections.shuffle(followingPosts);
         return followingPosts;
     }
 
@@ -45,8 +46,10 @@ public class FilterByFollowing extends Filter {
     private ArrayList<String> getUsersFollowingList() {
         ArrayList<User> currentUsersFollowing = this.currentUser.getFollowing();
         ArrayList<String> usersFollowingInStrings = new ArrayList<>();
-        for (User s : currentUsersFollowing) {
-            usersFollowingInStrings.add(s.getId());
+        if (currentUsersFollowing.size() != 0) {
+            for (User s : currentUsersFollowing) {
+                usersFollowingInStrings.add(s.getId());
+            }
         }
         return usersFollowingInStrings;
     }
