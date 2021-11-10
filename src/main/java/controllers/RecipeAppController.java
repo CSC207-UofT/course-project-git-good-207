@@ -10,7 +10,7 @@ public class RecipeAppController {
     private final MySQLController mySQLController;
     private final LoginController loginController;
     private final FeedController feedController;
-    private final PostControllerPresenter postControllerPresenter;
+    private final PostController postController;
     private final UserProfileController userProfileController;
     private final LoginManager loginManager;
     private final String shellActionPrompt = "Enter an action: \n" +
@@ -27,7 +27,7 @@ public class RecipeAppController {
         this.feedController = new FeedController(inOut, this.mySQLController, this.loginManager);
         this.loginController = new LoginController(inOut, this.loginManager);
         this.userProfileController = new UserProfileController(inOut, this.mySQLController, this.loginManager);
-        this.postControllerPresenter = new PostControllerPresenter(inOut, this.mySQLController, this.loginManager);
+        this.postController = new PostController(inOut, this.mySQLController, this.loginManager);
     }
 
     public void run() {
@@ -73,7 +73,7 @@ public class RecipeAppController {
         } else if (action == ShellAction.BROWSEPROFILE) {
             this.userProfileController.run(ShellAction.BROWSEPROFILE);
         } else if (action == ShellAction.POST) {
-            this.postControllerPresenter.run(ShellAction.POST);
+            this.postController.run(ShellAction.POST);
         } else if (action == ShellAction.CUSTOMIZEPROFILE) {
             this.userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         } else if (action == ShellAction.LOGOUT) {
