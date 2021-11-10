@@ -14,9 +14,9 @@ public class FilterByRecommended extends Filter {
     private final User user;
 
     /**
-     * Construct a Filter object and the user's feed.
-     *
+     * Construct a FilterByRecommended object
      * @param currentUserFeed The current user's feed
+     * @param user The current user
      */
     public FilterByRecommended(Feed currentUserFeed, User user) {
         super(currentUserFeed);
@@ -40,6 +40,13 @@ public class FilterByRecommended extends Filter {
         return recommendedPosts;
     }
 
+    /**
+     * Return an ArrayList of Posts that can be recommended
+     * Meaning they have not been previously liked/posted by user,
+     * and they are part of a category that the user has liked.
+     *
+     * @return ArrayList of Posts that can be recommended
+     */
     private ArrayList<Post> getRecommendablePosts() {
         ArrayList<Post> allPosts = this.currentUserFeed.getPosts();
         ArrayList<String> likedCategories = new ArrayList<>(this.user.getLikeHistory().keySet());
@@ -56,6 +63,12 @@ public class FilterByRecommended extends Filter {
         return recommendablePosts;
     }
 
+    /**
+     * Recommend a random post that is in recommendablePosts and is part of category
+     * @param recommendablePosts ArrayList of posts that can be recommended
+     * @param category String representing a post category
+     * @return a Post that is recommendable and in the correct category, null if it doesn't exist
+     */
     private Post getRecommendedPost(ArrayList<Post> recommendablePosts, String category) {
         ArrayList<Post> postsInCategory = new ArrayList<>();
         for (Post post : recommendablePosts) {
@@ -73,6 +86,11 @@ public class FilterByRecommended extends Filter {
 
     }
 
+    /**
+     * Recommend a category from user's like history using
+     * a weighted random probability based on likes
+     * @return the recommended category as a String
+     */
     private String getRecCategory() {
         HashMap<String, Integer> likeHistory = user.getLikeHistory();
         int totalLikes = 0;
