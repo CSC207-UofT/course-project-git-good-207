@@ -32,8 +32,10 @@ public class FeedManager {
             filterObject = new FilterByCuisine(this.getCurrentUsersFeed(), filterNumInput.get(1));
         } else if (filterNumInput.get(0) == 2) {
             filterObject = new FilterByLikes(this.getCurrentUsersFeed());
-        } else {
+        } else if (filterNumInput.get(0) == 3) {
             filterObject = new FilterByFollowing(this.getCurrentUsersFeed(), this.getCurrentUser());
+        } else {
+            filterObject = new FilterByRecommended(this.getCurrentUsersFeed(), this.getCurrentUser());
         }
 
         Feed filteredFeed = filterObject.runFilter();
@@ -44,14 +46,14 @@ public class FeedManager {
      * Get the current User.
      * @return the current User.
      */
-    public User getCurrentUser() { return currentUser; }
+    public User getCurrentUser() { return this.currentUser; }
 
     /**
      * Get the current User's Feed.
      * @return the current User's Feed.
      */
     public Feed getCurrentUsersFeed() {
-        return currentUsersFeed;
+        return this.currentUsersFeed;
     }
 
     /**

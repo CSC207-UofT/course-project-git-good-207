@@ -31,5 +31,5 @@ public abstract class PostableItem {
 
     public String getId() { return this.id; }
 
-    public String getCreatedTime() { return this.createdTime.toString(); }
+    public LocalDateTime getCreatedTime() { return this.createdTime; }
 }
