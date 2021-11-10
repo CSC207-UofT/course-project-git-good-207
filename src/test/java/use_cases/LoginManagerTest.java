@@ -69,7 +69,8 @@ class LoginManagerTest {
 
     @Test
     void testSignUpInvalid(){
-        boolean isValid = loginManager.signUp("uniqueTestUsername2", "Testing2");
+        loginManager.signUp("anotherTestUser", "Testing2");
+        boolean isValid = loginManager.signUp("anotherTestUser", "Testing2");
 
         //TODO also check that it wasn't added to database anyways once you can remove users
         assert !isValid;
@@ -77,7 +78,7 @@ class LoginManagerTest {
 
     @Test
     void getCurrUserLoggedIn() {
-        loginManager.login("test2", "Test2");
+        loginManager.login("test2", "test2");
 
         String actual = loginManager.getCurrUser().getId();
         String expect = testUser.getId();
