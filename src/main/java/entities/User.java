@@ -17,7 +17,6 @@ public class User {
     private final String id;
 
     // constructors
-
     public User(String username, String password, String bio, String id) {
         this.username = username;
         this.password = password;
