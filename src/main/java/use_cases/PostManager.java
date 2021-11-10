@@ -2,6 +2,7 @@ package use_cases;
 
 import entities.*;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,8 +13,10 @@ import java.util.Arrays;
 public class PostManager {
     private final ArrayList<Post> posts;
     private DatabaseManager databaseManager;
+    private UserManager userManager;
     public PostManager(DatabaseManager databaseManager){
         this.databaseManager = databaseManager;
+        this.userManager = new UserManager(databaseManager);
         Post[] allPosts = this.databaseManager.getAllPosts();
         this.posts = new ArrayList<>(Arrays.asList(allPosts));
     }
@@ -26,7 +29,7 @@ public class PostManager {
     }
 
     /**
-     * Private function in order to interacts with the posts
+     * Return true if like or comment is added to target post, false otherwise
      * @param targetPost the post we want to interact
      * @param obj the object in case of a adding a comment is a
      *           comment, but in the case of being a like is the user
@@ -65,7 +68,7 @@ public class PostManager {
     }
 
     /**
-     * Comments a post if and only if could be done returns true
+     * Comments on a post if and only if could be done returns true
      * @param post The post object itself
      * @param comment The comment that is being added
      * @return true if the comment was added to the Post
@@ -76,7 +79,7 @@ public class PostManager {
 
     /**
      *  likes a post and saves the state
-     * @param post the post is being liked
+     * @param post the post that is being liked
      * @param user the user that is giving the like
      * @return true if the post was liked
      */
@@ -96,7 +99,7 @@ public class PostManager {
 
     /**
      * Return method that returns a list of the posts
-     * @return a list of all the posts currrently available
+     * @return a list of all the posts currently available
      */
     public ArrayList<Post> getPosts() {
         return this.posts;
@@ -108,35 +111,44 @@ public class PostManager {
      * @param id the unique identifier of a post
      * @return the post stored in the postManager
      */
-    public Post getSpecificPost(String id)
-    {
-        for(Post element: this.getPosts())
-        {
-            if (id.equals(element.getId()))
-            {
+    public Post getSpecificPost(String id) {
+        for(Post element: this.getPosts()) {
+            if (id.equals(element.getId())) {
                 return element;
             }
         }
         return null;
     }
     /**
-     * Given a post id it returns a list with the liked users
+     * Given a post id it returns a list with the liked users' usernames
      * of that post
      * @param postId id of the post
-     * @return a list of the liked users
+     * @return a list of the liked users' usernames
      */
-    public ArrayList<User> getPostLikedUsers(String postId){
-        return this.getSpecificPost(postId).getLikedUsers();
+    public String[] getPostLikedUsers(String postId){
+
+        ArrayList<User> likedUsers = this.getSpecificPost(postId).getLikedUsers();
+        String[] likes = new String[likedUsers.size()];
+        for (int i = 0; i < likedUsers.size(); i++) {
+            likes[i] = userManager.getUsername(likedUsers.get(i));
+        }
+        return likes;
     }
 
     /**
-     * Given a post id it returns a list with the comments
+     * Return array of comments with usernames before each comment
      * of that post
      * @param postId id of the post
-     * @return a list of the comments associated to the post
+     * @return an array of the comments associated to the post
      */
-    public ArrayList<Comment> getPostComments(String postId){
-        return this.getSpecificPost(postId).getComments();
+    public String[] getPostComments(String postId){
+
+        ArrayList<Comment> commentObjects = this.getSpecificPost(postId).getComments();
+        String[] comments = new String[commentObjects.size()];
+        for (int i = 0; i < commentObjects.size(); i++) {
+            comments[i] = userManager.getUsernameById(commentObjects.get(i).getAuthorId()) + ": " + commentObjects.get(i).getCommentText();
+        }
+        return comments;
     }
 
     /**
@@ -150,6 +162,15 @@ public class PostManager {
     }
 
     /**
+     * Return author id of the post
+     * @param postId id of the post
+     * @return author of the post
+     */
+    public String getPostAuthor(String postId){
+        return this.getSpecificPost(postId).getAuthorId();
+    }
+
+    /**
      * Given the post id returns the category of it
      * @param postId id of the post
      * @return category of the post
@@ -157,4 +178,14 @@ public class PostManager {
     public String getPostCategory(String postId){
         return this.getSpecificPost(postId).getCategory();
     }
+
+    /**
+     * Given the post id returns the posted time
+     * @param postId id of the post
+     * @return time this post was posted
+     */
+    public String getPostedTime(String postId){
+        return this.getSpecificPost(postId).getCreatedTime();
+    }
+
 }

@@ -22,4 +22,13 @@ public class CountableIngredient extends Ingredient {
     public float getIngredientNumber(){
         return this.ingredientNumber;
     }
+
+    /**
+     * Return the full CountableIngredient as a String.
+     *
+     * @return Return the CountableIngredient String representation.
+     */
+    public String getCountableIngredient() {
+        return this.ingredientNumber + getIngredientName();
+    }
 }
