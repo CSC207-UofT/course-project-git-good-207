@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class Filter {
     protected Feed currentUserFeed;
@@ -50,7 +51,7 @@ public class Filter {
      * @return an ArrayList of Posts sorted from the most recent to the least.
      */
     private ArrayList<Post> sortByPostedTime(ArrayList<Post> maxDisplayedPosts) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         // Sort from most recent to oldest
         Comparator<Post> byPostedTime = (p1, p2) -> {
             if (LocalDateTime.parse(p1.getCreatedTime(), formatter).isBefore(LocalDateTime.parse(p2.getCreatedTime(), formatter))) {
