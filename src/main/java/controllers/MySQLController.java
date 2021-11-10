@@ -60,6 +60,17 @@ public class MySQLController extends DatabaseManager {
             e.printStackTrace();
         }
     }
+
+    private User getUser(String userId){
+        User[] users = this.getAllUsers();
+        for(User user: users){
+            if (user.getId().equals(userId)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     /**
      * Given an user objects changes all the attributes
      * such that match the ones given in the parameter
