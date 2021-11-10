@@ -60,6 +60,110 @@ public class MySQLController extends DatabaseManager {
             e.printStackTrace();
         }
     }
+    /**
+     * Given an user objects changes all the attributes
+     * such that match the ones given in the parameter
+     * except the id
+     * @param user user object that stores the id to
+     *             update the values
+     */
+    public boolean updateUser(User user){
+        try {
+            String query = "UPDATE FROM `user_info` SET `username`= ?, `password`=?, `bio`=? " +
+                    "WHERE `username`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getBio());
+            preparedStatement.setString(4, user.getUsername());
+            preparedStatement.execute();
+            return true;
+
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * deletes all the information except for recipes related
+     * to the given user in the database
+     * @param user user object that contains information about
+     *             the user
+     * @return true if it could delete all the information related
+     * to the user
+     */
+    public boolean deleteUser(User user){
+        try {
+            String query = "DELETE FROM `user_info` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        this.deletePostsFromUser(user);
+        this.deleteCommentsFromUser(user);
+        this.deleteFollowsFromUser(user);
+        this.deleteLikesFromUser(user);
+        return true;
+
+
+    }
+
+    /**
+     * deletes the posts from the table in mysql related to user
+     * @param user object user storing id
+     */
+    private void deletePostsFromUser(User user){
+        deletingFromUser(user, "posts");
+    }
+
+    /**
+     * deletes the likes given by the user from mysql table
+     * @param user object user storing id
+     */
+    private void deleteLikesFromUser(User user){
+        this.deletingFromUser(user, "likes");
+    }
+
+    /**
+     * deletes the comments given by the user from mysql table
+     * @param user object user storing id
+     */
+    private void deleteCommentsFromUser(User user){
+        this.deletingFromUser(user, "comments");
+    }
+
+    /**
+     * deletes the rows from the mysql table in follows
+     * @param user object user storing id
+     */
+    private void deleteFollowsFromUser(User user){
+        this.deletingFromUser(user, "follows");
+    }
+
+    /**
+     * Given a correct tableName this method deletes the rows where
+     * the user_id is equal to the one given
+     * @param user: object user where we get the user_id
+     * @param tableName: the name of the table
+     */
+    private void deletingFromUser(User user, String tableName){
+        try {
+            String query = "DELETE FROM `" + tableName + "` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 
     /**
      * Check if the given post ID exists in the database.
@@ -174,9 +278,6 @@ public class MySQLController extends DatabaseManager {
         return true;
     }
 
-    public boolean updateUser(User updatedUser) {
-        return true;
-    }
 
     /**
      * Gets an array of all the Users saved in the database.
