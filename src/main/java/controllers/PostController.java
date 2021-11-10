@@ -280,7 +280,7 @@ public class PostController {
      */
     private String getPostHeader(String id) {
         String author = userManager.getUsernameById(postManager.getPostAuthor(id));
-        String postedTime = postManager.getPostedTime(id);
+        String postedTime = postManager.getPostedTime(id).toString();
         return author + "\n" + postedTime + "\n\n";
     }
 

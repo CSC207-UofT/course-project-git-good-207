@@ -54,9 +54,9 @@ public class Filter {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         // Sort from most recent to oldest
         Comparator<Post> byPostedTime = (p1, p2) -> {
-            if (LocalDateTime.parse(p1.getCreatedTime(), formatter).isBefore(LocalDateTime.parse(p2.getCreatedTime(), formatter))) {
+            if (p1.getCreatedTime().isBefore(p2.getCreatedTime())) {
                 return 1;
-            } else if (LocalDateTime.parse(p1.getCreatedTime(), formatter).isEqual(LocalDateTime.parse(p2.getCreatedTime(), formatter))) {
+            } else if (p1.getCreatedTime().isEqual(p2.getCreatedTime())) {
                 return 0;
             } else {
                 return -1;
