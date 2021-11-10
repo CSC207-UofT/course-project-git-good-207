@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class PostController {
+public class PostControllerPresenter {
     private final InOut inOut;
     private final LoginManager loginManager;
     private final PostManager postManager;
@@ -18,7 +18,7 @@ public class PostController {
     private final UserManager userManager;
     private boolean noMeasurableIngredients;
 
-    public PostController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
+    public PostControllerPresenter(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
         this.inOut = inOut;
         this.postManager = new PostManager(dbManager);
         this.userManager = new UserManager(dbManager);
