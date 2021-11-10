@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeAll;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 
 class LoginManagerTest {
     static LoginManager loginManager;
@@ -16,14 +18,14 @@ class LoginManagerTest {
     static void setup(){
         dbManager = new MySQLController();
         loginManager = new LoginManager(dbManager);
-        testUser = new User("test", "test");
+        testUser = new User("test2", "test2", "", UUID.randomUUID().toString() );
         dbManager.addNewUser(testUser);
     }
 
 
     @Test
     void testLoginValid() {
-        boolean isValid = loginManager.login("test", "test");
+        boolean isValid = loginManager.login("test2", "test2");
         boolean correctCurrUser = loginManager.getCurrUser().getUsername().equals(testUser.getUsername())
                                 && loginManager.getCurrUser().getPassword().equals(testUser.getPassword());
 
@@ -44,7 +46,7 @@ class LoginManagerTest {
 
     @Test
     void testLogout() {
-        loginManager.login("test", "test");
+        loginManager.login("test2", "test2");
         loginManager.logout();
 
         User actual = loginManager.getCurrUser();
@@ -54,10 +56,10 @@ class LoginManagerTest {
 
     @Test
     void testSignUpValid() {
-        boolean isValid = loginManager.signUp("uniqueTestUsername", "test");
+        boolean isValid = loginManager.signUp("uniqueTestUsername2", "Testing2");
         int correctUserCount = 0;
         for (User user: dbManager.getAllUsers()){
-            if(user.getUsername().equals("uniqueTestUsername")){
+            if(user.getUsername().equals("uniqueTestUsername2")){
                 correctUserCount++;
             }
         }
@@ -67,7 +69,7 @@ class LoginManagerTest {
 
     @Test
     void testSignUpInvalid(){
-        boolean isValid = loginManager.signUp("uniqueTestUsername", "test");
+        boolean isValid = loginManager.signUp("uniqueTestUsername2", "Testing2");
 
         //TODO also check that it wasn't added to database anyways once you can remove users
         assert !isValid;
@@ -75,7 +77,7 @@ class LoginManagerTest {
 
     @Test
     void getCurrUserLoggedIn() {
-        loginManager.login("test", "test");
+        loginManager.login("test2", "Test2");
 
         String actual = loginManager.getCurrUser().getId();
         String expect = testUser.getId();

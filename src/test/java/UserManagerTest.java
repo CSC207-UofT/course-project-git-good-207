@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class UserManagerTest {
     private User user;
@@ -12,7 +13,7 @@ public class UserManagerTest {
 
     @BeforeEach
     void setupFeedTest(DatabaseManager dbManager) {
-        this.user = new User("eren_yeager", "#1titan_slayer");
+        this.user = new User("eren_yeager", "#1titan_slayer", "" , UUID.randomUUID().toString());
         this.userManager = new UserManager(dbManager);
     }
 
@@ -49,22 +50,22 @@ public class UserManagerTest {
 
     @Test
     void testFollowUserSuccess() {
-        User john_jones = new User("john_jones","123");
+        User john_jones = new User("john_jones","123", "" ,UUID.randomUUID().toString());
         this.userManager.followUser(this.user, john_jones);
         assert this.user.getFollowing().contains(john_jones);
     }
 
     @Test
     void testFollowUserThatAlreadyFollowed() {
-        User john_jones = new User("john_jones","123");
+        User john_jones = new User("john_jones","123", "" ,UUID.randomUUID().toString());
         this.userManager.followUser(this.user, john_jones);
         assert !this.userManager.followUser(this.user, john_jones);
     }
 
     @Test
     void testUnfollowUserSuccess() {
-        User john_jones = new User("john_jones","123");
-        User john_mike = new User("john_mike", "123");
+        User john_jones = new User("john_jones","123", "" ,UUID.randomUUID().toString());
+        User john_mike = new User("john_mike", "123", "" ,UUID.randomUUID().toString());
         this.userManager.followUser(this.user, john_jones);
         this.userManager.followUser(this.user, john_mike);
         this.userManager.unfollowUser(this.user, john_jones);
@@ -73,8 +74,8 @@ public class UserManagerTest {
 
     @Test
     void testUnfollowUserFail() {
-        User john_jones = new User("john_jones","123");
-        User john_mike = new User("john_mike", "123");
+        User john_jones = new User("john_jones","123", "" ,UUID.randomUUID().toString());
+        User john_mike = new User("john_mike", "123", "" ,UUID.randomUUID().toString());
         this.userManager.followUser(this.user, john_jones);
         this.userManager.followUser(this.user, john_mike);
         this.userManager.unfollowUser(this.user, john_jones);
@@ -83,14 +84,14 @@ public class UserManagerTest {
 
     @Test
     void testAddFollowerSuccess() {
-        User john_jones = new User("john_jones","123");
+        User john_jones = new User("john_jones","123", "" ,UUID.randomUUID().toString());
         this.userManager.addFollower(this.user, john_jones);
         assert this.user.getFollowers().contains(john_jones);
     }
 
     @Test
     void testAddFollowerThatAlreadyInFollowing() {
-        User john_jones = new User("john_jones","123");
+        User john_jones = new User("john_jones","123", "" ,UUID.randomUUID().toString());
         this.userManager.addFollower(this.user,john_jones);
         assert !this.userManager.addFollower(this.user, john_jones);
     }
