@@ -181,9 +181,9 @@ public class FeedController {
             do {
                 String filterInputString = this.inOut.getInput("Please enter a valid number that corresponds " +
                         "to how you want to filter your feed: \n" + "0 No filter \n" + "1 Filter by cuisine \n" +
-                        "2 Filter by likes \n" + "3 Filter by your following list");
+                        "2 Filter by likes \n" + "3 Filter by your following list \n" + "4 Filter by recommendations");
                 filterInput = Integer.parseInt(filterInputString);
-            } while (filterInput < 0 || filterInput > 3);
+            } while (filterInput < 0 || filterInput > 4);
 
             if (filterInput == 1) {
                 cuisineInput = this.getCuisineInput();
