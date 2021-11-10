@@ -168,7 +168,6 @@ public class UserProfileController {
      */
     private void runFollowUser(User user, User targetUser) {
         if (this.userManager.followUser(user, targetUser)) {
-            this.userManager.followUser(user, targetUser);
             this.inOut.setOutput("Successfully followed the target user!");
         } else {
             this.inOut.setOutput("Target user already followed!");

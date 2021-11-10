@@ -86,7 +86,7 @@ public class UserManager {
      */
     public boolean followUser(User currentUser, User wantToFollow) {
         // check whether User want_to_follow is already followed by current_user
-        if (currentUser.getFollowing().contains(wantToFollow)) {
+        if (this.getFollowingListUsernames(currentUser).contains(wantToFollow.getUsername())) {
             return false;
         } else {
             // update current_user's following list: following
