@@ -14,8 +14,8 @@ public class Comment extends PostableItem {
      * @param authorId The ID of the User who is the author of the comment
      * @param dateTime The local time the Comment was posted
      */
-    public Comment (String commentText, String authorId, LocalDateTime dateTime, String id) {
-        super(authorId, dateTime, id);
+    public Comment (String commentText, String authorId, LocalDateTime dateTime) {
+        super(authorId, dateTime);
         this.commentText = commentText;
     }
 
