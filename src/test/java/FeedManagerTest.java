@@ -76,9 +76,9 @@ public class FeedManagerTest {
     }
 
     private static void setupUserFollowing() {
-        currentUser = new User("justin", "1234");
-        friend1 = new User("glen", "1111");
-        friend2 = new User("eric", "2222");
+        currentUser = new User("justin", "1234", "Hi, I'm Justin", "1000");
+        friend1 = new User("glen", "1111", "Hi, I'm Glen", "2000");
+        friend2 = new User("eric", "2222", "Hi, I'm Eric", "3000");
         currentUser.addFollowing(friend1);
         currentUser.addFollowing(friend2);
     }
