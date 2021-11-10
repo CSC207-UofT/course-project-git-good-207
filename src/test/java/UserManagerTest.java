@@ -9,14 +9,12 @@ import java.util.HashMap;
 public class UserManagerTest {
     private User user;
     private UserManager userManager;
-    private DatabaseManager databaseManager;
 
-//    @BeforeEach
-//    void setupFeedTest() {
-//        this.user = new User("eren_yeager", "#1titan_slayer");
-//        this.userManager = new UserManager();
-//        this.databaseManager = new DatabaseManager();
-//    }
+    @BeforeEach
+    void setupFeedTest(DatabaseManager dbManager) {
+        this.user = new User("eren_yeager", "#1titan_slayer");
+        this.userManager = new UserManager(dbManager);
+    }
 
     @Test
     void testUpdateUsername() {

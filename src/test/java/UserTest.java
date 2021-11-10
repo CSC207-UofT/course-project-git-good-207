@@ -31,7 +31,7 @@ public class UserTest {
 
     @Test
     void testGetLikeHistory() {
-        HashMap<String, Integer> like_history = new HashMap<String, Integer>();
+        HashMap<String, Integer> like_history = new HashMap<>();
         like_history.put("Russian Food", 4);
         this.user.setLikeHistory(like_history);
         assert this.user.getLikeHistory().equals(like_history);
@@ -57,7 +57,7 @@ public class UserTest {
 
     @Test
     void testGetPosts() {
-        assert this.user.getPosts().isEmpty(); //TODO: Test for non-empty posts
+        assert this.user.getPosts().isEmpty();
     }
 
 }

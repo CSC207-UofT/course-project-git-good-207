@@ -17,7 +17,13 @@ public class UserProfileController {
     private final UserManager userManager;
     private final DatabaseManager databaseManager;
 
-    // Constructor
+    /**
+     * Create a UserProfileController with the given inOut, DatabaseManager, and LoginManager
+     *
+     * @param inOut         the inOut interface for managing input/output
+     * @param dbManager     the DatabaseManager
+     * @param loginManager  the LoginManager
+     */
     public UserProfileController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
         this.inOut = inOut;
         this.loginManager = loginManager;
@@ -25,7 +31,11 @@ public class UserProfileController {
         this.userManager = new UserManager(dbManager);
     }
 
-
+    /**
+     * Run the appropriate ShellAction
+     *
+     * @param action ShellAction corresponding to the action that needs to be run
+     */
     public void run(ShellAction action) {
         if (action == ShellAction.BROWSEPROFILE) {
             this.runBrowseProfile();
@@ -48,13 +58,9 @@ public class UserProfileController {
     }
 
     /**
-     * getUserInformation, Displays the user from the username given, return to main page if user not found
+     * Run the browse profile logic
      */
     public void runBrowseProfile() {
-        // Browse user's profile, given String username:
-        // run a helper method (checkUserToBrowse) to call Database manager to check whether the username belongs
-        // to a user in the database
-        // run findUser to get the user that owns the username from the database
         try {
             // display all the usernames in the database
             this.runDisplayAllUsers();
@@ -84,7 +90,7 @@ public class UserProfileController {
     }
 
     /**
-     * runCustomizeProfile, Displays current user's profile and asks
+     * Run the customize profile logic
      */
     public void runCustomizeProfile() {
         this.inOut.setOutput(this.getCustomizeProfileScreen());
@@ -97,7 +103,6 @@ public class UserProfileController {
             } else if (choice == 2) {
                 this.runCustomizeBio();
             } else if (choice == 3) {
-                // TODO: Implement this with a function from PostPresenter to show currentUser's posts
                 this.runDisplayUserPosts(this.loginManager.getCurrUser());
             } else if (choice == 4) {
                 // Show following list
@@ -113,7 +118,7 @@ public class UserProfileController {
     }
 
     /**
-     * Displays the prompt to change username
+     * Run the change username logic
      */
     private void runChangeUsernameDisplay(User user, String newUsername) {
         if (this.userManager.changeUsername(user, newUsername)) {
@@ -126,7 +131,7 @@ public class UserProfileController {
     }
 
     /**
-     * Displays the prompt to change password
+     * Run the change password logic
      */
     private void runChangePasswordDisplay(User user, String newPassword) {
         if (this.userManager.changePassword(user, newPassword)) {
@@ -139,7 +144,7 @@ public class UserProfileController {
     }
 
     /**
-     * Displays the prompt to change bio
+     * Run the change bio logic
      */
     private void runChangeBioDisplay(User user, String newBio) {
         if (this.userManager.changeBio(user, newBio)) {
@@ -153,8 +158,11 @@ public class UserProfileController {
     }
 
     /**
-     * Return error msg if target_user is already followed by user, return successful msg
+     * Runs the follow user logic: display error msg if target_user is already followed by user, return successful msg
      * otherwise and follow target_user
+     *
+     * @param user the currently logged-in user
+     * @param targetUser the user that the currently logged-in user wishes to follow
      */
     private void runFollowUser(User user, User targetUser) {
         if (this.userManager.followUser(user, targetUser)) {
@@ -166,7 +174,7 @@ public class UserProfileController {
     }
 
     /**
-     * Return false if target_user is not followed by user, return true otherwise and unfollow target_user
+     * Runs the unfollow user logic
      */
     private void runUnfollowUser() {
         try {
@@ -199,16 +207,15 @@ public class UserProfileController {
      * Display user's posts
      */
     private void runDisplayUserPosts(User user) {
-        PostManager postManager = new PostManager();
-        PostController postController = new PostController(this.inOut, postManager, this.loginManager);
+        PostController postController = new PostController(this.inOut, this.databaseManager, this.loginManager);
+        PostManager postManager = new PostManager(this.userManager.getUserPosts(user));
         for(Post post: this.userManager.getUserPosts(user)) {
-            // TODO: UPDATE SO THAT POST ID IS THE PARAM FOR DISPLAYPOST
-            // postController.displayPost(post);
+            postController.displayPost(postManager.getPostId(post));
         }
     }
 
     /**
-     * Customize a logged-in user's username
+     * Run the customize username logic
      */
     private void runCustomizeUsername() {
         try {
@@ -220,7 +227,7 @@ public class UserProfileController {
     }
 
     /**
-     * Customize a logged-in user's password
+     * Run the customize password logic
      */
     private void runCustomizePassword() {
         try {
@@ -232,7 +239,7 @@ public class UserProfileController {
     }
 
     /**
-     * Customize a logged-in user's bio
+     * Run the customize bio logic
      */
     private void runCustomizeBio() {
         try {

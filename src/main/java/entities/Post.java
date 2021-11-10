@@ -14,8 +14,8 @@ public class Post extends PostableItem {
     private Recipe recipe;
     private final String category;
 
-    public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category) {
-        super(authorId, postedTime);
+    public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category, String id) {
+        super(authorId, postedTime, id);
         this.likedUsers = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.recipe = recipe;
