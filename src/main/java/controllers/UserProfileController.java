@@ -220,7 +220,7 @@ public class UserProfileController {
     private void runCustomizeUsername() {
         try {
             String newUsername = this.inOut.getInput("Enter what you'd like your new username to be: ");
-            runChangeUsernameDisplay(this.loginManager.getCurrUser(), newUsername);
+            this.runChangeUsernameDisplay(this.loginManager.getCurrUser(), newUsername);
         } catch (IOException e) {
             inOut.setOutput("There was an error: " + e);
         }
@@ -244,7 +244,7 @@ public class UserProfileController {
     private void runCustomizeBio() {
         try {
             String newBio = this.inOut.getInput("Enter what you'd like your new bio to be: ");
-            runChangeBioDisplay(this.loginManager.getCurrUser(), newBio);
+            this.runChangeBioDisplay(this.loginManager.getCurrUser(), newBio);
         } catch (IOException e) {
             inOut.setOutput("There was an error: " + e);
         }
