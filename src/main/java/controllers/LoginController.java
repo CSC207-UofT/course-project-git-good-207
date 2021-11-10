@@ -1,28 +1,30 @@
 package controllers;
 
-import entities.InOut;
-import entities.ShellAction;
-import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 
 import java.io.IOException;
 
 public class LoginController {
-    private LoginManager loginManager;
-    private String loginMessage = "Please enter your login info.";
-    private String signUpMessage = "Please signup below:";
-    private String welcomeMessage = "Welcome to the Recipe App!";
-    private String welcomeActionPrompt = """
-            Please select an action:
-            0 Sign up
-            1 Login""";
-    private InOut inOut;
 
+    private final LoginManager loginManager;
+    private final InOut inOut;
+
+    /**
+     * Create a LoginController with the given InOut and LoginManager
+     *
+     * @param inOut        the InOut interface for managing input/output
+     * @param loginManager the LoginManager
+     */
     public LoginController(InOut inOut, LoginManager loginManager) {
         this.loginManager = loginManager;
         this.inOut = inOut;
     }
 
+    /**
+     * Run the appropriate ShellAction
+     *
+     * @param action ShellAction corresponding to the action that needs to be run
+     */
     public void run(ShellAction action) {
         if (action == ShellAction.LOGOUT) {
             this.runLogout();
@@ -30,16 +32,23 @@ public class LoginController {
     }
 
     /**
-     * Runs the welcome page logic.
+     * Run the welcome page logic.
      */
     public void runWelcomePage() {
-        this.inOut.setOutput(this.getWelcomeMessage());
+        String welcomeActionPrompt = "Please select an action:\n" +
+                "0 Sign up\n" +
+                "1 Login\n";
+
+        String welcomeMessage = "Welcome to the Recipe App!";
+
+        this.inOut.setOutput(welcomeMessage);
+
         try {
+
             String welcomeAction = inOut.getInput(welcomeActionPrompt);
             boolean isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
 
             //Loops on chosen page until valid input is given
-            // TODO: evaluate if this is the best way to make user stay on login/signup page if input invalid
             while (!isComplete) {
                 isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
             }
@@ -49,14 +58,19 @@ public class LoginController {
     }
 
     /**
-     * Runs the login page logic. Returns a boolean which is true if the user
-     * successfully logged in, false otherwise.
+     * Run the login page logic
+     *
+     * @return boolean true if the login is successful, false otherwise
      */
     private boolean runLoginPage() {
-        this.inOut.setOutput(this.loginMessage);
+        String loginMessage = "Please enter your login info.";
+        this.inOut.setOutput(loginMessage);
         try {
+            //get username and password input
             String username = this.inOut.getInput("Enter username: ");
             String password = this.inOut.getInput("Enter password: ");
+
+            //check if given username and password are valid and set appropriate output
             if (this.loginManager.login(username, password)) {
                 this.inOut.setOutput("Login successful.");
                 return true;
@@ -72,13 +86,22 @@ public class LoginController {
     }
 
     /**
-     * Runs the sign in page logic.
+     * Runs the signup page logic.
      *
-     * @return Returns true if user successfully signed up, false otherwise.
+     * @return boolean true if user successfully signed up, false otherwise.
      */
     private boolean runSignUpPage() {
+        String signUpMessage = "Please signup below:";
+        String signUpRulesMessage = "Username must contain:\n " +
+                "at least one letter\n" +
+                "Password must contain:\n " +
+                "6 or more characters,\n " +
+                "at least one lowercase letter,\n " +
+                "at least one uppercase letter,\n " +
+                "and at least one number\n";
         try {
-            this.inOut.setOutput(this.signUpMessage);
+            this.inOut.setOutput(signUpMessage);
+            this.inOut.setOutput(signUpRulesMessage);
             String username = this.inOut.getInput("Set username: ");
             String password = this.inOut.getInput("Set password: ");
             if (this.loginManager.signUp(username, password)) {
@@ -98,7 +121,7 @@ public class LoginController {
      * Handles actions from the welcome page
      *
      * @param welcomeAction The entered action from welcome page
-     * @return true if action was successful, false otherwise
+     * @return boolean true if action was successful, false otherwise
      */
     private boolean runWelcomeAction(Integer welcomeAction) {
         switch (welcomeAction) {
@@ -112,12 +135,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Run logout logic
+     */
     private void runLogout() {
         this.loginManager.logout();
-        System.out.println("Logged out of the Recipe App.");
+        inOut.setOutput("Logged out of the Recipe App.");
     }
 
-    private String getWelcomeMessage() {
-        return this.welcomeMessage;
-    }
 }

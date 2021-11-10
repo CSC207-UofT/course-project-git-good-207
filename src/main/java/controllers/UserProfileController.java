@@ -3,8 +3,6 @@ package controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import entities.InOut;
-import entities.ShellAction;
 import entities.User;
 import use_cases.DatabaseManager;
 import use_cases.LoginManager;
@@ -12,17 +10,15 @@ import use_cases.UserManager;
 
 public class UserProfileController {
     private InOut inOut;
-    private String customizeProfileScreen = """
-            Select which option you'd like to customize:
-            0 Username
-            1 Password
-            2 Bio
-            3 Posts
-            4 Following list""";
-    private String otherUserScreen = """
-            Select which action you'd like to take:
-            0 Follow user
-            1 Browse user's posts""";
+    private String customizeProfileScreen = "Select which option you'd like to customize:\n" +
+            "0 Username\n" +
+            "1 Password\n" +
+            "2 Bio\n" +
+            "3 Posts\n" +
+            "4 Following list\n";
+    private String otherUserScreen = "Select which action you'd like to take:\n" +
+            "0 Follow user\n" +
+            "1 Browse user's posts\n";
     private String userToBrowsePrompt = "Enter the username of the person you'd like to view: ";
     private LoginManager loginManager;
     private UserManager userManager;
