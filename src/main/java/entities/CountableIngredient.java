@@ -29,6 +29,6 @@ public class CountableIngredient extends Ingredient {
      * @return Return the CountableIngredient String representation.
      */
     public String getCountableIngredient() {
-        return this.ingredientNumber + getIngredientName();
+        return this.ingredientNumber + " " + getIngredientName();
     }
 }

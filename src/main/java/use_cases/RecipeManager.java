@@ -37,7 +37,7 @@ public class RecipeManager {
             ingredients[i] = measurableIngredients.get(i).getMeasurableIngredient();
         }
         for (int i = measurableIngredients.size(); i < ingredients.length; i++) {
-            ingredients[i] = countableIngredients.get(i = measurableIngredients.size()).getCountableIngredient();
+            ingredients[i] = countableIngredients.get(i - measurableIngredients.size()).getCountableIngredient();
         }
         return ingredients;
     }
