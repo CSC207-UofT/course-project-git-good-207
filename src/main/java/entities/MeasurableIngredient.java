@@ -1,8 +1,8 @@
 package entities;
 
 public class MeasurableIngredient extends Ingredient {
-    private float ingredientAmount;
-    private String ingredientMeasurementType;
+    private final float ingredientAmount;
+    private final String ingredientMeasurementType;
 
     /**
      * Construct a MeasurableIngredient with its name, its amount,
@@ -40,6 +40,6 @@ public class MeasurableIngredient extends Ingredient {
      * @return Return the MeasurableIngredient String representation.
      */
     public String getMeasurableIngredient() {
-        return this.ingredientAmount + this.ingredientMeasurementType + getIngredientName();
+        return this.ingredientAmount + " " + this.ingredientMeasurementType + " " + getIngredientName();
     }
 }

@@ -423,7 +423,7 @@ public class MySQLController extends DatabaseManager {
 
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, recipe.getId());
-            preparedStmt.setString(2, post.getId());
+            preparedStmt.setString(2, recipe.getTitle());
 
             preparedStmt.execute();
         } catch (Exception e) {

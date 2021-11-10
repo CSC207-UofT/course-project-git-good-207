@@ -194,6 +194,6 @@ public class PostManager {
      * @return postId id of the post
      */
     public String getPostId(Post post) {
-        return this.getPostId(post);
+        return post.getId();
     }
 }
