@@ -4,6 +4,7 @@ import entities.*;
 import use_cases.DatabaseManager;
 import use_cases.FeedManager;
 import use_cases.LoginManager;
+import use_cases.UserManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class FeedController {
     private final PostController postController;
     private final InOut inOut;
     private final DatabaseManager databaseManager;
+    private final UserManager userManager;
     private HashMap<Integer, Post> postsActionMap = new HashMap<>();
 
     public FeedController(InOut inOut, DatabaseManager dbManager,
@@ -28,6 +30,7 @@ public class FeedController {
         Post[] posts = this.databaseManager.getAllPosts();
         Feed currUserFeed = new Feed(new ArrayList<>(Arrays.asList(posts)));
         this.feedManager = new FeedManager(currUser, currUserFeed);
+        this.userManager = new UserManager(this.databaseManager);
     }
 
     public void run(ShellAction action) {
@@ -69,8 +72,11 @@ public class FeedController {
             postsString.append("\n");
             postsString.append(i).append(" ");
             // Change getAuthorId to getAuthor
-            postsString.append(posts.get(i).getAuthorId());
-            postsString.append("'s ").append(posts.get(i).getRecipe().getTitle());
+            User user = this.userManager.getUserById(posts.get(i).getAuthorId());
+            if (user != null) {
+                postsString.append(user.getUsername()).append("'s ");
+            }
+            postsString.append(posts.get(i).getRecipe().getTitle());
         }
         return postsString.toString();
     }
