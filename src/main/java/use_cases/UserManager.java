@@ -264,13 +264,6 @@ public class UserManager {
     }
 
     /**
-     * Return user's username after passing in user's id
-     */
-    public String getUsernameById(String id) {
-        return getUsername(getUserById(id));
-    }
-
-    /**
      * Return user's posts as a list of posts
      * @param user The user to return the posts of (as an array list)
      * @return user's posts as a list of posts

@@ -52,7 +52,8 @@ public class UserProfileController {
                     "1 Password\n" +
                     "2 Bio\n" +
                     "3 Posts\n" +
-                    "4 Following list\n";
+                    "4 Following list\n" +
+                    "5 Return to main menu\n";
     }
 
     /**
@@ -70,7 +71,8 @@ public class UserProfileController {
                 // Give the choice of following user or looking into user's post
                 String otherUserScreen = "Select which action you'd like to take:\n" +
                         "0 Follow user\n" +
-                        "1 Browse user's posts\n";
+                        "1 Browse user's posts\n" +
+                        "2 Return to main menu\n";
                 int choice = Integer.parseInt(this.inOut.getInput(otherUserScreen));
                 if (choice == 0) {
                     this.runFollowUser(this.loginManager.getCurrUser(), targetUser);
