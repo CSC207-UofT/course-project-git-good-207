@@ -122,8 +122,9 @@ Mock framework like Mockito, as this was more advanced, but we may look into thi
 
 ## --Refactoring--
 
-We refactored class names to be more descriptive. For example, we renamed our Presenter classes to Controllers in this PR:
+* We refactored class names to be more descriptive. For example, we renamed our Presenter classes to Controllers in this PR:
 https://github.com/CSC207-UofT/course-project-git-good-207/pull/24/files
+* Originally, we had classes generate a unique ID for themselves when constructed, but we realized this was problematic when reconstructing Java objects based on information stored in the database - we were not able to recreate an object with an existing ID. We refactored our approach and modified many of our classes to take in an ID as a parameter in the constructor. For example, we made this change in our User object, and you can see our refactored changes in this PR: https://github.com/CSC207-UofT/course-project-git-good-207/pull/72
 
 ## --Code Organization--
 
