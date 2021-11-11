@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginControllerTest {
     MySQLController mySQLController = new MySQLController();
     LoginManager loginManager = new LoginManager(mySQLController);
-    RecipeAppInOut inOut= new RecipeAppInOut();
+    RecipeAppInOut inOut = new RecipeAppInOut();
     LoginController loginController = new LoginController(inOut, loginManager);
 
 

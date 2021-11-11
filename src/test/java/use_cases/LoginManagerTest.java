@@ -14,11 +14,12 @@ class LoginManagerTest {
     static LoginManager loginManager;
     static MySQLController dbManager;
     static User testUser;
+
     @BeforeAll
-    static void setup(){
+    static void setup() {
         dbManager = new MySQLController();
         loginManager = new LoginManager(dbManager);
-        testUser = new User("test2", "test2", "", UUID.randomUUID().toString() );
+        testUser = new User("test2", "test2", "", UUID.randomUUID().toString());
         dbManager.addNewUser(testUser);
     }
 
@@ -27,7 +28,7 @@ class LoginManagerTest {
     void testLoginValid() {
         boolean isValid = loginManager.login("test2", "test2");
         boolean correctCurrUser = loginManager.getCurrUser().getUsername().equals(testUser.getUsername())
-                                && loginManager.getCurrUser().getPassword().equals(testUser.getPassword());
+                && loginManager.getCurrUser().getPassword().equals(testUser.getPassword());
 
         boolean actual = isValid && correctCurrUser;
 
@@ -35,7 +36,7 @@ class LoginManagerTest {
     }
 
     @Test
-    void testLoginInvalid(){
+    void testLoginInvalid() {
         loginManager.logout();
         boolean isInvalid = !(loginManager.login("wronguser", "wrongpass"));
         boolean correctCurrUser = loginManager.getCurrUser() == null;
@@ -58,8 +59,8 @@ class LoginManagerTest {
     void testSignUpValid() {
         boolean isValid = loginManager.signUp("uniqueTestUsername2", "Testing2");
         int correctUserCount = 0;
-        for (User user: dbManager.getAllUsers()){
-            if(user.getUsername().equals("uniqueTestUsername2")){
+        for (User user : dbManager.getAllUsers()) {
+            if (user.getUsername().equals("uniqueTestUsername2")) {
                 correctUserCount++;
             }
         }
@@ -68,7 +69,7 @@ class LoginManagerTest {
     }
 
     @Test
-    void testSignUpInvalid(){
+    void testSignUpInvalid() {
         loginManager.signUp("anotherTestUser", "Testing2");
         boolean isValid = loginManager.signUp("anotherTestUser", "Testing2");
 
@@ -96,7 +97,7 @@ class LoginManagerTest {
     }
 
     @AfterAll
-    static void removeTestUsers(){
+    static void removeTestUsers() {
         // TODO remove test users
     }
 }
