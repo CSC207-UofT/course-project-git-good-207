@@ -2,7 +2,7 @@
 
 ## Specification Changes
 We did not make any major changes to our specification. We will reprioritise
-features as necessary in the future
+features as necessary in the future.
 
 ## Major Design Decisions
 
