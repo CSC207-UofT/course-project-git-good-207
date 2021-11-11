@@ -72,6 +72,27 @@ public class MySQLController extends DatabaseManager {
     }
 
     /**
+     * Deletes the post from the user and starts to add new
+     * ones from the user
+     * @param user user object where we want to delete the
+     *             posts
+     * @param newUser user that contains the post we want to
+     *                add with a new id
+     */
+    private void updatePostsFromUser(User user, User newUser){
+        // first I delete the posts from the user
+        this.deletePostsFromUser(user);
+        // add the new ones
+        for (Post post: newUser.getPosts()){
+            this.addNewPost(new Post(user.getId(), post.getTime(), post.getRecipe(),
+                    post.getCategory(), post.getId()));
+        }
+
+    }
+
+
+
+    /**
      * Given an user objects changes all the attributes
      * such that match the ones given in the parameter
      * except the id
@@ -94,6 +115,8 @@ public class MySQLController extends DatabaseManager {
             e.printStackTrace();
             return false;
         }
+
+
     }
 
     /**
