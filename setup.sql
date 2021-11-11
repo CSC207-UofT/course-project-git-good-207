@@ -38,8 +38,8 @@ CREATE TABLE `comments` (
 -- Dumping data for table `comments`
 --
 
-INSERT INTO `comments` (`user_id`, `post_id`, `comment_time`, `comment_text`) VALUES
-    ('1', 'b', '2008-11-11 16:44:33', 'wow I love your post');
+INSERT INTO `comments` (`user_id`, `post_id`, `comment_time`, `comment_text`, `comment_id`) VALUES
+    ('1', 'b', '2008-11-11 16:44:33', 'wow I love your post', 'xyz');
 
 -- --------------------------------------------------------
 

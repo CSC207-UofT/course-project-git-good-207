@@ -45,7 +45,7 @@ public class PostManager {
                 else {
                     post.addLike((User) obj);
                 }
-                this.databaseManager.updatePost(post);
+                this.databaseManager.editPost(post);
                 return true;
             }
         }
