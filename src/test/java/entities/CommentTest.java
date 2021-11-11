@@ -10,9 +10,18 @@ class CommentTest {
     private final Comment comment = new Comment("Comment text", "id", LocalDateTime.now(), "id");
 
     @Test
-    void getCommentText() {
+    void testGetCommentText() {
         String actual = comment.getCommentText();
         String expected = "Comment text";
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testSetCommentText() {
+        comment.setCommentText("New text");
+        String actual = comment.getCommentText();
+        String expected = "New text";
 
         assertEquals(expected, actual);
     }

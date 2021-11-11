@@ -2,7 +2,6 @@ package controllers;
 
 import use_cases.LoginManager;
 
-import java.io.IOException;
 
 public class LoginController {
 
@@ -43,7 +42,6 @@ public class LoginController {
 
         this.inOut.setOutput(welcomeMessage);
 
-        try {
 
             String welcomeAction = inOut.getInput(welcomeActionPrompt);
             boolean isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
@@ -52,9 +50,6 @@ public class LoginController {
             while (!isComplete) {
                 isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
             }
-        } catch (IOException e) {
-            inOut.setOutput("There was an error: " + e);
-        }
     }
 
     /**
@@ -65,7 +60,7 @@ public class LoginController {
     private boolean runLoginPage() {
         String loginMessage = "Please enter your login info.";
         this.inOut.setOutput(loginMessage);
-        try {
+
             //get username and password input
             String username = this.inOut.getInput("Enter username: ");
             String password = this.inOut.getInput("Enter password: ");
@@ -78,10 +73,6 @@ public class LoginController {
                 this.inOut.setOutput("Your username or password was incorrect.");
                 return false;
             }
-        } catch (IOException e) {
-            this.inOut.setOutput("There was an error: " + e);
-            return false;
-        }
 
     }
 
@@ -99,7 +90,7 @@ public class LoginController {
                 "at least one lowercase letter,\n " +
                 "at least one uppercase letter,\n " +
                 "and at least one number\n";
-        try {
+
             this.inOut.setOutput(signUpMessage);
             this.inOut.setOutput(signUpRulesMessage);
             String username = this.inOut.getInput("Set username: ");
@@ -111,10 +102,6 @@ public class LoginController {
                 this.inOut.setOutput("Your username or password was invalid.");
                 return false;
             }
-        } catch (IOException e) {
-            inOut.setOutput("There was an error: " + e);
-            return false;
-        }
     }
 
     /**
