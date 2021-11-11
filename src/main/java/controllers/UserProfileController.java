@@ -1,18 +1,18 @@
 package controllers;
 
-import java.io.IOException;
-
 import entities.User;
+import entities.Post;
 import use_cases.DatabaseManager;
 import use_cases.LoginManager;
 import use_cases.UserManager;
+
+import java.util.HashMap;
 
 public class UserProfileController {
     private final InOut inOut;
     private final LoginManager loginManager;
     private final UserManager userManager;
     private final DatabaseManager databaseManager;
-    private final FeedController feedController;
 
     /**
      * Create a UserProfileController with the given inOut, DatabaseManager, and LoginManager
@@ -20,15 +20,12 @@ public class UserProfileController {
      * @param inOut          the inOut interface for managing input/output
      * @param dbManager      the DatabaseManager
      * @param loginManager   the LoginManager
-     * @param postController the PostController
      */
-    public UserProfileController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager,
-                                 PostController postController) {
+    public UserProfileController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
         this.inOut = inOut;
         this.loginManager = loginManager;
         this.databaseManager = dbManager;
         this.userManager = new UserManager(dbManager);
-        this.feedController = new FeedController(inOut, dbManager, loginManager, postController);
     }
 
     /**
@@ -65,8 +62,9 @@ public class UserProfileController {
         // display all the usernames in the database
         this.runDisplayAllUsers();
         String userToBrowse = this.inOut.getInput("Enter the username of the person you'd like to view: ");
-        if (this.userManager.checkUserToBrowse(userToBrowse) &&
-                !(userToBrowse.equals(this.loginManager.getCurrUser().getUsername()))) {
+        // if ((this.userManager.checkUserToBrowse(userToBrowse) &&
+        //                !(userToBrowse.equals(this.loginManager.getCurrUser().getUsername())))
+        if (this.userManager.checkUserToBrowse(userToBrowse)) {
             User targetUser = this.userManager.findUser(userToBrowse);
             this.inOut.setOutput(this.userManager.runBrowseOtherProfile(targetUser));
             // Give the choice of following user or looking into user's post
@@ -163,7 +161,7 @@ public class UserProfileController {
         if (this.userManager.followUser(user, targetUser)) {
             this.inOut.setOutput("Successfully followed the target user!");
         } else {
-            this.inOut.setOutput("Target user already followed!");
+            this.inOut.setOutput("Either target user already followed, or target user is yourself!");
         }
     }
 
@@ -197,10 +195,12 @@ public class UserProfileController {
      * Display user's posts
      */
     private void runDisplayUserPosts(User user) {
-        // Give option to select which of the user's post to view
-        String postsString = this.feedController.generateDisplayedPosts(this.userManager.getUserPosts(user));
-        // View the selected post
-        this.feedController.selectOnePost(postsString, this.userManager.getUserPosts(user).size());
+        // Generate User posts mapping
+        HashMap<Integer, Post> userPosts = this.userManager.generateUserPostsMap(user);
+        // Generate the output of the user posts to view
+        String userPostsString = this.generateDisplayedPosts(userPosts);
+        // Give option to select which of the user's post to view and view
+        this.selectOnePost(userPostsString, userPosts);
     }
 
     /**
@@ -225,5 +225,54 @@ public class UserProfileController {
     private void runCustomizeBio() {
         String newBio = this.inOut.getInput("Enter what you'd like your new bio to be: ");
         this.runChangeBioDisplay(this.loginManager.getCurrUser(), newBio);
+    }
+
+    /**
+     * Generate a selection of displayed posts' titles for the user to select.
+     *
+     * @param userPosts A hashmap of Posts representing a user's posts.
+     * @return a String representing all the posts of a user.
+     */
+    public String generateDisplayedPosts(HashMap<Integer, Post> userPosts) {
+        StringBuilder postsString = new StringBuilder("Enter a post number to view the post: ");
+
+        for (int i = 0; i < userPosts.size(); i++) {
+            postsString.append("\n");
+            postsString.append(i).append(" ");
+            postsString.append(userPosts.get(i).getRecipe().getTitle());
+        }
+        return postsString.toString();
+    }
+
+    /**
+     * Allow the user to act on a post selected.
+     *
+     * @param userPostsString     the string representing a user's posts
+     */
+    public void selectOnePost(String userPostsString, HashMap<Integer, Post> userPosts) {
+        PostController postController = new PostController(this.inOut, this.databaseManager, this.loginManager);
+        int postNumber = this.getSelectedPostInput(userPostsString);
+        Post selectedPost = userPosts.get(postNumber);
+        postController.browsePost(selectedPost);
+
+    }
+
+    /**
+     * Get the user to select a post to act on.
+     *
+     * @param userPostsString     the String representing the selection of displayed Posts' titles generated.
+     * @return an int representing the Post that the user selects.
+     */
+    private int getSelectedPostInput(String userPostsString) {
+        int postNumber = -700;
+
+        try {
+            String postSelection = this.inOut.getInput(userPostsString);
+            postNumber = Integer.parseInt(postSelection);
+        } catch (NumberFormatException nfe) {
+            this.inOut.setOutput("You entered an invalid action input.");
+        }
+
+        return postNumber;
     }
 }
