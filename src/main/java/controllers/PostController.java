@@ -81,10 +81,13 @@ public class PostController {
             String strippedIngredient = ingredient.stripLeading();
             if (!Character.isDigit(strippedIngredient.charAt(0))) {
                 inOut.setOutput("Invalid input. Did not specify numerical amount of one of the ingredients. Please enter countable ingredients again in correct format.");
-                getCountableIngredients(promptCountable);
+                countableInput = getCountableIngredients(promptCountable);
             } else if (strippedIngredient.split(" ").length < 2) {
                 inOut.setOutput(errorMessage);
-                getCountableIngredients(promptCountable);
+                countableInput = getCountableIngredients(promptCountable);
+            } else if (strippedIngredient.contains("/")) {
+                inOut.setOutput(errorMessage);
+                countableInput = getCountableIngredients(promptCountable);
             }
         }
         return countableInput;
@@ -108,8 +111,8 @@ public class PostController {
             String strippedIngredient = ingredient.stripLeading();
             if (!Character.isDigit(strippedIngredient.charAt(0))) {
                 inOut.setOutput("Invalid input. Did not specify numerical amount of one of the ingredients. Please enter measurable ingredients again in correct format.");
-                getMeasurableIngredients(promptMeasurable);
-            } else if (strippedIngredient.split(" ").length != 3) {
+                measurableInput = getMeasurableIngredients(promptMeasurable);
+            } else if (strippedIngredient.split(" ").length < 3) {
                 inOut.setOutput(errorMessage);
                 measurableInput = getMeasurableIngredients(promptMeasurable);
             }
@@ -125,7 +128,7 @@ public class PostController {
     private String[] createPostHelper() {
         String promptRecipeSteps = "Enter recipe steps in this comma-separated format: 'Add the water, mix flour'";
         String promptMeasurable = "Enter measurable ingredients (in grams, ounces etc) in format '50 grams sugar, 1 cup flour, etc.' or N/A if no measurable ingredients";
-        String promptCountable = "Enter countable ingredients in format '1 lemon, 1 apple, etc.' or N/A if no countable ingredients (must have entered at least one ingredient per recipe)";
+        String promptCountable = "Enter countable ingredients in format '1 lemon, 1 apple, etc.' or N/A if no countable ingredients (must have entered at least one ingredient per recipe and please write decimals instead of fractions)";
         return new String[]{promptRecipeSteps, promptMeasurable, promptCountable};
     }
 
