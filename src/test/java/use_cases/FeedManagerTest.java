@@ -6,7 +6,6 @@ import entities.Recipe;
 import entities.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import use_cases.FeedManager;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
