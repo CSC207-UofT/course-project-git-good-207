@@ -91,7 +91,6 @@ public class MySQLController extends DatabaseManager {
     }
 
 
-
     /**
      * Given an user objects changes all the attributes
      * such that match the ones given in the parameter
@@ -99,7 +98,7 @@ public class MySQLController extends DatabaseManager {
      * @param user user object that stores the id to
      *             update the values
      */
-    public boolean updateUser(User user){
+    public boolean updateUser(User user, User newUser){
         try {
             String query = "UPDATE FROM `user_info` SET `username`= ?, `password`=?, `bio`=? " +
                     "WHERE `username`=?";
@@ -109,12 +108,15 @@ public class MySQLController extends DatabaseManager {
             preparedStatement.setString(3, user.getBio());
             preparedStatement.setString(4, user.getUsername());
             preparedStatement.execute();
+            this.updatePostsFromUser(user, newUser);
             return true;
+
 
         } catch (Exception e){
             e.printStackTrace();
             return false;
         }
+
 
 
     }
