@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class FilterByFollowing extends Filter {
-    protected User currentUser;
+    protected final User currentUser;
     /**
      * Construct a FilterByFollowing object with the user's feed.
      *
