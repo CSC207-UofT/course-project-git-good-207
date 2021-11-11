@@ -62,7 +62,7 @@ public abstract class DatabaseManager {
      * @param updatedUser user object with the updated values
      * @return true if the attributes were changed
      */
-    public abstract boolean updateUser(User updatedUser);
+    public abstract boolean updateUser(User updatedUser, User newUser);
 
     /**
      * deletes all the information except for recipes related
