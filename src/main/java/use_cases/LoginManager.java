@@ -164,10 +164,10 @@ public class LoginManager {
 
     }
 
-    private boolean isUniqueUser (String username){
+    private boolean isUniqueUser(String username) {
         User[] allUsers = databaseManager.getAllUsers();
-        for(User user: allUsers){
-            if(username.equals(user.getUsername())){
+        for (User user : allUsers) {
+            if (username.equals(user.getUsername())) {
                 return false;
             }
         }
