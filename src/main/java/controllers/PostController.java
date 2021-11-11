@@ -16,7 +16,7 @@ public class PostController {
     private final PostManager postManager;
     private final RecipeManager recipeManager;
     private final UserManager userManager;
-    private static boolean noMeasurableIngredients;
+    private boolean noMeasurableIngredients;
 
     public PostController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
         this.inOut = inOut;
@@ -24,7 +24,7 @@ public class PostController {
         this.userManager = new UserManager(dbManager);
         this.recipeManager = new RecipeManager();
         this.loginManager = loginManager;
-        noMeasurableIngredients = false;
+        this.noMeasurableIngredients = false;
     }
 
     /**
@@ -78,7 +78,7 @@ public class PostController {
      */
     private String getCountableIngredients(String promptCountable) throws IOException {
         String countableInput = this.inOut.getInput(promptCountable);
-        if (countableInput.contains("N/A") && noMeasurableIngredients) {
+        if (countableInput.contains("N/A") && this.noMeasurableIngredients) {
             inOut.setOutput("Must enter at least one ingredient");
             countableInput = getCountableIngredients(promptCountable);
         } else if (countableInput.contains("N/A")) {
@@ -108,9 +108,9 @@ public class PostController {
     private String getMeasurableIngredients(String promptMeasurable) throws IOException {
         String measurableInput = this.inOut.getInput(promptMeasurable);
         if (measurableInput.contains("N/A")) {
-            noMeasurableIngredients = true;
+            this.noMeasurableIngredients = true;
             return "N/A";
-        } else { noMeasurableIngredients = false; }
+        } else { this.noMeasurableIngredients = false; }
         String[] splitIngredients = measurableInput.split(",");
         String errorMessage = "That was an invalid input. Please enter measurable ingredients again in correct format.";
         for (String ingredient: splitIngredients) {
