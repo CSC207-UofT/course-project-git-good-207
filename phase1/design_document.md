@@ -1,0 +1,145 @@
+# Design Document
+
+## Specification Changes
+We did not make any major changes to our specification. We will reprioritise
+features as necessary in the future
+
+## Major Design Decisions
+
+* Every Post will now have a unique ID. This will allow us to identify them uniquely within the program.  
+
+  
+* We have now made DatabaseManager (use case) abstract and extended it with MySQLController (controller) in accordance with Dependency Inversion. This way, our use cases classes no longer depend on the implementation of our database. (Helps us remain in accordance with SOLID and Clean Architecture)  
+
+
+* We discussed making DatabaseManager a Singleton class, so we wouldn’t have to pass it in everywhere we used it. However, after further investigation, we realized that this would not make sense. We were using Dependency Inversion to abstract away our database implementation, and thus made DatabaseManager an abstract class which we injected into our Controller classes. We then made MySQLController a child class of DatabaseManager. Since we had abstracted DatabaseManager, we realized that we could not make DatabaseManager a Singleton, since a Singleton is a final class. This conflicted with the abstract definition of DatabaseManager (a class cannot be both final and abstract).
+
+
+* We also discussed making LoginManager a singleton class. In the current state of our project, we only ever use a single instance of LoginManager as only one user can be logged in at a time, and we must keep track of who the current user is. This led us to think that a singleton LoginManager would make sense. Nevertheless, after further discussion and consideration, we decided that this would not be an effective idea. Making LoginManager a singleton class would limit us to only being able to have one instance of LoginManager. This would be very limiting if, in a hypothetical future, we wanted to expand the program to be able to have multiple users logging in at the same time (like in a real social media app), as that would require multiple instances of LoginManager to keep track of multiple current users. Thus, we decided against making LoginManager a singleton class.
+
+## --Clean Architecture--
+
+Making sure lower layers never depend on outer layers or specifics of implementation. For example DBManager is abstract
+and MySQL implemented in MySQLController
+
+## SOLID Design
+
+### Single Responsibility Principle
+
+We made sure to remain in line with the single responsibility principle by keeping our classes single function specific,
+such that they only have one major responsibility. For example, creating a distinction between “managers” and “controllers” 
+not only adheres to clean architecture, but also ensures that no class is responsible for both use-case logic and adapter functionality 
+(Eg. FeedManager vs FeedController). Additionally, within each layer of clean architecture we split the functionality of classes even further.
+This is done so based on their specific major responsibility. For example, LoginManager is responsible for solely managing 
+the login/signup logic, while UserManager is responsible for managing user specific actions such as following, liking a 
+post, or changes to the user profile. Both these strategies ensure that the single responsibility principle is followed.
+
+### Open-Close Principle
+
+We ensured compliance with the open-close principle through implementation of dependency inverters. A primary example of 
+this is the interface InOut, which ensures that the classes on the User Interface layer are not being depended on by 
+other classes in lower layers. This keeps our user interface open for extension (through addition of a more advanced/different UI)
+while also keeping the rest of the program closed for modification, as we do not need to make too many changes for it if 
+we want to extend UI capabilities. Another example is the database classes. Through the introduction of MySQLController 
+the use case classes are no longer dependent on an actual database implementation. This allows us to make changes to the 
+database we use (ie. extend it) without needing to make modifications to use case classes.
+
+Our Ingredient class is also a great example of this principle. We have so far extended it with MeasurableIngredient and 
+CountableIngredient, but our design leaves open the possibility of adding more types of ingredients in the future.
+
+### Liskov Substitution Principle
+
+Our consistency with the Liskov substitution principle is apparent with the implementation of the Ingredient superclass 
+and the MeasurableIngredient and CountableIngredient subclasses. This relationship between the classes allows us to pass 
+either MeasurableIngredients or CountableIngredients anywhere where the superclass Ingredient is mentioned (such as in 
+methods/fields of Recipe or RecipeManager). 
+
+### Interface Segregation Principle
+
+We are effective in ensuring that no client is forced to depend on methods it doesn’t use. This is primarily evident 
+through our implementation of interfaces such as InOut where we keep the contents of the interface very simple and 
+responsibility specific to ensure that any class that implements it does not get unnecessary methods.
+
+### Dependency Inversion Principle
+
+We really took the Dependency Inversion principle to heart, and tried to abstract out dependencies. For example, we
+passed in an abstract InOut interface to our Controller classes, so they would not depend on our implementation of our
+UI. We also made our DatabaseManager an abstract class and used that as a dependency in whatever class needed access to
+database info. We extended DatabaseManager with a child class, MySQLController, so that no clients of DatabaseManager
+depended on our specific database implementation.
+
+## Packaging Strategy
+
+We decided on the strategy of packaging by Layer. Following clean architecture and SOLID principles, we decided to
+divide our programs into packages based on the various layers of the program. Namely, we distributed our files into 
+entities, use cases, controllers, and interface.  
+
+Packaging by layer makes it significantly easier to ensure that we are adhering to clean architecture and forces us to
+always consider which layer each class belongs to. It also allows the packaging to reflect our CRC cards.
+
+## Design Patterns
+
+We decided to adopt the Template Method design pattern for our feed filtering algorithm. Since we are planning to
+implement various ways (number of likes, following list, cuisine type, recommendations) to filter a user’s feed with a
+default algorithm, I feel that the Template Method would be appropriate to organize our code into a structure that is
+easy to follow and clean without reusing the same codes in different parts of the filter classes. For any of the
+filters, the following methods are common: putting a cap to the number of posts that we will show in a user’s feed,
+sorting the posts from the most recent to least.
+
+## GitHub Features
+
+### GitHub Issues
+
+We made use of GitHub issues as a platform for us to keep track of what each other is currently doing.
+At the same time, the issues allow those who need to work on the same aspect of our program to collaborate and discuss
+directly and precisely on each other’s implementation plans. The issues also serve as a history of our progress should 
+we need to revert back to previous implementations.
+
+### Pull Requests
+
+We required everyone to create a pull request for new code and we never committed code directly to our main branch.
+This way, we could ensure that code worked, met our style/best practices requirements, and was designed correctly
+before it could be merged into our main branch.
+
+## Code Style
+
+We agreed on specific code style guidelines and made sure that we followed them throughout our code implementation
+process. For example, we agreed to put curly braces on the same line as methods or try blocks, with a space in between 
+(i.e. methodName() {).
+
+## Documentation
+
+We made sure that all our code was well documented and easy to understand by adding JavaDocs for every method, as well 
+as additional comments within certain methods to describe specific lines of code.
+
+## Testing
+
+Our Phase 0 submission had only one unit test file, just to make sure our JUnit was working. In Phase 1, we aimed to
+cover all methods across our codebase that made sense to test (i.e. simple, limited dependencies). We did not use a 
+Mock framework like Mockito, as this was more advanced, but we may look into this later on, time permitting.
+
+## --Refactoring--
+
+We refactored class names to be more descriptive. For example, we renamed our Presenter classes to Controllers in this PR:
+https://github.com/CSC207-UofT/course-project-git-good-207/pull/24/files
+
+## --Code Organization--
+
+As mentioned previously, we decided to use the layer package strategy. This makes it a lot easier to find specific
+classes within the package structure. To do so, you simply need to know what layer of clean architecture the class
+belongs to, or you can reference the CRC cards (as they directly reflect our package structure).
+
+## Functionality
+
+Our program does everything the specifications say it should do. We feel that our functionality is sufficiently
+ambitious, as was reflected through TA feedback.
+
+Our program can store and load state, allowing the state to persist across runs of the program. This is done through the 
+use of the MySQL database which stores all significant program data, such as user info, posts, recipes, ect.
+All this information is stored during program runtime and loaded when necessary. This means that if a user makes a post, 
+they can access it during a different run of the program.  
+
+Additionally, based on TA feedback, we added the option to perform no action in certain scenarios. For example, when viewing a Post,
+we decided that it would make sense to allow the user to return to the previous menu without liking, commenting, etc. on the Post.  
+
+
