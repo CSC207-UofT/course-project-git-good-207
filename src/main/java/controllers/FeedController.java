@@ -57,6 +57,7 @@ public class FeedController {
 
     /**
      * Generate a selection of displayed posts' titles for the user to select.
+     *
      * @param posts An ArrayList of Posts representing the selection of displayed Posts on a Feed.
      * @return a String representing a selection of displayed Posts' titles on a Feed.
      */
@@ -80,7 +81,8 @@ public class FeedController {
 
     /**
      * Allow the user to act on a post selected.
-     * @param postsString The String representing the selection of displayed Posts' titles generated.
+     *
+     * @param postsString         The String representing the selection of displayed Posts' titles generated.
      * @param numOfDisplayedPosts The number of displayed Posts on a Feed.
      */
     public void selectOnePost(String postsString, int numOfDisplayedPosts) {
@@ -95,7 +97,8 @@ public class FeedController {
 
     /**
      * Get the user to select a post to act on.
-     * @param postsString The String representing the selection of displayed Posts' titles generated.
+     *
+     * @param postsString         The String representing the selection of displayed Posts' titles generated.
      * @param numOfDisplayedPosts The number of displayed Posts on a Feed.
      * @return an int representing the Post that the user selects.
      */
@@ -106,8 +109,6 @@ public class FeedController {
             try {
                 String postSelection = this.inOut.getInput(postsString);
                 postNumber = Integer.parseInt(postSelection);
-            } catch (IOException e) {
-                this.inOut.setOutput("An error occurred: " + e);
             } catch (NumberFormatException nfe) {
                 this.inOut.setOutput("You entered an invalid action input.");
             }
@@ -118,6 +119,7 @@ public class FeedController {
 
     /**
      * Get the choice of filter that the user wants to apply on the Feed.
+     *
      * @return an ArrayList of ints representing the choice of filter and the type of cuisine (if filtering by cuisine).
      */
     private ArrayList<Integer> getFilterInput() {
@@ -138,8 +140,6 @@ public class FeedController {
                         this.runBrowseFeed();
                     }
                 }
-            } catch (IOException e) {
-                this.inOut.setOutput("An error occurred: " + e);
             } catch (NumberFormatException nfe) {
                 this.inOut.setOutput("You entered an invalid action input.");
             }
@@ -150,6 +150,7 @@ public class FeedController {
 
     /**
      * Get the type of cuisine that the user chooses to filter the Feed with.
+     *
      * @return an int representing the cuisine type that the user chooses to filter the Feed with.
      */
     private int getCuisineInput() {
@@ -162,8 +163,6 @@ public class FeedController {
                         "2 Japanese \n" + "3 Italian \n" + "4 French \n" + "5 Mexican \n" + "6 Others \n" +
                         "99 Return to choose a different feed filter");
                 cuisineInput = Integer.parseInt(cuisineInputString);
-            } catch (IOException e) {
-                this.inOut.setOutput("An error occurred: " + e);
             } catch (NumberFormatException nfe) {
                 this.inOut.setOutput("You entered an invalid action input.");
             }
