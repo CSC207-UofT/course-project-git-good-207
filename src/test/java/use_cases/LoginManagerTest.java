@@ -2,7 +2,6 @@ package use_cases;
 
 import controllers.MySQLController;
 import entities.User;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import org.junit.jupiter.api.Test;
@@ -94,10 +93,5 @@ class LoginManagerTest {
         User actual = loginManager.getCurrUser();
 
         assert actual == null;
-    }
-
-    @AfterAll
-    static void removeTestUsers() {
-        // TODO remove test users
     }
 }

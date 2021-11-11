@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Post extends PostableItem {
     private final ArrayList<User> likedUsers;
     private final ArrayList<Comment> comments;
-    private Recipe recipe;
+    private final Recipe recipe;
     private final String category;
 
     public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category, String id) {
@@ -65,12 +65,8 @@ public class Post extends PostableItem {
         return this.category;
     }
 
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
     /*Comparator for sorting the list by the number of likes of a post*/
-    public static Comparator<Post> PostLikesComparator = (p1, p2) -> {
+    public static final Comparator<Post> PostLikesComparator = (p1, p2) -> {
         int p1Likes = p1.getNumLikes();
         int p2Likes = p2.getNumLikes();
 

@@ -4,7 +4,7 @@ import controllers.InOut;
 import java.util.Scanner;
 
 public class RecipeAppInOut implements InOut {
-    private Scanner in = new Scanner(System.in);
+    private final Scanner in = new Scanner(System.in);
 
     public RecipeAppInOut() {}
 

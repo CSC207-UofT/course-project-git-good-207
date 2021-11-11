@@ -3,13 +3,12 @@ package use_cases;
 import entities.Feed;
 import entities.Post;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class Filter {
-    protected Feed currentUserFeed;
+    protected final Feed currentUserFeed;
 
     /**
      * Construct a Filter object and the user's feed.
@@ -49,7 +48,6 @@ public class Filter {
      * @return an ArrayList of Posts sorted from the most recent to the least.
      */
     private ArrayList<Post> sortByPostedTime(ArrayList<Post> maxDisplayedPosts) {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         // Sort from most recent to oldest
         Comparator<Post> byPostedTime = (p1, p2) -> {
             if (p1.getCreatedTime().isBefore(p2.getCreatedTime())) {
