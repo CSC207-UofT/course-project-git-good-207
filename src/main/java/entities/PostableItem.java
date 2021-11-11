@@ -21,10 +21,6 @@ public abstract class PostableItem {
         return this.authorId;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public String getId() { return this.id; }
 
     public LocalDateTime getCreatedTime() { return this.createdTime; }
