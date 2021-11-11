@@ -1,7 +1,7 @@
 package entities;
 
 public class CountableIngredient extends Ingredient {
-    private final float ingredientNumber;
+    private float ingredientNumber;
 
     /**
      * Construct a MeasurableIngredient with its name, its amount,

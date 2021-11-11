@@ -60,7 +60,7 @@ public class FeedController {
      * @param posts An ArrayList of Posts representing the selection of displayed Posts on a Feed.
      * @return a String representing a selection of displayed Posts' titles on a Feed.
      */
-    private String generateDisplayedPosts(ArrayList<Post> posts) {
+    public String generateDisplayedPosts(ArrayList<Post> posts) {
         this.postsActionMap = new HashMap<>();
         StringBuilder postsString = new StringBuilder("Enter a post number for a detailed view of " +
                 "that post or enter 99 to choose a different feed filter: ");
@@ -83,7 +83,7 @@ public class FeedController {
      * @param postsString The String representing the selection of displayed Posts' titles generated.
      * @param numOfDisplayedPosts The number of displayed Posts on a Feed.
      */
-    private void selectOnePost(String postsString, int numOfDisplayedPosts) {
+    public void selectOnePost(String postsString, int numOfDisplayedPosts) {
         int postNumber = this.getSelectedPostInput(postsString, numOfDisplayedPosts);
         if (postNumber == 99) {
             this.runBrowseFeed();

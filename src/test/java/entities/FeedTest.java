@@ -1,3 +1,5 @@
+package entities;
+
 import entities.Feed;
 import entities.Post;
 import entities.Recipe;
