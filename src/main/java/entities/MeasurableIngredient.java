@@ -40,6 +40,6 @@ public class MeasurableIngredient extends Ingredient {
      * @return Return the MeasurableIngredient String representation.
      */
     public String getMeasurableIngredient() {
-        return this.ingredientAmount + this.ingredientMeasurementType + getIngredientName();
+        return this.ingredientAmount + " " + this.ingredientMeasurementType + " " + getIngredientName();
     }
 }

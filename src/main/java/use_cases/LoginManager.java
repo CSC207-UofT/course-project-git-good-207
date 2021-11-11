@@ -105,7 +105,7 @@ public class LoginManager {
      * @return User with the given username if it exists, null otherwise
      */
     private User getExistingUser(String username, User[] allUsers) {
-        for (User user : allUsers) {
+        for (User user: allUsers) {
             if (user.getUsername().equals(username)) {
                 return user;
             }

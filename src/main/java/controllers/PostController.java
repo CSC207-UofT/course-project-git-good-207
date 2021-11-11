@@ -48,8 +48,15 @@ public class PostController {
                 String recipeSteps = this.inOut.getInput(promptRecipeSteps);
 
                 Recipe recipe = recipeManager.createRecipe(recipeTitle, allIngredients, getRecipeStepsList(recipeSteps), UUID.randomUUID().toString());
-                String category = this.inOut.getInput("What is the recipe category?");
-                postManager.createPost(currUser, timeNow, recipe, category, UUID.randomUUID().toString());
+                String category = this.inOut.getInput("What is the recipe category? (Type 'back' to discard draft and return to main menu)");
+                if (category.toLowerCase().contains("back")) {
+                    this.inOut.setOutput("Post deleted. Returning to main menu.");
+                } else {
+                    postManager.createPost(currUser, timeNow, recipe, category, UUID.randomUUID().toString());
+                    this.inOut.setOutput("Post successfully created!");
+
+
+                }
 
             } catch (IOException e) {
                 inOut.setOutput("There was an error: " + e);
@@ -73,7 +80,7 @@ public class PostController {
         String countableInput = this.inOut.getInput(promptCountable);
         if (countableInput.contains("N/A") && this.noMeasurableIngredients) {
             inOut.setOutput("Must enter at least one ingredient");
-            getCountableIngredients(promptCountable);
+            countableInput = getCountableIngredients(promptCountable);
         } else if (countableInput.contains("N/A")) {
             return "N/A";
         }
@@ -103,7 +110,7 @@ public class PostController {
         if (measurableInput.contains("N/A")) {
             this.noMeasurableIngredients = true;
             return "N/A";
-        }
+        } else { this.noMeasurableIngredients = false; }
         String[] splitIngredients = measurableInput.split(",");
         String errorMessage = "That was an invalid input. Please enter measurable ingredients again in correct format.";
         for (String ingredient: splitIngredients) {
@@ -113,7 +120,7 @@ public class PostController {
                 getMeasurableIngredients(promptMeasurable);
             } else if (strippedIngredient.split(" ").length != 3) {
                 inOut.setOutput(errorMessage);
-                getMeasurableIngredients(promptMeasurable);
+                measurableInput = getMeasurableIngredients(promptMeasurable);
             }
         }
         return measurableInput;
