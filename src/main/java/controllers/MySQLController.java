@@ -76,14 +76,12 @@ public class MySQLController extends DatabaseManager {
      * ones from the user
      * @param user user object where we want to delete the
      *             posts
-     * @param newUser user that contains the post we want to
-     *                add with a new id
      */
-    private void updatePostsFromUser(User user, User newUser){
+    private void updatePostsFromUser(User user){
         // first I delete the posts from the user
         this.deletePostsFromUser(user);
         // add the new ones
-        for (Post post: newUser.getPosts()){
+        for (Post post: user.getPosts()){
             this.addNewPost(new Post(user.getId(), post.getTime(), post.getRecipe(),
                     post.getCategory(), post.getId()));
         }
@@ -108,7 +106,7 @@ public class MySQLController extends DatabaseManager {
             preparedStatement.setString(3, user.getBio());
             preparedStatement.setString(4, user.getUsername());
             preparedStatement.execute();
-            this.updatePostsFromUser(user, newUser);
+            this.updatePostsFromUser(user);
             return true;
 
 
