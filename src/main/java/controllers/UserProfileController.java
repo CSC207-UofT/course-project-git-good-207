@@ -3,10 +3,8 @@ package controllers;
 import java.io.IOException;
 
 import entities.User;
-import entities.Post;
 import use_cases.DatabaseManager;
 import use_cases.LoginManager;
-import use_cases.PostManager;
 import use_cases.UserManager;
 
 public class UserProfileController {
@@ -14,6 +12,7 @@ public class UserProfileController {
     private final LoginManager loginManager;
     private final UserManager userManager;
     private final DatabaseManager databaseManager;
+    private final FeedController feedController;
 
     /**
      * Create a UserProfileController with the given inOut, DatabaseManager, and LoginManager
@@ -21,12 +20,15 @@ public class UserProfileController {
      * @param inOut         the inOut interface for managing input/output
      * @param dbManager     the DatabaseManager
      * @param loginManager  the LoginManager
+     * @param postController the PostController
      */
-    public UserProfileController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager) {
+    public UserProfileController(InOut inOut, DatabaseManager dbManager, LoginManager loginManager,
+                                 PostController postController) {
         this.inOut = inOut;
         this.loginManager = loginManager;
         this.databaseManager = dbManager;
         this.userManager = new UserManager(dbManager);
+        this.feedController = new FeedController(inOut, dbManager, loginManager, postController);
     }
 
     /**
@@ -166,7 +168,6 @@ public class UserProfileController {
      */
     private void runFollowUser(User user, User targetUser) {
         if (this.userManager.followUser(user, targetUser)) {
-            this.userManager.followUser(user, targetUser);
             this.inOut.setOutput("Successfully followed the target user!");
         } else {
             this.inOut.setOutput("Target user already followed!");
@@ -207,11 +208,10 @@ public class UserProfileController {
      * Display user's posts
      */
     private void runDisplayUserPosts(User user) {
-        PostController postController = new PostController(this.inOut, this.databaseManager, this.loginManager);
-        PostManager postManager = new PostManager(this.userManager.getUserPosts(user));
-        for (Post post: this.userManager.getUserPosts(user)) {
-            postController.displayPost(postManager.getPostId(post));
-        }
+        // Give option to select which of the user's post to view
+        String postsString = this.feedController.generateDisplayedPosts(this.userManager.getUserPosts(user));
+        // View the selected post
+        this.feedController.selectOnePost(postsString, this.userManager.getUserPosts(user).size());
     }
 
     /**
@@ -249,5 +249,4 @@ public class UserProfileController {
             inOut.setOutput("There was an error: " + e);
         }
     }
-
 }
