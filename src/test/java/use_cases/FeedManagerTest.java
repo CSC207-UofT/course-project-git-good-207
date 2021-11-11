@@ -1,3 +1,5 @@
+package use_cases;
+
 import entities.Feed;
 import entities.Post;
 import entities.Recipe;
@@ -76,9 +78,9 @@ public class FeedManagerTest {
     }
 
     private static void setupUserFollowing() {
-        currentUser = new User("justin", "1234", "Hi, I'm Justin", "1000");
-        friend1 = new User("glen", "1111", "Hi, I'm Glen", "2000");
-        friend2 = new User("eric", "2222", "Hi, I'm Eric", "3000");
+        currentUser = new User("justin", "1234", "" ,UUID.randomUUID().toString());
+        friend1 = new User("glen", "1111", "" ,UUID.randomUUID().toString());
+        friend2 = new User("eric", "2222", "" ,UUID.randomUUID().toString());
         currentUser.addFollowing(friend1);
         currentUser.addFollowing(friend2);
     }

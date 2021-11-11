@@ -105,7 +105,7 @@ public class LoginManager {
      * @return User with the given username if it exists, null otherwise
      */
     private User getExistingUser(String username, User[] allUsers) {
-        for (User user : allUsers) {
+        for (User user: allUsers) {
             if (user.getUsername().equals(username)) {
                 return user;
             }
@@ -157,11 +157,21 @@ public class LoginManager {
         Matcher matcher = userReq.matcher(username);
 
         //make sure username isn't take already
-        boolean isUniqueUser = !(databaseManager.getLoginInfo().containsKey(username));
+        boolean isUniqueUser = isUniqueUser(username);
         boolean isValidUser = matcher.matches();
 
         return isValidUser && isUniqueUser;
 
+    }
+
+    private boolean isUniqueUser(String username) {
+        User[] allUsers = databaseManager.getAllUsers();
+        for (User user: allUsers) {
+            if (username.equals(user.getUsername())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
