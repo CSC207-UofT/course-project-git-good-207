@@ -2,32 +2,23 @@ package controllers;
 
 import use_cases.LoginManager;
 
-import java.io.IOException;
-
 public class RecipeAppController {
     private final InOut inOut;
-    private final MySQLController mySQLController;
     private final LoginController loginController;
     private final FeedController feedController;
     private final PostController postController;
     private final UserProfileController userProfileController;
     private final LoginManager loginManager;
-    private final String shellActionPrompt = "Enter an action: \n" +
-            "0 Browse your Feed\n" +
-            "1 Browse a User Profile\n" +
-            "2 Post a Recipe\n" +
-            "3 Customize your User Profile\n" +
-            "4 Logout\n";
 
     public RecipeAppController(InOut inOut) {
         this.inOut = inOut;
-        this.mySQLController = new MySQLController();
-        this.loginManager = new LoginManager(this.mySQLController);
+        MySQLController mySQLController = new MySQLController();
+        this.loginManager = new LoginManager(mySQLController);
         this.loginController = new LoginController(inOut, this.loginManager);
-        this.postController = new PostController(inOut, this.mySQLController, this.loginManager);
-        this.userProfileController = new UserProfileController(inOut, this.mySQLController, this.loginManager,
+        this.postController = new PostController(inOut, mySQLController, this.loginManager);
+        this.userProfileController = new UserProfileController(inOut, mySQLController, this.loginManager,
                 this.postController);
-        this.feedController = new FeedController(inOut, this.mySQLController, this.loginManager, this.postController);
+        this.feedController = new FeedController(inOut, mySQLController, this.loginManager, this.postController);
     }
 
     public void run() {
@@ -41,13 +32,9 @@ public class RecipeAppController {
     }
 
     private void runLoggedInState() {
-        try {
-            String action = this.inOut.getInput(this.getShellActionPrompt());
-            this.runAction(this.getShellActionEnum(action));
-            this.inOut.setOutput("You selected action: " + action);
-        } catch (IOException e) {
-            this.inOut.setOutput("An error occurred: " + e);
-        }
+        String action = this.inOut.getInput(this.getShellActionPrompt());
+        this.runAction(this.getShellActionEnum(action));
+        this.inOut.setOutput("You selected action: " + action);
     }
 
     private ShellAction getShellActionEnum(String action) {
@@ -84,6 +71,11 @@ public class RecipeAppController {
     }
 
     private String getShellActionPrompt() {
-        return this.shellActionPrompt;
+        return "Enter an action: \n" +
+                "0 Browse your Feed\n" +
+                "1 Browse a User Profile\n" +
+                "2 Post a Recipe\n" +
+                "3 Customize your User Profile\n" +
+                "4 Logout\n";
     }
 }

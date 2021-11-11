@@ -3,7 +3,6 @@ package controllers;
 import entities.*;
 import use_cases.*;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,8 +37,6 @@ public class PostController {
             LocalDateTime timeNow = LocalDateTime.now();
             String promptMeasurable = createPostHelper()[1], promptCountable = createPostHelper()[2],
                     promptRecipeSteps = createPostHelper()[0];
-
-            try {
                 String inputMeasurable = getMeasurableIngredients(promptMeasurable);
                 String inputCountable = getCountableIngredients(promptCountable);
                 ArrayList<Ingredient> allIngredients = createAllIngredientList(inputCountable, createMeasurableIngredient(inputMeasurable));
@@ -54,13 +51,7 @@ public class PostController {
                 } else {
                     postManager.createPost(currUser, timeNow, recipe, category, UUID.randomUUID().toString());
                     this.inOut.setOutput("Post successfully created!");
-
-
                 }
-
-            } catch (IOException e) {
-                inOut.setOutput("There was an error: " + e);
-            }
         }
     }
 
@@ -76,7 +67,7 @@ public class PostController {
      * @param promptCountable prompt for countable ingredients
      * @return String countable ingredients that user entered
      */
-    private String getCountableIngredients(String promptCountable) throws IOException {
+    private String getCountableIngredients(String promptCountable) {
         String countableInput = this.inOut.getInput(promptCountable);
         if (countableInput.contains("N/A") && this.noMeasurableIngredients) {
             inOut.setOutput("Must enter at least one ingredient");
@@ -105,7 +96,7 @@ public class PostController {
      * @param promptMeasurable prompt for measurable ingredients
      * @return String measurable ingredients that user entered
      */
-    private String getMeasurableIngredients(String promptMeasurable) throws IOException {
+    private String getMeasurableIngredients(String promptMeasurable) {
         String measurableInput = this.inOut.getInput(promptMeasurable);
         if (measurableInput.contains("N/A")) {
             this.noMeasurableIngredients = true;
@@ -325,14 +316,10 @@ public class PostController {
         Comment comment = new Comment("", this.loginManager.getCurrUser().getId(),
                 LocalDateTime.now(), UUID.randomUUID().toString());
         String commentText;
-        try {
-            do {
-                commentText = this.inOut.getInput("Please write your comment:");
-            } while (commentText.isEmpty());
-            comment.setText(commentText);
-        } catch (IOException e) {
-            this.inOut.setOutput("An error occurred: " + e);
-        }
+        do {
+            commentText = this.inOut.getInput("Please write your comment:");
+        } while (commentText.isEmpty());
+        comment.setCommentText(commentText);
         return comment;
     }
 
@@ -348,8 +335,6 @@ public class PostController {
                         + "0 Like the Post \n" + "1 Comment on the Post \n" + "99 Return to main menu";
                 String postActionString = this.inOut.getInput(postActionPrompt);
                 postAction = Integer.parseInt(postActionString);
-            } catch (IOException e) {
-                this.inOut.setOutput("An error occurred: " + e);
             } catch (NumberFormatException nfe) {
                 this.inOut.setOutput("You entered an invalid action input.");
             }

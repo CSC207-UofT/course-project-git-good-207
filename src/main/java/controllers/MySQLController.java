@@ -19,14 +19,7 @@ public class MySQLController extends DatabaseManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.loginInfo.put("eric", "123");
-        this.loginInfo.put("shawn", "1234");
     }
-
-    public HashMap<String, String> getLoginInfo(){
-        return loginInfo;
-    }
-
 
     /**
      * Save a new post to the database.
@@ -34,7 +27,7 @@ public class MySQLController extends DatabaseManager {
      */
     public void addNewPost(Post newPost) {
         this.insertPostDB(newPost);
-        this.insertRecipeDB(newPost, newPost.getRecipe());
+        this.insertRecipeDB(newPost.getRecipe());
         this.insertRecipeStepsDB(newPost.getRecipe());
         this.insertRecipeIngredientsDB(newPost.getRecipe());
         this.insertCommentsDB(newPost, newPost.getComments());
@@ -99,11 +92,8 @@ public class MySQLController extends DatabaseManager {
     /**
      * Save a new user to the database.
      * @param newUser The new User to save to the database.
-     * @return A boolean which is true if the user was successfully
-     * added (there was no user with the same username). False if
-     * unsuccessful.
      */
-    public boolean addNewUser(User newUser) {
+    public void addNewUser(User newUser) {
         try {
             String query = "INSERT INTO `user_info`(`user_id`, `username`, `password`, `bio`) " +
                     "VALUES (?,?,?,?)";
@@ -115,10 +105,8 @@ public class MySQLController extends DatabaseManager {
             preparedStmt.setString(4, newUser.getBio());
 
             preparedStmt.execute();
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -170,12 +158,7 @@ public class MySQLController extends DatabaseManager {
         }
     }
 
-    public boolean updatePost(Post updatedPost) {
-        return true;
-    }
-
-    public boolean updateUser(User updatedUser) {
-        return true;
+    public void updateUser(User updatedUser) {
     }
 
     /**
@@ -396,14 +379,15 @@ public class MySQLController extends DatabaseManager {
     private void insertCommentsDB(Post post, Iterable<Comment> comments) {
         try {
             for (Comment comment: comments) {
-                String query = "INSERT INTO `comments`(`user_id`, `post_id`, `comment_time`, `comment_text`) " +
-                        "VALUES (?,?,?,?)";
+                String query = "INSERT INTO `comments`(`user_id`, `post_id`, `comment_time`, `comment_text`, `comment_id`) " +
+                        "VALUES (?,?,?,?,?)";
 
                 PreparedStatement preparedStmt = connection.prepareStatement(query);
                 preparedStmt.setString(1, comment.getAuthorId());
-                preparedStmt.setString(2, comment.getId());
+                preparedStmt.setString(2, post.getId());
                 preparedStmt.setTimestamp(3, Timestamp.valueOf(comment.getCreatedTime()));
                 preparedStmt.setString(4, comment.getCommentText());
+                preparedStmt.setString(5, comment.getId());
                 preparedStmt.execute();
             }
         } catch (Exception e) {
@@ -413,10 +397,9 @@ public class MySQLController extends DatabaseManager {
 
     /**
      * Save recipe associated with a Post ID to the database.
-     * @param post The post associated with the Recipe.
      * @param recipe The recipe associated with the Post.
      */
-    private void insertRecipeDB(Post post, Recipe recipe) {
+    private void insertRecipeDB(Recipe recipe) {
         try {
             String query = "INSERT INTO `recipes`(`recipe_id`, `title`)" +
                     "VALUES (?,?)";
@@ -573,14 +556,5 @@ public class MySQLController extends DatabaseManager {
         Recipe newRecipe = newPost.getRecipe();
         newRecipe.setTitle("My new recipe title!" + LocalDateTime.now());
         d.editPost(posts[0]);
-
-        posts = d.getAllPosts();
-        for (Post post: posts) {
-            System.out.println("post category is: " + post.getCategory());
-            System.out.println("post recipe title is: " + post.getRecipe().getTitle());
-            if (post.getRecipe().getSteps().size() > 0) {
-                System.out.println("first step of post recipe is: " + post.getRecipe().getSteps().get(0));
-            }
-        }
     }
 }
