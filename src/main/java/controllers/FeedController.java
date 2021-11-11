@@ -6,7 +6,6 @@ import use_cases.FeedManager;
 import use_cases.LoginManager;
 import use_cases.UserManager;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -106,8 +105,6 @@ public class FeedController {
             try {
                 String postSelection = this.inOut.getInput(postsString);
                 postNumber = Integer.parseInt(postSelection);
-            } catch (IOException e) {
-                this.inOut.setOutput("An error occurred: " + e);
             } catch (NumberFormatException nfe) {
                 this.inOut.setOutput("You entered an invalid action input.");
             }
@@ -138,8 +135,6 @@ public class FeedController {
                         this.runBrowseFeed();
                     }
                 }
-            } catch (IOException e) {
-                this.inOut.setOutput("An error occurred: " + e);
             } catch (NumberFormatException nfe) {
                 this.inOut.setOutput("You entered an invalid action input.");
             }
@@ -162,8 +157,6 @@ public class FeedController {
                         "2 Japanese \n" + "3 Italian \n" + "4 French \n" + "5 Mexican \n" + "6 Others \n" +
                         "99 Return to choose a different feed filter");
                 cuisineInput = Integer.parseInt(cuisineInputString);
-            } catch (IOException e) {
-                this.inOut.setOutput("An error occurred: " + e);
             } catch (NumberFormatException nfe) {
                 this.inOut.setOutput("You entered an invalid action input.");
             }
