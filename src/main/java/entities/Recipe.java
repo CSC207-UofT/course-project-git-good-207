@@ -3,10 +3,10 @@ package entities;
 import java.util.ArrayList;
 
 public class Recipe {
-    private ArrayList<String> steps;
-    private ArrayList<Ingredient> ingredients;
+    private final ArrayList<String> steps;
+    private final ArrayList<Ingredient> ingredients;
     private String title;
-    private String id;
+    private final String id;
 
     /**
      * Construct a Recipe with its name, its amount,

@@ -2,7 +2,6 @@ package use_cases;
 
 import entities.*;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -2,7 +2,6 @@ package use_cases;
 
 import entities.Feed;
 import entities.Post;
-import use_cases.Filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
