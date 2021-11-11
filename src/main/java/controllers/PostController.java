@@ -127,7 +127,7 @@ public class PostController {
      */
     private String[] createPostHelper() {
         String promptRecipeSteps = "Enter recipe steps in this comma-separated format: 'Add the water, mix flour'";
-        String promptMeasurable = "Enter measurable ingredients (in grams, ounces etc) in format '50 grams sugar, 1 cup flour, etc.' or N/A if no measurable ingredients";
+        String promptMeasurable = "Enter measurable ingredients (in grams, ounces etc) in format '50 grams sugar, 1 cup flour, etc.' or N/A if no measurable ingredients (please ensure no extra spaces between ingredient words)";
         String promptCountable = "Enter countable ingredients in format '1 lemon, 1 apple, etc.' or N/A if no countable ingredients (must have entered at least one ingredient per recipe and please write decimals instead of fractions)";
         return new String[]{promptRecipeSteps, promptMeasurable, promptCountable};
     }
