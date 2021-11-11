@@ -6,7 +6,7 @@ features as necessary in the future.
 
 ## Major Design Decisions
 
-* Every Post will now have a unique ID. This will allow us to identify them uniquely within the program.  
+* Every Post, Recipe, and User have a unique ID. This will allow us to identify them uniquely within the program.  
 
   
 * We have now made DatabaseManager (use case) abstract and extended it with MySQLController (controller) in accordance with Dependency Inversion. This way, our use cases classes no longer depend on the implementation of our database. (Helps us remain in accordance with SOLID and Clean Architecture)  
@@ -15,11 +15,11 @@ features as necessary in the future.
 * We discussed making DatabaseManager a Singleton class, so we wouldn’t have to pass it in everywhere we used it. However, after further investigation, we realized that this would not make sense. We were using Dependency Inversion to abstract away our database implementation, and thus made DatabaseManager an abstract class which we injected into our Controller classes. We then made MySQLController a child class of DatabaseManager. Since we had abstracted DatabaseManager, we realized that we could not make DatabaseManager a Singleton, since a Singleton is a final class. This conflicted with the abstract definition of DatabaseManager (a class cannot be both final and abstract).
 
 
-* We also discussed making LoginManager a singleton class. In the current state of our project, we only ever use a single instance of LoginManager as only one user can be logged in at a time, and we must keep track of who the current user is. This led us to think that a singleton LoginManager would make sense. Nevertheless, after further discussion and consideration, we decided that this would not be an effective idea. Making LoginManager a singleton class would limit us to only being able to have one instance of LoginManager. This would be very limiting if, in a hypothetical future, we wanted to expand the program to be able to have multiple users logging in at the same time (like in a real social media app), as that would require multiple instances of LoginManager to keep track of multiple current users. Thus, we decided against making LoginManager a singleton class.
+* We also discussed making LoginManager a Singleton class. In the current state of our project, we only ever use a single instance of LoginManager as only one user can be logged in at a time, and we must keep track of who the current user is. This led us to think that a singleton LoginManager would make sense. Nevertheless, after further discussion and consideration, we decided that this would not be an effective idea. Making LoginManager a singleton class would limit us to only being able to have one instance of LoginManager. This would be very limiting if, in a hypothetical future, we wanted to expand the program to be able to have multiple users logging in at the same time (like in a real social media app), as that would require multiple instances of LoginManager to keep track of multiple current users. Thus, we decided against making LoginManager a singleton class.
 
 ## Clean Architecture
 
-* We strived to adhere to the Dependency Rule, so that lower layers never depended on outer layers. For example, we abstracted DatabaseManager so that our Use Case classes would not have to depend on our database implementation.  
+* We strived to adhere to the Dependency Rule, so that lower layers never depended on outer layers. For example, we abstracted DatabaseManager so that our Use Case classes would not have to depend on our database implementation. We made sure that outer layers only called on the same layer or the layer just below them without skipping layers.
 
 
 * Our codebase is definitely modular and testable without the UI, Database, et cetera. We just did not have time to learn a JUnit mock framework to be able to write unit tests with mocked dependencies, but we may look into this in the future.
@@ -159,7 +159,7 @@ Our program does everything the specifications say it should do. We feel that ou
 ambitious, as was reflected through TA feedback.
 
 Our program can store and load state, allowing the state to persist across runs of the program. This is done through the 
-use of the MySQL database which stores all significant program data, such as user info, posts, recipes, ect.
+use of the MySQL database which stores all significant program data, such as user info, posts, recipes, etc.
 All this information is stored during program runtime and loaded when necessary. This means that if a user makes a post, 
 they can access it during a different run of the program.  
 
