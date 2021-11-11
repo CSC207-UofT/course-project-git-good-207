@@ -103,9 +103,11 @@ before it could be merged into our main branch.
 
 ## Code Style
 
-We agreed on specific code style guidelines and made sure that we followed them throughout our code implementation
+* We agreed on specific code style guidelines and made sure that we followed them throughout our code implementation
 process. For example, we agreed to put curly braces on the same line as methods or try blocks, with a space in between 
 (i.e. methodName() {).
+* We made sure that all our code was well documented and easy to understand by adding Javadocs for every method, as well as additional comments within certain methods to describe specific lines of code where needed.
+* We agreed on naming conventions like camelCase and descriptive variable and method names. Here is an example PR where peer feedback resulted in clearer method naming: https://github.com/CSC207-UofT/course-project-git-good-207/pull/43
 
 ## Documentation
 
