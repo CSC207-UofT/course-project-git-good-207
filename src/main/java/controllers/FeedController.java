@@ -63,7 +63,7 @@ public class FeedController {
      */
     public String generateDisplayedPosts(ArrayList<Post> posts) {
         this.postsActionMap = new HashMap<>();
-        StringBuilder postsString = new StringBuilder("Enter a post number (if there's any) for a detailed view of " +
+        StringBuilder postsString = new StringBuilder("Enter a post number for a detailed view of " +
                 "that post or enter 99 to choose a different feed filter: ");
 
         if (posts.size() == 0) {
