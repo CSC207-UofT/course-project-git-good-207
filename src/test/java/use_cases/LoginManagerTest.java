@@ -59,7 +59,7 @@ class LoginManagerTest {
     void testSignUpValid() {
         boolean isValid = loginManager.signUp("uniqueTestUsername2", "Testing2");
         int correctUserCount = 0;
-        for (User user : dbManager.getAllUsers()) {
+        for (User user: dbManager.getAllUsers()) {
             if (user.getUsername().equals("uniqueTestUsername2")) {
                 correctUserCount++;
             }
