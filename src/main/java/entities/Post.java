@@ -41,6 +41,9 @@ public class Post extends PostableItem {
 
     public String getId() { return this.id; }
 
+    public LocalDateTime getTime(){
+        return this.createdTime;
+    }
     public void addComment(Comment comment) {
         this.comments.add(comment);
     }
