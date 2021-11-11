@@ -66,15 +66,19 @@ public class FeedController {
         StringBuilder postsString = new StringBuilder("Enter a post number for a detailed view of " +
                 "that post or enter 99 to choose a different feed filter: ");
 
-        for (int i = 0; i < posts.size(); i++) {
-            this.postsActionMap.put(i, posts.get(i));
-            postsString.append("\n");
-            postsString.append(i).append(" ");
-            User user = this.userManager.getUserById(posts.get(i).getAuthorId());
-            if (user != null) {
-                postsString.append(user.getUsername()).append("'s ");
+        if (posts.size() == 0) {
+            postsString = new StringBuilder("There aren't any posts suitable for the chosen filter. Pick a different filter.");
+        } else {
+            for (int i = 0; i < posts.size(); i++) {
+                this.postsActionMap.put(i, posts.get(i));
+                postsString.append("\n");
+                postsString.append(i).append(" ");
+                User user = this.userManager.getUserById(posts.get(i).getAuthorId());
+                if (user != null) {
+                    postsString.append(user.getUsername()).append("'s ");
+                }
+                postsString.append(posts.get(i).getRecipe().getTitle());
             }
-            postsString.append(posts.get(i).getRecipe().getTitle());
         }
         return postsString.toString();
     }
@@ -86,12 +90,17 @@ public class FeedController {
      * @param numOfDisplayedPosts The number of displayed Posts on a Feed.
      */
     public void selectOnePost(String postsString, int numOfDisplayedPosts) {
-        int postNumber = this.getSelectedPostInput(postsString, numOfDisplayedPosts);
-        if (postNumber == 99) {
+        if (numOfDisplayedPosts == 0) {
+            this.inOut.setOutput(postsString);
             this.runBrowseFeed();
         } else {
-            Post selectedPost = this.postsActionMap.get(postNumber);
-            this.postController.browsePost(selectedPost);
+            int postNumber = this.getSelectedPostInput(postsString, numOfDisplayedPosts);
+            if (postNumber == 99) {
+                this.runBrowseFeed();
+            } else {
+                Post selectedPost = this.postsActionMap.get(postNumber);
+                this.postController.browsePost(selectedPost);
+            }
         }
     }
 
