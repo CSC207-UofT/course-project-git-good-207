@@ -3,12 +3,10 @@ package use_cases;
 import entities.Feed;
 import entities.Post;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 
 public class Filter {
     protected Feed currentUserFeed;

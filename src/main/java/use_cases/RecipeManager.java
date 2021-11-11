@@ -84,13 +84,4 @@ public class RecipeManager {
         return ingredients;
     }
 
-    public void deleteStep(Recipe recipe) {
-        recipe.deleteLastStep();
-    }
-
-    public void addStep(Recipe recipe, String step) {
-        recipe.addStep(step);
-    }
-
-    public void updateTitle(Recipe recipe, String title) {recipe.setTitle(title);}
 }

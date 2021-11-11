@@ -21,10 +21,6 @@ public abstract class PostableItem {
         return this.authorId;
     }
 
-    public String getText() {
-        return text;
-    }
-
     public void setText(String text) {
         this.text = text;
     }
