@@ -17,11 +17,17 @@ features as necessary in the future.
 
 * We also discussed making LoginManager a singleton class. In the current state of our project, we only ever use a single instance of LoginManager as only one user can be logged in at a time, and we must keep track of who the current user is. This led us to think that a singleton LoginManager would make sense. Nevertheless, after further discussion and consideration, we decided that this would not be an effective idea. Making LoginManager a singleton class would limit us to only being able to have one instance of LoginManager. This would be very limiting if, in a hypothetical future, we wanted to expand the program to be able to have multiple users logging in at the same time (like in a real social media app), as that would require multiple instances of LoginManager to keep track of multiple current users. Thus, we decided against making LoginManager a singleton class.
 
-## --Clean Architecture--
+## Clean Architecture
 
-* We strived to adhere to the Dependency Rule, so that lower layers never depended on outer layers. For example, we abstracted DatabaseManager so that our Use Case classes would not have to depend on our database implementation.
+* We strived to adhere to the Dependency Rule, so that lower layers never depended on outer layers. For example, we abstracted DatabaseManager so that our Use Case classes would not have to depend on our database implementation.  
+
+
 * Our codebase is definitely modular and testable without the UI, Database, et cetera. We just did not have time to learn a JUnit mock framework to be able to write unit tests with mocked dependencies, but we may look into this in the future.
+
+
 * We strived to make our app independent of UI implementation, by using an abstracted InOut interface in our Controllers. This opens the possibility for us of using something like Spring Boot with a web framework in the future.
+
+
 * Our app is independent of our Database implementation in MySQLController.
 
 ## SOLID Design
@@ -108,7 +114,11 @@ before it could be merged into our main branch.
 * We agreed on specific code style guidelines and made sure that we followed them throughout our code implementation
 process. For example, we agreed to put curly braces on the same line as methods or try blocks, with a space in between 
 (i.e. methodName() {).
+
+
 * We made sure that all our code was well documented and easy to understand by adding Javadocs for every method, as well as additional comments within certain methods to describe specific lines of code where needed.
+
+
 * We agreed on naming conventions like camelCase and descriptive variable and method names. Here is an example PR where peer feedback resulted in clearer method naming: https://github.com/CSC207-UofT/course-project-git-good-207/pull/43
 
 ## Documentation
@@ -122,18 +132,24 @@ Our Phase 0 submission had only one unit test file, just to make sure our JUnit 
 cover all methods across our codebase that made sense to test (i.e. simple, limited dependencies). We did not use a 
 Mock framework like Mockito, as this was more advanced, but we may look into this later on, time permitting.
 
-## --Refactoring--
+## Refactoring
 
 * We refactored class names to be more descriptive. For example, we renamed our Presenter classes to Controllers in this PR:
 https://github.com/CSC207-UofT/course-project-git-good-207/pull/24/files
+
+
 * Originally, we had classes generate a unique ID for themselves when constructed, but we realized this was problematic when reconstructing Java objects based on information stored in the database - we were not able to recreate an object with an existing ID. We refactored our approach and modified many of our classes to take in an ID as a parameter in the constructor. For example, we made this change in our User object, and you can see our refactored changes in this PR: https://github.com/CSC207-UofT/course-project-git-good-207/pull/72
+
+
 * We relocated some classes based on TA feedback. This is discussed further in the Code Organization section.
 
-## --Code Organization--
+## Code Organization
 
 * As mentioned previously, we decided to use the layer package strategy. This makes it a lot easier to find specific
 classes within the package structure. To do so, you simply need to know what layer of clean architecture the class
 belongs to, or you can reference the CRC cards (as they directly reflect our package structure).
+
+
 * Based on TA feedback, we relocated some classes to better reflect their use. For example, InOut and ShellAction were originally in the Entities package, but we moved them to the Controllers package, as they were more related to user interaction logic, which we handle in our Controllers.
 
 
