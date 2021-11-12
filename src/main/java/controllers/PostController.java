@@ -115,7 +115,13 @@ public class PostController {
             } else if (strippedIngredient.split(" ").length < 3) {
                 inOut.setOutput(errorMessage);
                 measurableInput = getMeasurableIngredients(promptMeasurable);
-            }
+            } /*
+            for (int i = 0; i < strippedIngredient.split(" ")[0].length(); i++) {
+                if (Character.isAlphabetic(strippedIngredient.split(" ")[0].charAt(i))) {
+                    inOut.setOutput(errorMessage);
+                    measurableInput = getMeasurableIngredients(promptMeasurable);
+                }
+            } */
         }
         return measurableInput;
     }
@@ -158,7 +164,11 @@ public class PostController {
 
             for (String countableIngredient : countable) {
                 String[] splitIngredient = countableIngredient.split(" ");
-                ingredientList.add(recipeManager.createCountableIngredient(splitIngredient[1],
+                StringBuilder name = new StringBuilder();
+                for (int i = 1; i < splitIngredient.length; i++) {
+                    name.append(splitIngredient[i]).append(" ");
+                }
+                ingredientList.add(recipeManager.createCountableIngredient(name.toString(),
                         Float.valueOf(splitIngredient[0])));
             }
         }
@@ -178,7 +188,11 @@ public class PostController {
             ArrayList<Ingredient> ingredientList = new ArrayList<>();
             for (String measurableIngredient : measurable) {
                 String[] splitIngredientParts = measurableIngredient.split(" ");
-                ingredientList.add(recipeManager.createMeasurableIngredient(splitIngredientParts[2],
+                StringBuilder name = new StringBuilder();
+                for (int i = 2; i < splitIngredientParts.length; i++) {
+                    name.append(splitIngredientParts[i]).append(" ");
+                }
+                ingredientList.add(recipeManager.createMeasurableIngredient(name.toString(),
                         Float.parseFloat(splitIngredientParts[0]), splitIngredientParts[1]));
             }
             return ingredientList;
