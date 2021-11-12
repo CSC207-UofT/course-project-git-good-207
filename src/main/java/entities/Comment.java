@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 
 public class Comment extends PostableItem {
-    private final String commentText;
+    private String commentText;
 
     /**
      * Construct a Comment with text, the user that commented, and
@@ -20,10 +20,12 @@ public class Comment extends PostableItem {
     }
 
     /**
-     *
+     * Returns the Comment's text.
      * @return Return the Comment's text
      */
     public String getCommentText(){
         return this.commentText;
     }
+
+    public void setCommentText(String commentText) { this.commentText = commentText; }
 }

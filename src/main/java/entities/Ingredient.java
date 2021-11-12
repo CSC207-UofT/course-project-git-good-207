@@ -1,7 +1,7 @@
 package entities;
 
 public class Ingredient {
-    private String ingredientName;
+    private final String ingredientName;
 
     /**
      * Construct an Ingredient with its name.

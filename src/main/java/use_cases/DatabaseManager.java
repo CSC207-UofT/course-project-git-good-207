@@ -3,15 +3,9 @@ package use_cases;
 import entities.*;
 
 import java.sql.*;
-import java.util.HashMap;
 
 public abstract class DatabaseManager {
-    //Temp user storage for loginManager testing
-    protected HashMap<String, String> loginInfo = new HashMap<>();
     protected Connection connection;
-
-    public abstract HashMap<String, String> getLoginInfo();
-
 
     /**
      * Save a new post to the database.
@@ -47,14 +41,6 @@ public abstract class DatabaseManager {
      * @return an Array of all the posts stored in the database.
      */
     public abstract Post[] getAllPosts();
-
-    /**
-     * Given a post it changes the values of the previous post so that
-     * are the same to the new one
-     * @param updatedPost stores the new attributes of the post
-     * @return true if the post could be updated
-     */
-    public abstract boolean updatePost(Post updatedPost);
 
     /**
      * Updates the attributes of the user to the new attributes

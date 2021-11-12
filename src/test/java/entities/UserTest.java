@@ -1,16 +1,18 @@
-import entities.User;
+package entities;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class UserTest {
     private User user;
 
     @BeforeEach
     void setupFeedTest() {
-        this.user = new User("eren_yeager", "#1titan_slayer");
+        this.user = new User("eren_yeager", "#1titan_slayer", "" , UUID.randomUUID().toString());
     }
 
     @Test
@@ -39,7 +41,7 @@ public class UserTest {
 
     @Test
     void testGetFollowers() {
-        User john_jones = new User("john_jones", "123");
+        User john_jones = new User("john_jones", "123", "" ,UUID.randomUUID().toString());
         ArrayList<User> followers = new ArrayList<>();
         followers.add(john_jones);
         this.user.setFollowers(followers);
@@ -48,7 +50,7 @@ public class UserTest {
 
     @Test
     void testGetFollowing() {
-        User john_jones = new User("john_jones", "123");
+        User john_jones = new User("john_jones", "123", "" ,UUID.randomUUID().toString());
         ArrayList<User> following = new ArrayList<>();
         following.add(john_jones);
         this.user.setFollowing(following);

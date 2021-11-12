@@ -1,13 +1,12 @@
+package use_cases;
+
 import entities.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import use_cases.PostManager;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PostManagerTest {
     private PostManager postManager;
@@ -50,7 +49,7 @@ class PostManagerTest {
 
     @Test
     void testLikePost() {
-        User user = new User("ibarrame", "password");
+        User user = new User("ibarrame", "password", "" ,UUID.randomUUID().toString());
         this.postManager.createPost(this.samplePost);
         boolean liked = this.postManager.likePost(this.samplePost, user);
         assert(this.postManager.getSpecificPost(this.samplePost.getId()).getNumLikes() == 1 && liked);

@@ -2,15 +2,14 @@ package use_cases;
 
 import entities.Feed;
 import entities.Post;
-import use_cases.Filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 public class FilterByCuisine extends Filter {
-    protected int cuisineNumInput;
-    protected ArrayList<String> cuisineList = new ArrayList<>(Arrays.asList("chinese", "american",
+    protected final int cuisineNumInput;
+    protected final ArrayList<String> cuisineList = new ArrayList<>(Arrays.asList("chinese", "american",
             "japanese", "italian", "french", "mexican"));
 
     /**

@@ -19,14 +19,7 @@ public class MySQLController extends DatabaseManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.loginInfo.put("eric", "123");
-        this.loginInfo.put("shawn", "1234");
     }
-
-    public HashMap<String, String> getLoginInfo(){
-        return loginInfo;
-    }
-
 
     /**
      * Save a new post to the database.
@@ -34,7 +27,7 @@ public class MySQLController extends DatabaseManager {
      */
     public void addNewPost(Post newPost) {
         this.insertPostDB(newPost);
-        this.insertRecipeDB(newPost, newPost.getRecipe());
+        this.insertRecipeDB(newPost.getRecipe());
         this.insertRecipeStepsDB(newPost.getRecipe());
         this.insertRecipeIngredientsDB(newPost.getRecipe());
         this.insertCommentsDB(newPost, newPost.getComments());
@@ -127,7 +120,7 @@ public class MySQLController extends DatabaseManager {
      */
     public boolean updateUser(User user){
         try {
-            String query = "UPDATE FROM `user_info` SET `username`= ?, `password`=?, `bio`=? " +
+            String query = "UPDATE `user_info` SET `username`= ?, `password`=?, `bio`=? " +
                     "WHERE `username`=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getUsername());
@@ -322,15 +315,15 @@ public class MySQLController extends DatabaseManager {
 
     /**
      * Adds the fact thats new_follower starts following to user
-     * @param user user that stores the user_id
-     * @param new_followers new follower that is starting to follow user
+     * @param user user that stores the user id
+     * @param newFollowers new follower that is starting to follow user
      */
-    public void startFollowingDB(User user, User new_followers){
+    public void startFollowingDB(User user, User newFollowers){
         try {
             String query = "INSERT INTO `follows` (`user_id`, `follower_id`) VALUES(?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getId());
-            preparedStatement.setString(2, new_followers.getId());
+            preparedStatement.setString(2, newFollowers.getId());
             preparedStatement.execute();
 
         } catch (Exception e){
@@ -437,11 +430,6 @@ public class MySQLController extends DatabaseManager {
             throw new DatabaseException("A recipe with the ID " + recipeID + " was not found.");
         }
     }
-
-    public boolean updatePost(Post updatedPost) {
-        return true;
-    }
-
 
     /**
      * Gets an array of all the Users saved in the database.
@@ -661,14 +649,15 @@ public class MySQLController extends DatabaseManager {
     private void insertCommentsDB(Post post, Iterable<Comment> comments) {
         try {
             for (Comment comment: comments) {
-                String query = "INSERT INTO `comments`(`user_id`, `post_id`, `comment_time`, `comment_text`) " +
-                        "VALUES (?,?,?,?)";
+                String query = "INSERT INTO `comments`(`user_id`, `post_id`, `comment_time`, `comment_text`, `comment_id`) " +
+                        "VALUES (?,?,?,?,?)";
 
                 PreparedStatement preparedStmt = connection.prepareStatement(query);
                 preparedStmt.setString(1, comment.getAuthorId());
-                preparedStmt.setString(2, comment.getId());
+                preparedStmt.setString(2, post.getId());
                 preparedStmt.setTimestamp(3, Timestamp.valueOf(comment.getCreatedTime()));
                 preparedStmt.setString(4, comment.getCommentText());
+                preparedStmt.setString(5, comment.getId());
                 preparedStmt.execute();
             }
         } catch (Exception e) {
@@ -678,17 +667,16 @@ public class MySQLController extends DatabaseManager {
 
     /**
      * Save recipe associated with a Post ID to the database.
-     * @param post The post associated with the Recipe.
      * @param recipe The recipe associated with the Post.
      */
-    private void insertRecipeDB(Post post, Recipe recipe) {
+    private void insertRecipeDB(Recipe recipe) {
         try {
             String query = "INSERT INTO `recipes`(`recipe_id`, `title`)" +
                     "VALUES (?,?)";
 
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, recipe.getId());
-            preparedStmt.setString(2, post.getId());
+            preparedStmt.setString(2, recipe.getTitle());
 
             preparedStmt.execute();
         } catch (Exception e) {
@@ -838,14 +826,5 @@ public class MySQLController extends DatabaseManager {
         Recipe newRecipe = newPost.getRecipe();
         newRecipe.setTitle("My new recipe title!" + LocalDateTime.now());
         d.editPost(posts[0]);
-
-        posts = d.getAllPosts();
-        for (Post post: posts) {
-            System.out.println("post category is: " + post.getCategory());
-            System.out.println("post recipe title is: " + post.getRecipe().getTitle());
-            if (post.getRecipe().getSteps().size() > 0) {
-                System.out.println("first step of post recipe is: " + post.getRecipe().getSteps().get(0));
-            }
-        }
     }
 }

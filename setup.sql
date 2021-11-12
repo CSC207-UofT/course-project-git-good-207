@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Oct 24, 2021 at 01:26 AM
+-- Generation Time: Nov 10, 2021 at 10:15 PM
 -- Server version: 5.7.34
 -- PHP Version: 7.4.21
 
@@ -38,8 +38,8 @@ CREATE TABLE `comments` (
 -- Dumping data for table `comments`
 --
 
-INSERT INTO `comments` (`user_id`, `post_id`, `comment_time`, `comment_text`) VALUES
-    ('1', 'b', '2008-11-11 16:44:33', 'wow I love your post');
+INSERT INTO `comments` (`user_id`, `post_id`, `comment_time`, `comment_text`, `comment_id`) VALUES
+    ('1', 'b', '2008-11-11 16:44:33', 'wow I love your post', 'xyz');
 
 -- --------------------------------------------------------
 
@@ -116,7 +116,8 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`recipe_id`, `title`) VALUES
-    ('z', 'Amazing recipe');
+                                                 ('z', 'My new recipe title!2021-11-10T17:07:36.676543'),
+                                                 ('x', 'italian recipe');
 
 -- --------------------------------------------------------
 
@@ -135,7 +136,9 @@ CREATE TABLE `recipes_steps` (
 --
 
 INSERT INTO `recipes_steps` (`recipe_id`, `step_number`, `step_text`) VALUES
-    ('z', 1, 'The first step is to make the dish.');
+                                                                          ('x', 1, 'Just make the italian recipe!'),
+                                                                          ('z', 0, 'The first step is to make the dish.'),
+                                                                          ('z', 1, 'The second step is to finish making the dish.');
 
 -- --------------------------------------------------------
 
@@ -156,8 +159,8 @@ CREATE TABLE `recipe_ingredients` (
 --
 
 INSERT INTO `recipe_ingredients` (`recipe_id`, `ingredient_name`, `ingredient_count`, `ingredient_amount`, `ingredient_measurement`) VALUES
-                                                                                                                                         ('z', 'awesome sauce', NULL, 5, 'tbsp'),
-                                                                                                                                         ('z', 'apple', 20000, NULL, NULL);
+                                                                                                                                         ('z', 'apple', 20000, NULL, NULL),
+                                                                                                                                         ('z', 'awesome sauce', NULL, 5, 'tbsp');
 
 -- --------------------------------------------------------
 

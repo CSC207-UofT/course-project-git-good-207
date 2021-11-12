@@ -1,6 +1,7 @@
 package use_cases;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import entities.Post;
 import entities.User;
@@ -86,7 +87,8 @@ public class UserManager {
      */
     public boolean followUser(User currentUser, User wantToFollow) {
         // check whether User want_to_follow is already followed by current_user
-        if (currentUser.getFollowing().contains(wantToFollow)) {
+        if (this.getFollowingListUsernames(currentUser).contains(wantToFollow.getUsername()) ||
+                this.getUsername(currentUser).equals(this.getUsername(wantToFollow))) {
             return false;
         } else {
             // update current_user's following list: following
@@ -203,10 +205,10 @@ public class UserManager {
     }
 
     /**
-     * Return the information(attributes) of another user, therefore password is not given
+     * Return the information(attributes) of user, password is not given
      *
      * @param user The user to return the information of (without the password)
-     * @return the information of another user (username, bio)
+     * @return the information of user (username, bio)
      */
     public String runBrowseOtherProfile(User user) {
         User updatedUser = this.findUser(user.getUsername());
@@ -264,15 +266,6 @@ public class UserManager {
     }
 
     /**
-     * Return user's posts as a list of posts
-     * @param user The user to return the posts of (as an array list)
-     * @return user's posts as a list of posts
-     */
-    public ArrayList<Post> getUserPosts(User user) {
-        return user.getPosts();
-    }
-
-    /**
      * Return user's username after passing in user's id
      */
     public String getUsernameById(String id) {
@@ -287,5 +280,20 @@ public class UserManager {
      */
     public String getUsername(User user) {
         return user.getUsername();
+    }
+
+    /**
+     * Return user's posts as a hashmap mapping integer (post number) to the post
+     *
+     * @param user the user to return the hashmap of the posts of
+     * @return a hashmap of user's posts mapping post number to the post object
+     */
+    public HashMap<Integer, Post> generateUserPostsMap(User user) {
+        int numberOfPosts = user.getPosts().size();
+        HashMap<Integer, Post> userPostsMap = new HashMap<>();
+        for(int i = 0; i < numberOfPosts; i++) {
+            userPostsMap.put(i, user.getPosts().get(i));
+        }
+        return userPostsMap;
     }
 }
