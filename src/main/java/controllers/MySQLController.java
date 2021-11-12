@@ -63,7 +63,7 @@ public class MySQLController extends DatabaseManager {
 
     private User getUser(String userId){
         User[] users = this.getAllUsers();
-        for(User user: users){
+        for (User user: users){
             if (user.getId().equals(userId)) {
                 return user;
             }
