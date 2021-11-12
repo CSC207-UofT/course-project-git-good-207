@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RecipeManagerTest {
     private RecipeManager recipeManager;
@@ -47,18 +48,13 @@ public class RecipeManagerTest {
 
     @Test
     void testGetAllIngredients() {
-        int numMeasurable = 0;
-        int numCountable = 0;
-        ArrayList<Ingredient> ingredients = recipe.getIngredients();
-        for (Ingredient ingredient : ingredients) {
-            if (ingredient instanceof MeasurableIngredient) {
-                numMeasurable++;
-            } else if (ingredient instanceof CountableIngredient) {
-                numCountable++;
-            }
+        String[] ingredients = recipeManager.getAllIngredients(recipe);
+        for (int i = 0; i < ingredients.length; i++) {
+            String[] splitIngredient = ingredients[i].split(" ");
+            ingredients[i] = splitIngredient[splitIngredient.length - 1];
         }
-        boolean correct = numCountable == 1 && numMeasurable == 2 && ingredients.get(2) instanceof CountableIngredient;
-        assert correct;
+        String[] expected = new String[]{"oats", "water", "blueberries"};
 
+        assert Arrays.equals(ingredients, expected);
     }
 }
