@@ -103,7 +103,6 @@ public class MySQLController extends DatabaseManager {
 
     }
 
-
     /**
      * deletes all the rows where a user is following user_id
      * @param user object that stores the information of user_id
@@ -119,7 +118,6 @@ public class MySQLController extends DatabaseManager {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Given an user objects changes all the attributes
@@ -149,8 +147,6 @@ public class MySQLController extends DatabaseManager {
             e.printStackTrace();
             return false;
         }
-
-
 
     }
 
