@@ -188,7 +188,7 @@ public class MySQLController extends DatabaseManager {
      * @param user object user storing id
      */
     private void deletePostsFromUser(User user){
-        deletingFromUser(user, "posts");
+        deleteUserDataFromTable(user, "posts");
     }
 
     /**
@@ -196,7 +196,7 @@ public class MySQLController extends DatabaseManager {
      * @param user object user storing id
      */
     private void deleteLikesFromUser(User user){
-        this.deletingFromUser(user, "likes");
+        this.deleteUserDataFromTable(user, "likes");
     }
 
     /**
@@ -204,7 +204,7 @@ public class MySQLController extends DatabaseManager {
      * @param user object user storing id
      */
     private void deleteCommentsFromUser(User user){
-        this.deletingFromUser(user, "comments");
+        this.deleteUserDataFromTable(user, "comments");
     }
 
     /**
@@ -212,7 +212,7 @@ public class MySQLController extends DatabaseManager {
      * @param user object user storing id
      */
     private void deleteFollowsFromUser(User user){
-        this.deletingFromUser(user, "follows");
+        this.deleteUserDataFromTable(user, "follows");
     }
 
     /**
@@ -221,7 +221,7 @@ public class MySQLController extends DatabaseManager {
      * @param user: object user where we get the user_id
      * @param tableName: the name of the table
      */
-    private void deletingFromUser(User user, String tableName){
+    private void deleteUserDataFromTable(User user, String tableName){
         try {
             String query = "DELETE FROM `" + tableName + "` WHERE `user_id`=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
