@@ -182,7 +182,7 @@ public class MySQLController extends DatabaseManager {
      * @param user object user storing id
      */
     private void deletePostsFromUser(User user){
-        deleteUserDataFromTable(user, "posts");
+        this.deleteUserDataFromPosts(user);
     }
 
     /**
@@ -190,7 +190,7 @@ public class MySQLController extends DatabaseManager {
      * @param user object user storing id
      */
     private void deleteLikesFromUser(User user){
-        this.deleteUserDataFromTable(user, "likes");
+        this.deleteUserDataFromLikes(user);
     }
 
     /**
@@ -198,7 +198,7 @@ public class MySQLController extends DatabaseManager {
      * @param user object user storing id
      */
     private void deleteCommentsFromUser(User user){
-        this.deleteUserDataFromTable(user, "comments");
+        this.deleteUserDataFromComments(user);
     }
 
     /**
@@ -206,18 +206,73 @@ public class MySQLController extends DatabaseManager {
      * @param user object user storing id
      */
     private void deleteFollowsFromUser(User user){
-        this.deleteUserDataFromTable(user, "follows");
+        this.deleteUserDataFromFollows(user);
+    }
+
+
+    /**
+     * This method deletes the rows where
+     * the user_id is equal to the one given
+     * @param user: object user where we get the user_id
+     */
+    private void deleteUserDataFromPosts(User user){
+
+        try {
+            String query = "DELETE FROM `posts` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Given a correct tableName this method deletes the rows where
+     * This method deletes the rows where
      * the user_id is equal to the one given
      * @param user: object user where we get the user_id
-     * @param tableName: the name of the table
      */
-    private void deleteUserDataFromTable(User user, String tableName){
+    private void deleteUserDataFromLikes(User user){
+
         try {
-            String query = "DELETE FROM `" + tableName + "` WHERE `user_id`=?";
+            String query = "DELETE FROM `likes` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method deletes the rows where
+     * the user_id is equal to the one given
+     * @param user: object user where we get the user_id
+     */
+    private void deleteUserDataFromComments(User user){
+
+        try {
+            String query = "DELETE FROM `comments` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method deletes the rows where
+     * the user_id is equal to the one given
+     * @param user: object user where we get the user_id
+     */
+    private void deleteUserDataFromFollows(User user){
+
+        try {
+            String query = "DELETE FROM `follows` WHERE `user_id`=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getId());
             preparedStatement.execute();
