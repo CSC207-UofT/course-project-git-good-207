@@ -1,5 +1,6 @@
 package use_cases;
 
+import controllers.MySQLController;
 import entities.*;
 
 import java.time.LocalDateTime;
@@ -24,7 +25,11 @@ public class PostManager {
      * Constructor given an array of posts
      */
     public PostManager(ArrayList<Post> posts){
+        this.databaseManager = new MySQLController();
+        this.userManager = new UserManager(databaseManager);
+        Post[] allPosts = this.databaseManager.getAllPosts();
         this.posts = posts;
+
     }
 
     /**
