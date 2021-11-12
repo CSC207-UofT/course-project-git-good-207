@@ -100,7 +100,6 @@ public class MySQLController extends DatabaseManager {
             this.addNewPost(new Post(user.getId(), post.getTime(), post.getRecipe(),
                     post.getCategory(), post.getId()));
         }
-
     }
 
     /**
@@ -141,7 +140,6 @@ public class MySQLController extends DatabaseManager {
             this.updateFollowers(user);
             this.updateFollows(user);
             return true;
-
 
         } catch (Exception e){
             e.printStackTrace();
