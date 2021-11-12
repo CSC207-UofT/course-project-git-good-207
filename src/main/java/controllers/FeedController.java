@@ -6,7 +6,6 @@ import use_cases.FeedManager;
 import use_cases.LoginManager;
 import use_cases.UserManager;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,7 +60,7 @@ public class FeedController {
      * @param posts An ArrayList of Posts representing the selection of displayed Posts on a Feed.
      * @return a String representing a selection of displayed Posts' titles on a Feed.
      */
-    public String generateDisplayedPosts(ArrayList<Post> posts) {
+    private String generateDisplayedPosts(ArrayList<Post> posts) {
         this.postsActionMap = new HashMap<>();
         StringBuilder postsString = new StringBuilder("Enter a post number for a detailed view of " +
                 "that post or enter 99 to choose a different feed filter: ");
@@ -89,7 +88,7 @@ public class FeedController {
      * @param postsString         The String representing the selection of displayed Posts' titles generated.
      * @param numOfDisplayedPosts The number of displayed Posts on a Feed.
      */
-    public void selectOnePost(String postsString, int numOfDisplayedPosts) {
+    private void selectOnePost(String postsString, int numOfDisplayedPosts) {
         if (numOfDisplayedPosts == 0) {
             this.inOut.setOutput(postsString);
             this.runBrowseFeed();

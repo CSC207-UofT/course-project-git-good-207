@@ -16,8 +16,7 @@ public class RecipeAppController {
         this.loginManager = new LoginManager(mySQLController);
         this.loginController = new LoginController(inOut, this.loginManager);
         this.postController = new PostController(inOut, mySQLController, this.loginManager);
-        this.userProfileController = new UserProfileController(inOut, mySQLController, this.loginManager,
-                this.postController);
+        this.userProfileController = new UserProfileController(inOut, mySQLController, this.loginManager);
         this.feedController = new FeedController(inOut, mySQLController, this.loginManager, this.postController);
     }
 
