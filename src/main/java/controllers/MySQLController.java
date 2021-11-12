@@ -71,7 +71,7 @@ public class MySQLController extends DatabaseManager {
         return null;
     }
 
-    private boolean userHasPostsDB(User user){
+    private boolean userHasPostsDB(User user) {
         try {
             String query = "SELECT * FROM `posts` WHERE `user_id`= ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
