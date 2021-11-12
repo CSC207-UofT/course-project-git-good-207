@@ -9,7 +9,7 @@ Collaborators: UserProfilePresenter, UserManager
 
 Class Name: Recipe  
 Parent Class: N/A  
-Responsibilities: stores a recipe id, list of steps, a list of ingredients, and the title of the recipe. Basic functions like deleteStep.  
+Responsibilities: stores a recipe id, list of steps, a list of ingredients, and the title of the recipe. Get basic recipe info.  
 Collaborators: User, Post, Ingredient, CountableIngredient, MeasurableIngredient  
 
 Class Name: Ingredient  
@@ -19,12 +19,12 @@ Collaborators: Recipe, MeasurableIngredient, CountableIngredient
 
 Class Name: MeasurableIngredient  
 Parent Class: Ingredient  
-Responsibilities: stores amount of ingredient, stores type of measurement, getter functions for the amount of ingredient and the type of measurement  
+Responsibilities: stores amount/name of ingredient, stores type of measurement, getter functions for the amount of ingredient and the type of measurement  
 Collaborators: Ingredient
 
 Class Name: CountableIngredient  
 Parent Class: Ingredient  
-Responsibilities: stores number of ingredient, gets the number of ingredient  
+Responsibilities: stores number/name of ingredient, gets the number of ingredient  
 Collaborators: Ingredient
 
 Class Name: Feed  
@@ -69,7 +69,7 @@ Collaborators: Post, User, Feed
 
 Class Name: PostManager  
 Parent Class: N/A  
-Responsibilities: Create new Ingredients, create a new Post, create a new Recipe, comment/like a Post  
+Responsibilities: Create new Ingredients, create a new Post, create a new Recipe, comment/like a Post, get post info  
 Collaborators: Post, FeedManager, PostPresenter
 
 Class Name: RecipeManager  
@@ -130,7 +130,7 @@ Collaborators: FeedManager, PostManager, Feed, User, RecipeAppController
 
 Class Name: PostController  
 Parent Class:N/A  
-Responsibilities: gets post creation related inputs (recipe steps, ingredients, category) and displays the appropriate outputs  
+Responsibilities: gets post creation related inputs (recipe steps, ingredients, category), interact with posts and displays the appropriate outputs  
 Collaborators: Recipe, PostManager, LoginManager, RecipeAppController
 
 Class Name: RecipeAppController  
