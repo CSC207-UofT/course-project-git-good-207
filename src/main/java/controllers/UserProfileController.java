@@ -62,8 +62,6 @@ public class UserProfileController {
         // display all the usernames in the database
         this.runDisplayAllUsers();
         String userToBrowse = this.inOut.getInput("Enter the username of the person you'd like to view: ");
-        // if ((this.userManager.checkUserToBrowse(userToBrowse) &&
-        //                !(userToBrowse.equals(this.loginManager.getCurrUser().getUsername())))
         if (this.userManager.checkUserToBrowse(userToBrowse)) {
             User targetUser = this.userManager.findUser(userToBrowse);
             this.inOut.setOutput(this.userManager.runBrowseOtherProfile(targetUser));
