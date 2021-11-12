@@ -42,4 +42,4 @@ You need to setup a MySQL Database to get Foodstagram running. To do so, follow 
 27. Set Port to 8889, User to "admin", and Password to "1234"
 28. Then at the end of the URL enter "/foodstagram"
 29. Press "Apply" and then "OK".
-30. Your MySQL server is now running and the Database should work. You can confirm this by running the main method in DatabaseManager.
+30. Your MySQL server is now running and the Database should work. You can confirm this by running the main method in MySQLController.

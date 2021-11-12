@@ -2,7 +2,6 @@ package controllers;
 
 import use_cases.LoginManager;
 
-import java.io.IOException;
 
 public class LoginController {
 
@@ -43,17 +42,12 @@ public class LoginController {
 
         this.inOut.setOutput(welcomeMessage);
 
-        try {
+        String welcomeAction = inOut.getInput(welcomeActionPrompt);
+        boolean isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
 
-            String welcomeAction = inOut.getInput(welcomeActionPrompt);
-            boolean isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
-
-            //Loops on chosen page until valid input is given
-            while (!isComplete) {
-                isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
-            }
-        } catch (IOException e) {
-            inOut.setOutput("There was an error: " + e);
+        //Loops on chosen page until valid input is given
+        while (!isComplete) {
+            isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
         }
     }
 
@@ -65,21 +59,17 @@ public class LoginController {
     private boolean runLoginPage() {
         String loginMessage = "Please enter your login info.";
         this.inOut.setOutput(loginMessage);
-        try {
-            //get username and password input
-            String username = this.inOut.getInput("Enter username: ");
-            String password = this.inOut.getInput("Enter password: ");
 
-            //check if given username and password are valid and set appropriate output
-            if (this.loginManager.login(username, password)) {
-                this.inOut.setOutput("Login successful.");
-                return true;
-            } else {
-                this.inOut.setOutput("Your username or password was incorrect.");
-                return false;
-            }
-        } catch (IOException e) {
-            this.inOut.setOutput("There was an error: " + e);
+        //get username and password input
+        String username = this.inOut.getInput("Enter username: ");
+        String password = this.inOut.getInput("Enter password: ");
+
+        //check if given username and password are valid and set appropriate output
+        if (this.loginManager.login(username, password)) {
+            this.inOut.setOutput("Login successful.");
+            return true;
+        } else {
+            this.inOut.setOutput("Your username or password was incorrect.");
             return false;
         }
 
@@ -99,20 +89,16 @@ public class LoginController {
                 "at least one lowercase letter,\n " +
                 "at least one uppercase letter,\n " +
                 "and at least one number\n";
-        try {
-            this.inOut.setOutput(signUpMessage);
-            this.inOut.setOutput(signUpRulesMessage);
-            String username = this.inOut.getInput("Set username: ");
-            String password = this.inOut.getInput("Set password: ");
-            if (this.loginManager.signUp(username, password)) {
-                this.inOut.setOutput("Sign up successful.");
-                return true;
-            } else {
-                this.inOut.setOutput("Your username or password was invalid.");
-                return false;
-            }
-        } catch (IOException e) {
-            inOut.setOutput("There was an error: " + e);
+
+        this.inOut.setOutput(signUpMessage);
+        this.inOut.setOutput(signUpRulesMessage);
+        String username = this.inOut.getInput("Set username: ");
+        String password = this.inOut.getInput("Set password: ");
+        if (this.loginManager.signUp(username, password)) {
+            this.inOut.setOutput("Sign up successful.");
+            return true;
+        } else {
+            this.inOut.setOutput("Your username or password was invalid.");
             return false;
         }
     }

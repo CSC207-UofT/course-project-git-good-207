@@ -1,7 +1,6 @@
 package entities;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * User class stores: username, password, HashMap mapping cuisine to number of likes (Integer) user put for that
@@ -13,7 +12,7 @@ public class User {
     // HashMap<String cuisineCategory, int likes>
     private HashMap<String, Integer> likeHistory;
     private ArrayList<User> followers, following;
-    private ArrayList<Post> posts;
+    private final ArrayList<Post> posts;
     private final String id;
 
     // constructors
@@ -26,18 +25,6 @@ public class User {
         this.followers = new ArrayList<>();
         this.following = new ArrayList<>();
         this.posts = new ArrayList<>();
-    }
-
-    public User(String username, String password, String bio, HashMap<String, Integer> likeHistory,
-                ArrayList<User> followers, ArrayList<User> following, ArrayList<Post> posts){
-        this.username = username;
-        this.password = password;
-        this.bio = bio;
-        this.likeHistory = likeHistory;
-        this.followers = followers;
-        this.following = following;
-        this.posts = posts;
-        this.id = UUID.randomUUID().toString();
     }
 
     // setters
@@ -75,10 +62,6 @@ public class User {
 
     public void addPost(Post post) {
         this.posts.add(post);
-    }
-
-    public void setPosts(ArrayList<Post> posts) {
-        this.posts = posts;
     }
 
     // getters

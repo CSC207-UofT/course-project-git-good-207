@@ -2,7 +2,6 @@ package use_cases;
 
 import entities.*;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,8 +32,7 @@ public class PostManager {
      * @param targetPost the post we want to interact
      * @param obj the object in case of a adding a comment is a
      *           comment, but in the case of being a like is the user
-     * @param type depending on its either a comment or a like
-     *            then it would change the behavior
+     * @param type if obj is a Comment, type is true; if obj is User, type is false
      * @return true iff the post was founded and could be interacted with
      */
     private boolean interactPost(Post targetPost, Object obj, boolean type){
@@ -46,7 +44,7 @@ public class PostManager {
                 else {
                     post.addLike((User) obj);
                 }
-                this.databaseManager.updatePost(post);
+                this.databaseManager.editPost(post);
                 return true;
             }
         }
@@ -136,8 +134,8 @@ public class PostManager {
     }
 
     /**
-     * Return array of comments with usernames before each comment
-     * of that post
+     * Return array of comments on the post with usernames before each comment
+     *
      * @param postId id of the post
      * @return an array of the comments associated to the post
      */
@@ -186,14 +184,5 @@ public class PostManager {
      */
     public LocalDateTime getPostedTime(String postId){
         return this.getSpecificPost(postId).getCreatedTime();
-    }
-
-    /**
-     * Given the post object returns the post id
-     * @param post post object to return the id of
-     * @return postId id of the post
-     */
-    public String getPostId(Post post) {
-        return post.getId();
     }
 }

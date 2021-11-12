@@ -1,8 +1,6 @@
 package controllers;
 
-import java.io.IOException;
-
 public interface InOut {
-    String getInput(String prompt) throws IOException;
+    String getInput(String prompt);
     void setOutput(String output);
 }
