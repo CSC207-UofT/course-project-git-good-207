@@ -71,6 +71,18 @@ public class MySQLController extends DatabaseManager {
         return null;
     }
 
+    private boolean userHasPostsDB(User user){
+        try{
+            String query = "SELECT * FROM `posts` WHERE `user_id`= ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            return preparedStatement.execute();
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     /**
      * Deletes the post from the user and starts to add new
      * ones from the user
@@ -79,7 +91,10 @@ public class MySQLController extends DatabaseManager {
      */
     private void updatePostsFromUser(User user){
         // first I delete the posts from the user
-        this.deletePostsFromUser(user);
+        if (this.userHasPostsDB(user)){
+            this.deletePostsFromUser(user);
+        }
+
         // add the new ones
         for (Post post: user.getPosts()){
             this.addNewPost(new Post(user.getId(), post.getTime(), post.getRecipe(),
@@ -90,13 +105,30 @@ public class MySQLController extends DatabaseManager {
 
 
     /**
+     * deletes all the rows where a user is following user_id
+     * @param user object that stores the information of user_id
+     */
+    private void deleteFollowersFromUser(User user){
+        try {
+            String query = "DELETE FROM `follows` WHERE `follower_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
      * Given an user objects changes all the attributes
      * such that match the ones given in the parameter
      * except the id
      * @param user user object that stores the id to
      *             update the values
      */
-    public boolean updateUser(User user, User newUser){
+    public boolean updateUser(User user){
         try {
             String query = "UPDATE FROM `user_info` SET `username`= ?, `password`=?, `bio`=? " +
                     "WHERE `username`=?";
@@ -107,6 +139,9 @@ public class MySQLController extends DatabaseManager {
             preparedStatement.setString(4, user.getUsername());
             preparedStatement.execute();
             this.updatePostsFromUser(user);
+            // update follows
+            this.updateFollowers(user);
+            this.updateFollows(user);
             return true;
 
 
@@ -141,6 +176,7 @@ public class MySQLController extends DatabaseManager {
         this.deletePostsFromUser(user);
         this.deleteCommentsFromUser(user);
         this.deleteFollowsFromUser(user);
+        this.deleteFollowersFromUser(user);
         this.deleteLikesFromUser(user);
         return true;
 
@@ -234,6 +270,50 @@ public class MySQLController extends DatabaseManager {
 
     }
 
+
+    /**
+     * Adds the fact thats new_follower starts following to user
+     * @param user user that stores the user_id
+     * @param new_followers new follower that is starting to follow user
+     */
+    public void startFollowingDB(User user, User new_followers){
+        try {
+            String query = "INSERT INTO `follows` (`user_id`, `follower_id`) VALUES(?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.setString(2, new_followers.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * deletes the follows of a user and adds it to the database
+     * @param user stores the user_id
+     */
+    private void updateFollows(User user){
+        // given the list from the user list
+        this.deleteFollowsFromUser(user);
+        for(User followed: user.getFollowing()){
+            this.startFollowingDB(followed, user);
+        }
+    }
+
+
+    /**
+     * deletes the followers of a user and adds it to the database
+     * @param user stores the user_id
+     */
+    private void updateFollowers(User user){
+        // given the list from the user list
+        this.deleteFollowersFromUser(user);
+        for(User follower: user.getFollowers()){
+                this.startFollowingDB(user, follower);
+        }
+    }
+
     /**
      * Save a new user to the database.
      * @param newUser The new User to save to the database.
@@ -253,6 +333,7 @@ public class MySQLController extends DatabaseManager {
             preparedStmt.setString(4, newUser.getBio());
 
             preparedStmt.execute();
+            this.updateUser(newUser);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
