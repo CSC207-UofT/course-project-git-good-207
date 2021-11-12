@@ -54,6 +54,229 @@ public class MySQLController extends DatabaseManager {
         }
     }
 
+    private User getUser(String userId){
+        User[] users = this.getAllUsers();
+        for (User user: users){
+            if (user.getId().equals(userId)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    private boolean userHasPostsDB(User user) {
+        try {
+            String query = "SELECT * FROM `posts` WHERE `user_id`= ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            return preparedStatement.execute();
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Deletes the post from the user and starts to add new
+     * ones from the user
+     * @param user user object where we want to delete the
+     *             posts
+     */
+    private void updatePostsFromUser(User user){
+        // first I delete the posts from the user
+        if (this.userHasPostsDB(user)){
+            this.deletePostsFromUser(user);
+        }
+
+        // add the new ones
+        for (Post post: user.getPosts()){
+            this.addNewPost(new Post(user.getId(), post.getTime(), post.getRecipe(),
+                    post.getCategory(), post.getId()));
+        }
+    }
+
+    /**
+     * deletes all the rows where a user is following user_id
+     * @param user object that stores the information of user_id
+     */
+    private void deleteFollowersFromUser(User user){
+        try {
+            String query = "DELETE FROM `follows` WHERE `follower_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Given an user objects changes all the attributes
+     * such that match the ones given in the parameter
+     * except the id
+     * @param user user object that stores the id to
+     *             update the values
+     */
+    public boolean updateUser(User user){
+        try {
+            String query = "UPDATE `user_info` SET `username`= ?, `password`=?, `bio`=? " +
+                    "WHERE `username`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getBio());
+            preparedStatement.setString(4, user.getUsername());
+            preparedStatement.execute();
+            this.updatePostsFromUser(user);
+            // update follows
+            this.updateFollowers(user);
+            this.updateFollows(user);
+            return true;
+
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    /**
+     * deletes all the information except for recipes related
+     * to the given user in the database
+     * @param user user object that contains information about
+     *             the user
+     * @return true if it could delete all the information related
+     * to the user
+     */
+    public boolean deleteUser(User user){
+        try {
+            String query = "DELETE FROM `user_info` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        this.deletePostsFromUser(user);
+        this.deleteCommentsFromUser(user);
+        this.deleteFollowsFromUser(user);
+        this.deleteFollowersFromUser(user);
+        this.deleteLikesFromUser(user);
+        return true;
+
+
+    }
+
+    /**
+     * deletes the posts from the table in mysql related to user
+     * @param user object user storing id
+     */
+    private void deletePostsFromUser(User user){
+        this.deleteUserDataFromPosts(user);
+    }
+
+    /**
+     * deletes the likes given by the user from mysql table
+     * @param user object user storing id
+     */
+    private void deleteLikesFromUser(User user){
+        this.deleteUserDataFromLikes(user);
+    }
+
+    /**
+     * deletes the comments given by the user from mysql table
+     * @param user object user storing id
+     */
+    private void deleteCommentsFromUser(User user){
+        this.deleteUserDataFromComments(user);
+    }
+
+    /**
+     * deletes the rows from the mysql table in follows
+     * @param user object user storing id
+     */
+    private void deleteFollowsFromUser(User user){
+        this.deleteUserDataFromFollows(user);
+    }
+
+
+    /**
+     * This method deletes the rows where
+     * the user_id is equal to the one given
+     * @param user: object user where we get the user_id
+     */
+    private void deleteUserDataFromPosts(User user){
+
+        try {
+            String query = "DELETE FROM `posts` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method deletes the rows where
+     * the user_id is equal to the one given
+     * @param user: object user where we get the user_id
+     */
+    private void deleteUserDataFromLikes(User user){
+
+        try {
+            String query = "DELETE FROM `likes` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method deletes the rows where
+     * the user_id is equal to the one given
+     * @param user: object user where we get the user_id
+     */
+    private void deleteUserDataFromComments(User user){
+
+        try {
+            String query = "DELETE FROM `comments` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method deletes the rows where
+     * the user_id is equal to the one given
+     * @param user: object user where we get the user_id
+     */
+    private void deleteUserDataFromFollows(User user){
+
+        try {
+            String query = "DELETE FROM `follows` WHERE `user_id`=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
     /**
      * Check if the given post ID exists in the database.
      * @param postID the ID of the Post to check for in the database.
@@ -89,11 +312,58 @@ public class MySQLController extends DatabaseManager {
 
     }
 
+
+    /**
+     * Adds the fact thats new_follower starts following to user
+     * @param user user that stores the user id
+     * @param newFollowers new follower that is starting to follow user
+     */
+    public void startFollowingDB(User user, User newFollowers){
+        try {
+            String query = "INSERT INTO `follows` (`user_id`, `follower_id`) VALUES(?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.setString(2, newFollowers.getId());
+            preparedStatement.execute();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * deletes the follows of a user and adds it to the database
+     * @param user stores the user_id
+     */
+    private void updateFollows(User user){
+        // given the list from the user list
+        this.deleteFollowsFromUser(user);
+        for(User followed: user.getFollowing()){
+            this.startFollowingDB(followed, user);
+        }
+    }
+
+
+    /**
+     * deletes the followers of a user and adds it to the database
+     * @param user stores the user_id
+     */
+    private void updateFollowers(User user){
+        // given the list from the user list
+        this.deleteFollowersFromUser(user);
+        for(User follower: user.getFollowers()){
+                this.startFollowingDB(user, follower);
+        }
+    }
+
     /**
      * Save a new user to the database.
      * @param newUser The new User to save to the database.
+     * @return A boolean which is true if the user was successfully
+     * added (there was no user with the same username). False if
+     * unsuccessful.
      */
-    public void addNewUser(User newUser) {
+    public boolean addNewUser(User newUser) {
         try {
             String query = "INSERT INTO `user_info`(`user_id`, `username`, `password`, `bio`) " +
                     "VALUES (?,?,?,?)";
@@ -105,8 +375,11 @@ public class MySQLController extends DatabaseManager {
             preparedStmt.setString(4, newUser.getBio());
 
             preparedStmt.execute();
+            this.updateUser(newUser);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -156,9 +429,6 @@ public class MySQLController extends DatabaseManager {
         } else {
             throw new DatabaseException("A recipe with the ID " + recipeID + " was not found.");
         }
-    }
-
-    public void updateUser(User updatedUser) {
     }
 
     /**
