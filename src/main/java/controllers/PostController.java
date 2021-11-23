@@ -69,10 +69,11 @@ public class PostController {
      */
     private String getCountableIngredients(String promptCountable) {
         String countableInput = this.inOut.getInput(promptCountable);
-        if (countableInput.contains("N/A") && this.noMeasurableIngredients) {
+        boolean empty = countableInput.contains("N/A") || countableInput.strip().equals("");
+        if (empty && this.noMeasurableIngredients) {
             inOut.setOutput("Must enter at least one ingredient");
             countableInput = getCountableIngredients(promptCountable);
-        } else if (countableInput.contains("N/A")) {
+        } else if (empty) {
             return "N/A";
         }
         String[] splitIngredients = countableInput.split(",");
@@ -101,7 +102,7 @@ public class PostController {
      */
     private String getMeasurableIngredients(String promptMeasurable) {
         String measurableInput = this.inOut.getInput(promptMeasurable);
-        if (measurableInput.contains("N/A")) {
+        if (measurableInput.contains("N/A") || measurableInput.strip().equals("")) {
             this.noMeasurableIngredients = true;
             return "N/A";
         } else { this.noMeasurableIngredients = false; }
