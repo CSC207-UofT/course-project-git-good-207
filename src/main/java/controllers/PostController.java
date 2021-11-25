@@ -116,7 +116,7 @@ public class PostController {
             } else if (strippedIngredient.split(" ").length < 3) {
                 inOut.setOutput(errorMessage);
                 measurableInput = getMeasurableIngredients(promptMeasurable);
-            } /*
+            } /* 50grams sugar
             for (int i = 0; i < strippedIngredient.split(" ")[0].length(); i++) {
                 if (Character.isAlphabetic(strippedIngredient.split(" ")[0].charAt(i))) {
                     inOut.setOutput(errorMessage);
@@ -271,10 +271,9 @@ public class PostController {
      * @return String the formatted "Recipe" section of post
      */
     private String getRecipeInfo(String id) {
-        Recipe postRecipe = postManager.getPostRecipe(id);
-        String recipeTitle = recipeManager.getRecipeTitle(postRecipe);
-        String[] recipeIngredients = recipeManager.getAllIngredients(postRecipe);
-        ArrayList<String> recipeSteps = recipeManager.getRecipeSteps(postRecipe);
+        String recipeTitle = recipeManager.getRecipeTitle(postManager.getPostRecipe(id));
+        String[] recipeIngredients = recipeManager.getAllIngredients(postManager.getPostRecipe(id));
+        ArrayList<String> recipeSteps = recipeManager.getRecipeSteps(postManager.getPostRecipe(id));
         String category = postManager.getPostCategory(id);
 
         StringBuilder recipeInfo = new StringBuilder(recipeTitle + "\n" + "\nIngredients:\n");
