@@ -160,7 +160,7 @@ public class PostController {
      */
     private ArrayList<Ingredient> createAllIngredientList(String inputCountable, ArrayList<Ingredient> measurable) {
         ArrayList<Ingredient> ingredientList = new ArrayList<>();
-        if (!inputCountable.equals("N/A")) {
+        if (!inputCountable.contains("N/A")) {
             String[] countable = inputCountable.split(", ");
 
             for (String countableIngredient : countable) {
@@ -184,7 +184,7 @@ public class PostController {
      * @return ArrayList<Ingredient> the ArrayList of all measurable ingredients user entered
      */
     private ArrayList<Ingredient> createMeasurableIngredient(String inputMeasurable) {
-        if (!inputMeasurable.equals("N/A")) {
+        if (!inputMeasurable.contains("N/A")) {
             String[] measurable = inputMeasurable.split(", ");
             ArrayList<Ingredient> ingredientList = new ArrayList<>();
             for (String measurableIngredient : measurable) {
@@ -257,7 +257,8 @@ public class PostController {
      */
     private String getPostComments(String id) {
         String[] comments = postManager.getPostComments(id);
-        StringBuilder formattedComments = new StringBuilder("Comments:\n\n");
+        int numComments = comments.length;
+        StringBuilder formattedComments = new StringBuilder("Comments (").append(numComments).append("):\n\n");
         for (String comment: comments) {
             formattedComments.append(comment).append("\n");
         }
