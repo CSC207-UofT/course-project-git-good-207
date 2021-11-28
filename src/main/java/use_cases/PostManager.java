@@ -33,7 +33,7 @@ public class PostManager {
     public PostManager(ArrayList<Post> posts){
         this.databaseManager = new MySQLController();
         this.userManager = new UserManager(databaseManager);
-        Post[] allPosts = this.databaseManager.getAllPosts();
+        // Post[] allPosts = this.databaseManager.getAllPosts();
         this.posts = posts;
 
     }
