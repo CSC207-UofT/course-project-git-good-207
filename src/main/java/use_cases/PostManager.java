@@ -12,8 +12,14 @@ import java.util.Arrays;
  */
 public class PostManager {
     private final ArrayList<Post> posts;
-    private DatabaseManager databaseManager;
-    private UserManager userManager;
+    private final DatabaseManager databaseManager;
+    private final UserManager userManager;
+
+    /**
+     * Constructor given the databasemanager object
+     * @param databaseManager stores all the information from the
+     *                        Posts we want to add
+     */
     public PostManager(DatabaseManager databaseManager){
         this.databaseManager = databaseManager;
         this.userManager = new UserManager(databaseManager);
