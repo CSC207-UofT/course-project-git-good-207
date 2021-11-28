@@ -2,6 +2,7 @@ package use_cases;
 
 import controllers.MySQLController;
 import entities.User;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ class LoginManagerTest {
     static User testUser;
 
     @BeforeAll
-    static void setup() {
+    static void setUp() {
         dbManager = new MySQLController();
         loginManager = new LoginManager(dbManager);
         testUser = new User("test2", "test2", "", UUID.randomUUID().toString());
@@ -93,5 +94,22 @@ class LoginManagerTest {
         User actual = loginManager.getCurrUser();
 
         assert actual == null;
+    }
+
+    @AfterAll
+    static void tearDown() {
+        dbManager.deleteUser(testUser);
+        dbManager.deleteUser(getUser("anotherTestUser"));
+        dbManager.deleteUser(getUser("uniqueTestUsername2"));
+    }
+
+    private static User getUser(String username) {
+        User[] allUsers = dbManager.getAllUsers();
+        for (User user: allUsers){
+            if (user.getUsername().equals(username)){
+                return user;
+            }
+        }
+        return null;
     }
 }
