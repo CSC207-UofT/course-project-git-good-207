@@ -1,0 +1,19 @@
+.nav {
+  width: 100%;
+  background-color: purple;
+  color: white;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: large;
+}
+
+.nav-title {
+  margin: 0 2rem 0 2rem;
+  font-size: x-large;
+}
+
+.nav-items {
+  margin: 0 2rem 0 2rem;
+}
