@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4adabbb4-aebe-4f7a-8628-823358514037" name="Changes" comment="Merge main into user_relatedDB" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Course project" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Course project" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="user_relatedDB" />
+                    <option name="lastUsedInstant" value="1636684592" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="fix_postcontroller_bugs" />
+                    <option name="lastUsedInstant" value="1636664588" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1636652949" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="fix-warnings" />
+                    <option name="lastUsedInstant" value="1636651630" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="notnine-3.0" />
+                    <option name="lastUsedInstant" value="1636593337" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="ProjectId" id="1zTmDRKwd3FiFKWT13W6hKL0Jle" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="use_cases" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/resources" />
+      <recent name="$PROJECT_DIR$/src/test/java" />
+      <recent name="$PROJECT_DIR$/src/main/java/use_cases" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.RecipeAppMain">
+    <configuration name="MySQLController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="controllers.MySQLController" />
+      <module name="Course_project.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RecipeAppMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="user_interface.RecipeAppMain" />
+      <module name="Course_project.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="user_interface.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RecipeAppControllerTest.testRun" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;RecipeAppControllerTest.testRun&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="RecipeAppInOutTest.testGetInput" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;RecipeAppInOutTest.testGetInput&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="RecipeAppInOutTest.testSetOutput" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;RecipeAppInOutTest.testSetOutput&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="course-project-git-good-207 [:Create.main()]" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value=":Create.main() --warning-mode all" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.RecipeAppMain" />
+        <item itemvalue="Gradle.RecipeAppInOutTest.testGetInput" />
+        <item itemvalue="Gradle.RecipeAppInOutTest.testSetOutput" />
+        <item itemvalue="Gradle.RecipeAppControllerTest.testRun" />
+        <item itemvalue="Application.MySQLController" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4adabbb4-aebe-4f7a-8628-823358514037" name="Changes" comment="" />
+      <created>1634180331319</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1634180331319</updated>
+      <workItem from="1634180333451" duration="930000" />
+      <workItem from="1634234374698" duration="16950000" />
+      <workItem from="1634402853807" duration="2546000" />
+      <workItem from="1634425944566" duration="13630000" />
+      <workItem from="1634478717580" duration="763000" />
+      <workItem from="1634588379558" duration="2980000" />
+      <workItem from="1634912940809" duration="3025000" />
+      <workItem from="1634928512605" duration="4644000" />
+      <workItem from="1634938570305" duration="102000" />
+      <workItem from="1634938687657" duration="942000" />
+      <workItem from="1635011969291" duration="19000" />
+      <workItem from="1635012020424" duration="286000" />
+      <workItem from="1635012320409" duration="131000" />
+      <workItem from="1635012463346" duration="68000" />
+      <workItem from="1635012535000" duration="56000" />
+      <workItem from="1635012594207" duration="116000" />
+      <workItem from="1635012713979" duration="122000" />
+      <workItem from="1635012838929" duration="5000" />
+      <workItem from="1635012860945" duration="180000" />
+      <workItem from="1635013057821" duration="226000" />
+      <workItem from="1635013299940" duration="339000" />
+      <workItem from="1635013644744" duration="64000" />
+      <workItem from="1635013719403" duration="5803000" />
+      <workItem from="1635021254285" duration="106000" />
+      <workItem from="1635021370076" duration="16296000" />
+      <workItem from="1635196054615" duration="266000" />
+      <workItem from="1635219063925" duration="4587000" />
+      <workItem from="1635274005885" duration="2369000" />
+      <workItem from="1635559952279" duration="592000" />
+      <workItem from="1635733234060" duration="6521000" />
+      <workItem from="1636146114589" duration="7261000" />
+      <workItem from="1636231897053" duration="58000" />
+      <workItem from="1636337696691" duration="12011000" />
+      <workItem from="1636391414141" duration="1149000" />
+      <workItem from="1636401023675" duration="1042000" />
+      <workItem from="1636507521588" duration="3870000" />
+      <workItem from="1636511878708" duration="478000" />
+      <workItem from="1636513492539" duration="1743000" />
+      <workItem from="1636515679902" duration="1127000" />
+      <workItem from="1636517937206" duration="1149000" />
+      <workItem from="1636519263905" duration="624000" />
+      <workItem from="1636521653115" duration="2455000" />
+      <workItem from="1636568248323" duration="520000" />
+      <workItem from="1636581830711" duration="1030000" />
+      <workItem from="1636593320906" duration="1734000" />
+      <workItem from="1636604357137" duration="553000" />
+      <workItem from="1636644449486" duration="3761000" />
+      <workItem from="1636651595844" duration="2795000" />
+      <workItem from="1636655492927" duration="2113000" />
+      <workItem from="1636679321443" duration="2984000" />
+      <workItem from="1636690104188" duration="719000" />
+    </task>
+    <task id="LOCAL-00002" summary="Implement preliminary version of RecipeAppShell">
+      <created>1634314433951</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1634314433951</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Refactor UI and Controllers to use InOut interface">
+      <created>1634328333320</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1634328333320</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fix string error and replace sout call with inOut">
+      <created>1634331101336</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1634331101336</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Implement DatabaseManager with dummy data">
+      <created>1634430364111</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1634430364111</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Merge branch 'main' into 'dbmanager-dummy'">
+      <created>1634430659061</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1634430659061</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add dummy login credentials data to DatabaseManager">
+      <created>1634430955781</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1634430955781</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Implement addNewPost and refactor addNewUser to use more realistic logic in DatabaseManager">
+      <created>1634431732816</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1634431732816</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Revert changes in DatabaseManager and change underscorecase to camelCase in User, UserManager, and UserProfilePresenter">
+      <created>1634439504038</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1634439504038</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Comment out non-implemented method in UserProfilePresenter">
+      <created>1634439542433</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1634439542433</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Add updatePost to DBmanager">
+      <created>1634441750515</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1634441750515</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Update FeedTest">
+      <created>1634441762342</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1634441762342</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Generate postIds with UUID, improve style, and get posts from DBmanager">
+      <created>1634441831910</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1634441831910</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Implement Feed Presenter">
+      <created>1634450996671</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1634450996671</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Implement User Bio Customization">
+      <created>1634451044046</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1634451044046</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Merge branch 'main' into 'Refactor_Presenters'">
+      <created>1634479187369</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1634479187369</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Refactor entities to use UUID for unique ids">
+      <created>1635020476972</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1635020476972</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Add mySQL JDBC as dependency">
+      <created>1635038908369</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1635038908369</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Add Database setup SQL file">
+      <created>1635038922654</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1635038922654</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Abstract more properties of Post and Comment into PostableItem">
+      <created>1635039515003</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1635039515003</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Update unit test">
+      <created>1635039524939</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1635039524939</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Add getter/setter methods and use Strings for class IDs">
+      <created>1635039723851</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1635039723851</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Add users master list and getUserById method to UserManager">
+      <created>1635039757851</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1635039757851</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Integrate MySQL into DatabaseManager and implement getPosts and getUsers methods">
+      <created>1635040295352</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1635040295352</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Change LoginManager to prevent User Creation on login">
+      <created>1635040804775</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1635040804775</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Move ShellAction to UI layer and move InOut to Use Case layer">
+      <created>1635733592922</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1635733592922</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Simplify constructor params and make DatabaseManager a Singleton class">
+      <created>1635768527715</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1635768527715</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Make DBManager abstract and implement MySQLController">
+      <created>1636150379065</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1636150379065</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Fix Intellij warnings">
+      <created>1636151512340</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1636151512340</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Use same instance of login manager in all classes and use StringBuilder">
+      <created>1636166121528</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1636166121528</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Improve prompt string formatting">
+      <created>1636166743902</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1636166743902</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Refactor classes that have IDs to receive IDs as params in their constructors">
+      <created>1636385333845</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1636385333845</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Update unit tests with new ID params">
+      <created>1636385362242</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1636385362242</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Remove unused import">
+      <created>1636385412264</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1636385412264</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Implement addNewPost, editPost, deletePost, and finish implementation of getAllPosts">
+      <created>1636385808847</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1636385808847</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Divide getIngredients method into helpers">
+      <created>1636391912831</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1636391912831</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Revert text blocks to regular strings and revert enhanced switch into Java 11 switch">
+      <created>1636392491472</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1636392491472</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Remove unused imports in RecipeAppController">
+      <created>1636511460972</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1636511460972</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Create RecipeAppController and RecipeAppInOut test files and write InOut test">
+      <created>1636511556239</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1636511556239</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Move InOut and ShellAction to controller layer based on TA feedback">
+      <created>1636513753480</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1636513753480</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Fix created time typing inconsistencies">
+      <created>1636554290851</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1636554290851</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Fix post string">
+      <created>1636554949149</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1636554949149</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Fix User constructor to pass in ID as a param">
+      <created>1636568710261</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1636568710261</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Save correct recipe title (not post id) in MySQLController.addNewPost">
+      <created>1636582628402</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1636582628402</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Add missing recipe to setup.sql">
+      <created>1636582647446</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1636582647446</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Merge 'main' into notnine-3.0">
+      <created>1636594619986</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1636594619986</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Merge isUniqueUser method">
+      <created>1636594688687</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1636594688687</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Fix intellij warnings">
+      <created>1636647603284</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1636647603284</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Remove IOException catch blocks for InOut">
+      <created>1636652538661</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1636652538661</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Merge main into user_relatedDB">
+      <created>1636685510057</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1636685510057</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Simplify constructor params and make DatabaseManager a Singleton class" />
+    <MESSAGE value="Make DBManager abstract and implement MySQLController" />
+    <MESSAGE value="Fix Intellij warnings" />
+    <MESSAGE value="Use same instance of login manager in all classes" />
+    <MESSAGE value="Use same instance of login manager in all classes and use StringBuilder" />
+    <MESSAGE value="Improve prompt string formatting" />
+    <MESSAGE value="Refactor classes that have IDs to receive IDs as params in their constructors" />
+    <MESSAGE value="Update unit tests with new ID params" />
+    <MESSAGE value="Remove unused import" />
+    <MESSAGE value="Implement addNewPost, editPost, deletePost, and finish implementation of getAllPosts" />
+    <MESSAGE value="Divide getIngredients method into helpers" />
+    <MESSAGE value="Revert text blocks to regular strings and revert enhanced switch into Java 11 switch" />
+    <MESSAGE value="Remove unused imports in RecipeAppController" />
+    <MESSAGE value="Create RecipeAppController and RecipeAppInOut test files and write InOut test" />
+    <MESSAGE value="Move InOut and ShellAction to controller layer based on TA feedback" />
+    <MESSAGE value="Fix created time typing inconsistencies" />
+    <MESSAGE value="Fix post string" />
+    <MESSAGE value="Fix User constructor to pass in ID as a param" />
+    <MESSAGE value="Save correct recipe title (not post id) in MySQLController.addNewPost" />
+    <MESSAGE value="Add missing recipe to setup.sql" />
+    <MESSAGE value="Merge 'main' into notnine-3.0" />
+    <MESSAGE value="Merge isUniqueUser method" />
+    <MESSAGE value="Fix intellij warnings" />
+    <MESSAGE value="Remove IOException catch blocks for InOut" />
+    <MESSAGE value="Merge main into user_relatedDB" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge main into user_relatedDB" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
