@@ -43,3 +43,10 @@ You need to setup a MySQL Database to get Foodstagram running. To do so, follow 
 28. Then at the end of the URL enter "/foodstagram"
 29. Press "Apply" and then "OK".
 30. Your MySQL server is now running and the Database should work. You can confirm this by running the main method in MySQLController.
+
+## How to setup the web frontend
+These instructions are based off of https://angular.io/guide/setup-local.
+1. Open a terminal window inside the foodstagram-ui folder.  
+2. In your terminal, run "npm install -g @angular/cli"  
+3. Run the command "ng serve --open"  
+4. A browser window should open with the web frontend.  
