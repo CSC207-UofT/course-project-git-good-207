@@ -77,16 +77,10 @@ public class PostController {
             return "N/A";
         }
         String[] splitIngredients = countableInput.split(",");
-        String errorMessage = "That was an invalid input. Please enter countable ingredients again in correct format.";
+        String errorMessage = "That was an invalid input. Please enter ingredients again in correct format.";
         for (String ingredient: splitIngredients) {
             String strippedIngredient = ingredient.stripLeading();
-            if (!Character.isDigit(strippedIngredient.charAt(0))) {
-                inOut.setOutput("Invalid input. Did not specify numerical amount of one of the ingredients. Please enter countable ingredients again in correct format.");
-                countableInput = getCountableIngredients(promptCountable);
-            } else if (strippedIngredient.split(" ").length < 2) {
-                inOut.setOutput(errorMessage);
-                countableInput = getCountableIngredients(promptCountable);
-            } else if (strippedIngredient.contains("/")) {
+            if (checkInputInvalidity(strippedIngredient) || strippedIngredient.split(" ").length < 2) {
                 inOut.setOutput(errorMessage);
                 countableInput = getCountableIngredients(promptCountable);
             }
@@ -107,24 +101,23 @@ public class PostController {
             return "N/A";
         } else { this.noMeasurableIngredients = false; }
         String[] splitIngredients = measurableInput.split(",");
-        String errorMessage = "That was an invalid input. Please enter measurable ingredients again in correct format.";
+        String errorMessage = "That was an invalid input. Please enter ingredients again in correct format.";
         for (String ingredient: splitIngredients) {
             String strippedIngredient = ingredient.stripLeading();
-            if (!Character.isDigit(strippedIngredient.charAt(0))) {
-                inOut.setOutput("Invalid input. Did not specify numerical amount of one of the ingredients. Please enter measurable ingredients again in correct format.");
-                measurableInput = getMeasurableIngredients(promptMeasurable);
-            } else if (strippedIngredient.split(" ").length < 3) {
+            if (checkInputInvalidity(strippedIngredient) || strippedIngredient.split(" ").length < 3) {
                 inOut.setOutput(errorMessage);
                 measurableInput = getMeasurableIngredients(promptMeasurable);
-            } /* 50grams sugar
-            for (int i = 0; i < strippedIngredient.split(" ")[0].length(); i++) {
-                if (Character.isAlphabetic(strippedIngredient.split(" ")[0].charAt(i))) {
-                    inOut.setOutput(errorMessage);
-                    measurableInput = getMeasurableIngredients(promptMeasurable);
-                }
-            } */
+            }
         }
         return measurableInput;
+    }
+
+    private boolean checkInputInvalidity(String strippedIngredient) {
+        if (!Character.isDigit(strippedIngredient.charAt(0)) || strippedIngredient.contains("/")) {
+            return true;
+        }
+        String firstWord = strippedIngredient.split(" ")[0];
+        return !firstWord.matches("^[0-9]+\\.?[0-9]*");
     }
 
     /**
