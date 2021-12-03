@@ -46,6 +46,7 @@ You need to setup a MySQL Database to get Foodstagram running. To do so, follow 
 
 ## How to setup the web frontend
 These instructions are based off of https://angular.io/guide/setup-local.
+1. Install Node.js here: https://nodejs.org/en/download/.  
 1. Open a terminal window inside the foodstagram-ui folder.  
 2. In your terminal, run "npm install -g @angular/cli"  
 3. Run the command "ng serve --open"  
