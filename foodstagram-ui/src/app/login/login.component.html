@@ -1,0 +1,31 @@
+<div class="login-wrapper">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title class="card-title">
+        <span class="login-title">Foodstagram</span>
+      </mat-card-title>
+    </mat-card-header>
+    <div class="card-content-wrapper">
+      <mat-card-content>
+        <div class="login-form-unit">
+          <span class="login-form-label">Username</span>
+          <mat-form-field appearance="fill">
+            <mat-label>Enter Username</mat-label>
+            <input matInput class="login-input">
+          </mat-form-field>
+        </div>
+        <div class="login-form-unit">
+          <span class="login-form-label">Password</span>
+          <mat-form-field appearance="fill">
+            <mat-label>Enter Password</mat-label>
+            <input matInput class="login-input" type="password">
+          </mat-form-field>
+        </div>
+        <div class="login-form-unit">
+          <button mat-button class="card-button" (click)="login()">LOGIN</button>
+          <button mat-button class="card-button">CREATE ACCOUNT</button>
+        </div>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</div>

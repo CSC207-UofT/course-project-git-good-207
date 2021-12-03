@@ -1,0 +1,93 @@
+.user-profile-view-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5rem 0 6rem 3rem;
+
+  h1 {
+    font-size: 4rem;
+  }
+
+  .user-description {
+    font-size: 2.5rem;
+  }
+}
+
+.username-view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.user-profile-image {
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  margin-right: 3rem;
+}
+
+.large-button {
+  width: 160px !important;
+  height: 70px !important;
+  font-size: 24px !important;
+  margin-left: 3rem;
+}
+
+.user-profile-view-posts-header {
+  width: 100%;
+  margin: 3rem 3rem 0 3rem;
+  
+  h2 {
+    font-size: 2.5rem;
+  }
+}
+
+.user-profile-view-posts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 3rem 7rem 3rem;
+}
+
+.post-card {
+  max-width: 400px;
+  margin-top: 2rem;
+  background-color: rgb(141, 0, 162);
+  color: white;
+}
+
+.post-header-image {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/GordonRamsay.jpg/1024px-GordonRamsay.jpg');
+  background-size: cover;
+}
+
+.post-date {
+  color: white;
+}
+
+.recipe-ingredients {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.recipe-steps {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.recipe-ingredients-title {
+  font-size: large;
+}
+
+.recipe-steps-title {
+  font-size: large;
+}
+
+.likes {
+  margin-top: 1.5rem;
+  font-size: large;
+}
