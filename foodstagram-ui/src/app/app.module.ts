@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UserProfileViewComponent } from './user-profile-view/user-profile-view.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MatDividerModule } from '@angular/material/divider';
     NavbarComponent,
     FeedComponent,
     CreatePostComponent,
-    UserProfileViewComponent
+    UserProfileViewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

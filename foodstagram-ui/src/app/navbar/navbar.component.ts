@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,10 @@ export class NavbarComponent implements OnInit {
   users: string[] = ['Eric', 'Shawn', 'Yolanda'];
   filteredUsers: Observable<string[]>;
 
-  constructor(private _router: Router) { 
+  constructor(
+    private _router: Router,
+    private _loginService: LoginService
+  ) { 
     this.filteredUsers = this.userSearch.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value)),
@@ -25,6 +29,10 @@ export class NavbarComponent implements OnInit {
 
   public openUserProfile(): void {
     this._router.navigate(['/user-profile']);
+  }
+
+  public logout(): void {
+    this._loginService.logout();
   }
 
   private _filter(value: string): string[] {
