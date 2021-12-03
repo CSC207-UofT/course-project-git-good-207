@@ -18,13 +18,8 @@ Our project is a recipe saving and sharing app where the user can create recipes
 * We also discussed making LoginManager a Singleton class. In the current state of our project, we only ever use a single instance of LoginManager as only one user can be logged in at a time, and we must keep track of who the current user is. This led us to think that a singleton LoginManager would make sense. Nevertheless, after further discussion and consideration, we decided that this would not be an effective idea. Making LoginManager a Singleton class would limit us to only being able to have one instance of LoginManager. This would be very limiting if, in a hypothetical future, we wanted to expand the program to be able to have multiple users logging in at the same time (like in a real social media app), as that would require multiple instances of LoginManager to keep track of multiple current users. Thus, we decided against making LoginManager a Singleton class.
 
 
-* Our codebase is definitely modular and testable without the UI, Database, et cetera. We just did not have time to learn a JUnit mock framework to be able to write unit tests with mocked dependencies, but we may look into this in the future.
+* Our codebase is definitely modular and testable without the UI, Database, et cetera. By using an abstracted InOut interface in our Controllers, this allowed us to use Spring Boot when creating a web UI while making minimal modifications to our original code. 
 
-
-* We strived to make our app independent of UI implementation, by using an abstracted InOut interface in our Controllers. This opens the possibility for us of using something like Spring Boot with a web framework in the future.
-
-
-* Our app is independent of our Database implementation in MySQLController.
 
 ## SOLID Design
 
