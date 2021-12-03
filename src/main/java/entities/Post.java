@@ -62,35 +62,30 @@ public class Post extends PostableItem {
     public String getId() { return this.id; }
 
     /**
-     * @return return the time when it was posted
-     * saved in the object
+     * @return Return the time Post was created
      */
     public LocalDateTime getTime(){
         return this.createdTime;
     }
 
     /**
-     * given a Comment object it adds it stores the new
-     * comment in the object
-     * @param comment stores the information about the
-     *                comment
+     * Saves the comment to the Post's list of comments
+     * @param comment the comment to be added to the post
      */
     public void addComment(Comment comment) {
         this.comments.add(comment);
     }
 
     /**
-     * given the user that decided to like the post
-     * it stores the user
-     * @param user user that gave like to the post
+     * Adds the given user to the Post's list of liked users.
+     * @param user The user that liked the post
      */
     public void addLike(User user) {
         this.likedUsers.add(user);
     }
 
     /**
-     * @return  all the
-     * users that have given like to the Post
+     * @return  All the users that liked the Post
      */
     public ArrayList<User> getLikedUsers() {
         return this.likedUsers;
