@@ -9,7 +9,7 @@ Our project is a recipe saving and sharing app where the user can create recipes
 * Every Post, Recipe, and User (entities) have a unique ID. This will allow us to identify them uniquely within the program.  
 
 
-* We strived to adhere to the Dependency Rule, so that lower layers never depended on outer layers. For example, we abstracted DatabaseManager (use case) and extended it with MySQLController (controller) so that our Use Case classes would not have to depend on our database implementation. We made sure that outer layers only called on the same layer or the layer just below them without skipping layers.
+* We strived to adhere to the Dependency Rule, which means that our source code dependencies can only point inwards. Nothing in the inner layers can know or depend on anything from something in the outer layers. For example, we abstracted DatabaseManager (use case) and extended it with MySQLController (controller) so that our Use Case classes would not have to depend on our database implementation. We made sure that outer layers only called on the same layer or the layer just below them without skipping layers.
 
 
 * We discussed making DatabaseManager a Singleton class, so we wouldn’t have to pass it in everywhere we used it. However, we realized that this would not make sense. Since we had abstracted DatabaseManager, we realized that we could not make DatabaseManager a Singleton, since a Singleton is a final class. This conflicted with the abstract definition of DatabaseManager (a class cannot be both final and abstract).
