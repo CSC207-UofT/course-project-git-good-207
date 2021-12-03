@@ -8,11 +8,11 @@
           <input type="text"
                  aria-label="Number"
                  matInput
-                 [formControl]="myControl"
+                 [formControl]="userSearch"
                  [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="openUserProfile()">
             <mat-option *ngFor="let option of filteredUsers | async" [value]="option">
-              {{option}}
+              <span (click)="openUserProfile()">{{option}}</span>
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
