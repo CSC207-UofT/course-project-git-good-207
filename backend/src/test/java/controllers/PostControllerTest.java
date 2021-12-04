@@ -5,7 +5,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import use_cases.LoginManager;
 
 import java.time.LocalDateTime;
@@ -24,17 +26,17 @@ class PostControllerTest {
     final PostController postController = new PostController(inOut, mySQLController, loginManager);
 
     @BeforeAll
-    static void setup(){
+    static void setup() {
         loginManager.login("shawn", "1234");
         ArrayList<Ingredient> ingredients = new ArrayList<>(List.of(new CountableIngredient("apples", 13)));
         ArrayList<String> steps = new ArrayList<>(Arrays.asList("Get apples", "Throw them"));
         Recipe recipe = new Recipe("Test", ingredients, steps, recipeId);
-        post = new Post("2", dateTime, recipe, "test", "100" );
+        post = new Post("2", dateTime, recipe, "test", "100");
         mySQLController.addNewPost(post);
     }
 
     @AfterEach
-    void clearOutput(){
+    void clearOutput() {
         inOut.clearOutputs();
     }
 
@@ -99,7 +101,7 @@ class PostControllerTest {
 
     @Test
     void testBrowsePostInvalid() {
-        ArrayList<String> inputs = new ArrayList<>(List.of("hi","99"));
+        ArrayList<String> inputs = new ArrayList<>(List.of("hi", "99"));
         inOut.setInput(inputs);
         postController.browsePost(post);
 
@@ -143,7 +145,7 @@ class PostControllerTest {
     }
 
     @AfterAll
-    static void cleanUp(){
+    static void cleanUp() {
         mySQLController.deletePost("100");
     }
 }

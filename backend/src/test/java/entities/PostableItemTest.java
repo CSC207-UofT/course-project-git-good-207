@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PostableItemTest {
     private final LocalDateTime dateTime = LocalDateTime.now();
-    private final PostableItem pItem = new Comment("test", "1234", dateTime, "321" );
+    private final PostableItem pItem = new Comment("test", "1234", dateTime, "321");
 
     @Test
     void testGetAuthorId() {

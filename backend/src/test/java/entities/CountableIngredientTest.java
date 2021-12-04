@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CountableIngredientTest {
     CountableIngredient countableIngredient = new CountableIngredient("apples", 13);
+
     @Test
     void testGetIngredientNumber() {
         assertEquals(13, countableIngredient.getIngredientNumber());
