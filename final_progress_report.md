@@ -1,6 +1,10 @@
 # Progress Report
 
-# What we have worked on in Phase 2 and our major contributions to the overall project
+### What our group did well for Phase 2
+
+### What our group did not do well for Phase 2
+
+## Individual Progress Report
 
 ### Glen
 
