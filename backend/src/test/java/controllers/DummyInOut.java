@@ -2,12 +2,16 @@ package controllers;
 
 import java.util.ArrayList;
 
+/**
+ * DummyInOut with String input and output.
+ * For testing purposes only
+ */
 public class DummyInOut implements InOut {
     private final ArrayList<String> inputs = new ArrayList<>();
     private final ArrayList<String> outputs = new ArrayList<>();
 
     @Override
-    public String getInput(String prompt){
+    public String getInput(String prompt) {
         String input = this.inputs.get(0);
         inputs.remove(0);
         return input;
@@ -18,12 +22,12 @@ public class DummyInOut implements InOut {
         this.outputs.add(output);
     }
 
-    public void setInput(ArrayList<String> input){
+    public void setInput(ArrayList<String> input) {
         this.inputs.clear();
         this.inputs.addAll(input);
     }
 
-    public ArrayList<String> getOutputs(){
+    public ArrayList<String> getOutputs() {
         return outputs;
     }
 }
