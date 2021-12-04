@@ -1,0 +1,18 @@
+.create-post-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-post-content {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.create-post-form-label {
+  font-size: large;
+  margin: 2rem 0 1rem 0;
+}

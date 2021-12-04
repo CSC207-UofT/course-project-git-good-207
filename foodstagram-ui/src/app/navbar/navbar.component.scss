@@ -1,0 +1,50 @@
+.nav {
+  width: 100%;
+  background-color: purple;
+  color: white;
+  height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: large;
+}
+
+.nav-title {
+  margin: 0 2rem 0 2rem;
+  font-size: x-large;
+}
+
+.nav-items {
+  width: 100%;
+  margin: 0 2rem 0 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.nav-item {
+  margin-left: 5rem;
+}
+
+.user-search-form {
+  min-width: 150px;
+  max-width: 1000px;
+  width: 30rem;
+  height: 100px;
+  margin-top: 1.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-underline, ::ng-deep .mat-form-field-ripple {
+  background-color: white !important;
+  color: white !important
+}
+
+::ng-deep .mat-form-field-empty.mat-form-field-label {
+    color: white;
+}

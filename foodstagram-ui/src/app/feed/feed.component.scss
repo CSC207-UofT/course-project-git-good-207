@@ -1,0 +1,48 @@
+.feed-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.post-card {
+  max-width: 400px;
+  margin-top: 2rem;
+  background-color: rgb(141, 0, 162);
+  color: white;
+}
+
+.post-header-image {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/GordonRamsay.jpg/1024px-GordonRamsay.jpg');
+  background-size: cover;
+}
+
+.post-date {
+  color: white;
+}
+
+.recipe-ingredients {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.recipe-steps {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.recipe-ingredients-title {
+  font-size: large;
+}
+
+.recipe-steps-title {
+  font-size: large;
+}
+
+.likes {
+  margin-top: 1.5rem;
+  font-size: large;
+}
