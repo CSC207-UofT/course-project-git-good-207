@@ -11,21 +11,21 @@ class PostableItemTest {
     private final PostableItem pItem = new Comment("test", "1234", dateTime, "321" );
 
     @Test
-    void getAuthorId() {
+    void testGetAuthorId() {
         String actual = pItem.getAuthorId();
         String expected = "1234";
         assertEquals(expected, actual);
     }
 
     @Test
-    void getId() {
+    void testGetId() {
         String actual = pItem.getId();
         String expected = "321";
         assertEquals(expected, actual);
     }
 
     @Test
-    void getCreatedTime() {
+    void testGetCreatedTime() {
         LocalDateTime actual = pItem.getCreatedTime();
         assertEquals(this.dateTime, actual);
     }
