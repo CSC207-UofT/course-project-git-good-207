@@ -8,7 +8,9 @@ public class DummyInOut implements InOut {
 
     @Override
     public String getInput(String prompt){
-        return this.inputs.get(0);
+        String input = this.inputs.get(0);
+        inputs.remove(0);
+        return input;
     }
 
     @Override
