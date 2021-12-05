@@ -34,6 +34,7 @@ public class LoginController {
      * Run the welcome page logic.
      */
     public void runWelcomePage() {
+        int DEFAULT_ACTION = 99;
         String welcomeActionPrompt = "Please select an action:\n" +
                 "0 Sign up\n" +
                 "1 Login\n";
@@ -42,12 +43,18 @@ public class LoginController {
 
         this.inOut.setOutput(welcomeMessage);
 
-        String welcomeAction = inOut.getInput(welcomeActionPrompt);
-        boolean isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
+        Integer welcomeAction;
+        try{
+            welcomeAction = Integer.parseInt(inOut.getInput(welcomeActionPrompt));
+        } catch (NumberFormatException nfe){
+            welcomeAction = DEFAULT_ACTION;
+        }
+
+        boolean isComplete = runWelcomeAction(welcomeAction);
 
         //Loops on chosen page until valid input is given
         while (!isComplete) {
-            isComplete = runWelcomeAction(Integer.parseInt(welcomeAction));
+            isComplete = runWelcomeAction(welcomeAction);
         }
     }
 
