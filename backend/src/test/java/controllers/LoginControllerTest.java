@@ -9,6 +9,7 @@ import user_interface.RecipeAppInOut;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +24,7 @@ class LoginControllerTest {
     void clearInputs(){
         inputs.clear();
     }
+
     @Test
     void testRun() {
         loginManager.login("shawn", "1234");
@@ -30,6 +32,17 @@ class LoginControllerTest {
 
 
         assertNull(loginManager.getCurrUser());
+    }
+
+    @Test
+    void testRunWelcomePageInvalidInput(){
+        ArrayList<String> input = new ArrayList<>(List.of("hey"));
+        inOut.setInput(input);
+        loginController.runWelcomePage();
+        ArrayList<String> actualOutputs = inOut.getOutputs();
+        String expectedOutput = "You entered an invalid action input.";
+
+        assertTrue(actualOutputs.contains(expectedOutput));
     }
 
     @Test
