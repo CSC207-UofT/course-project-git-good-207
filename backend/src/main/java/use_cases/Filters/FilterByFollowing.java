@@ -43,7 +43,7 @@ public class FilterByFollowing extends Filter {
      * Get the list of IDs of Users that the current User follow.
      * @return an ArrayList of IDs of Users that the current User follow.
      */
-    private ArrayList<String> getUsersFollowingList() {
+    public ArrayList<String> getUsersFollowingList() {
         ArrayList<User> currentUsersFollowing = this.currentUser.getFollowing();
         ArrayList<String> usersFollowingInStrings = new ArrayList<>();
         if (currentUsersFollowing.size() != 0) {

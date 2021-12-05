@@ -4,6 +4,7 @@ import entities.Feed;
 import entities.Post;
 import entities.Recipe;
 import entities.User;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import use_cases.Filters.FilterByFollowing;
 
@@ -13,9 +14,21 @@ import java.util.Arrays;
 import java.util.UUID;
 
 public class FilterByFollowingTest {
-    static final User currentUser = new User("justin", "1234", "", UUID.randomUUID().toString());
-    final Feed feed = setupFeed();
-    final FilterByFollowing filter = new FilterByFollowing(feed, currentUser);
+    private static User friend1;
+    private static User friend2;
+    private static FilterByFollowing filter;
+
+    @BeforeAll
+    static void setupFollowing() {
+        User currentUser = new User("justin", "1234", "", UUID.randomUUID().toString());
+        friend1 = new User("glen", "1111", "", UUID.randomUUID().toString());
+        friend2 = new User("eric", "2222", "", UUID.randomUUID().toString());
+        currentUser.addFollowing(friend1);
+        currentUser.addFollowing(friend2);
+
+        Feed feed = setupFeed();
+        filter = new FilterByFollowing(feed, currentUser);
+    }
 
     @Test
     void testRunFeed() {
@@ -31,12 +44,16 @@ public class FilterByFollowingTest {
         assert expected.containsAll(actualPostTitles);
     }
 
-    private static Feed setupFeed() {
-        User friend1 = new User("glen", "1111", "", UUID.randomUUID().toString());
-        User friend2 = new User("eric", "2222", "", UUID.randomUUID().toString());
-        currentUser.addFollowing(friend1);
-        currentUser.addFollowing(friend2);
+    @Test
+    void testGetUsersFollowingList() {
+        ArrayList<String> actual = filter.getUsersFollowingList();
 
+        ArrayList<String> expected = new ArrayList<>(Arrays.asList(friend1.getId(), friend2.getId()));
+
+        assert expected.containsAll(actual);
+    }
+
+    private static Feed setupFeed() {
         Post friend1Post1 = new Post(friend1.getId(), LocalDateTime.now(), new Recipe("Szechuan Chicken",
                 new ArrayList<>(), new ArrayList<>(), "r1"), "Chinese", "f1p1");
         Post friend1Post2 = new Post(friend1.getId(), LocalDateTime.now(), new Recipe("Beef Burger",
