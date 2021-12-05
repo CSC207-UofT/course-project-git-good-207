@@ -14,13 +14,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { UserProfileViewComponent } from './user-profile-view/user-profile-view.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FeedComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    UserProfileViewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +37,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

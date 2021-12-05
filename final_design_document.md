@@ -2,7 +2,7 @@
 
 ## Specification – Foodstagram
 
-Our project is a recipe saving and sharing app where the user can create recipes and share their recipes to the world or their friends. The program home page is the user’s feed containing other people’s posted recipes that the current user follows, as well as recipes suggested by the app based on past recipes that the user liked. The user can also filter their feed by categories such as cuisine, only people they follow, or likes etc. The user can “like” and “comment” on recipe posts. “Liking” the post saves that recipe to the user’s “Liked” list of recipes, which the app uses in its filter feature. The user can customize their personal profile where others can see their bio, created recipes, and saved recipes.
+Our project is a recipe saving and sharing app where the user can create recipes and share their recipes to the world or their friends. The program home page is the user’s feed containing other people’s posted recipes that the current user follows, as well as recipes suggested by the app based on past recipes that the user liked. The user can also filter their feed by categories such as cuisine, only people they follow, or likes etc. The user can “like” and “comment” on recipe posts. “Liking” the post saves that recipe to the user’s “Liked” list of recipes, which the app uses in its filter feature. The user can customize their personal profile where others can see their bio, created recipes, and saved recipes. With the addition of a database, we can store information related to our entity classes and also load them.
 
 ## Major Design Decisions and Clean Architecture
 
