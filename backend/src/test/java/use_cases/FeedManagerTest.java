@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 public class FeedManagerTest {
@@ -40,7 +39,7 @@ public class FeedManagerTest {
         feedManager.setFeedFilter(filterNumInput);
         Feed actualFeed = feedManager.getCurrentUsersFeed();
         ArrayList<String> actual = new ArrayList<>();
-        for (Post p: actualFeed.getDisplayedPosts()) {
+        for (Post p : actualFeed.getDisplayedPosts()) {
             actual.add(p.getRecipe().getTitle());
         }
         ArrayList<String> expected = new ArrayList<>(Arrays.asList("Szechuan Chicken", "Stir Fry Beef", "Mapo Tofu"));
@@ -54,7 +53,7 @@ public class FeedManagerTest {
         feedManager.setFeedFilter(filterNumInput);
         Feed actual = feedManager.getCurrentUsersFeed();
         ArrayList<String> actualPostTitles = new ArrayList<>();
-        for (Post p: actual.getDisplayedPosts()) {
+        for (Post p : actual.getDisplayedPosts()) {
             actualPostTitles.add(p.getRecipe().getTitle());
         }
         ArrayList<String> expectedTitles = new ArrayList<>(Arrays.asList("Butter Chicken", "Beef Bourguignon"));
@@ -68,7 +67,7 @@ public class FeedManagerTest {
         feedManager.setFeedFilter(filterNumInput);
         Feed actualFeed = feedManager.getCurrentUsersFeed();
         ArrayList<String> actual = new ArrayList<>();
-        for (Post p: actualFeed.getDisplayedPosts()) {
+        for (Post p : actualFeed.getDisplayedPosts()) {
             actual.add(p.getRecipe().getTitle());
         }
         ArrayList<String> expected = new ArrayList<>(Arrays.asList("Szechuan Chicken", "Beef Burger",
@@ -83,7 +82,7 @@ public class FeedManagerTest {
         feedManager.setFeedFilter(filterNumInput);
         Feed actualFeed = feedManager.getCurrentUsersFeed();
         ArrayList<String> actual = new ArrayList<>();
-        for (Post p: actualFeed.getDisplayedPosts()) {
+        for (Post p : actualFeed.getDisplayedPosts()) {
             actual.add(p.getRecipe().getTitle());
         }
 
@@ -92,10 +91,34 @@ public class FeedManagerTest {
         assert expected.containsAll(actual) && actual.containsAll(expected);
     }
 
+    @Test
+    void testGetCurrentUser() {
+        User actual = feedManager.getCurrentUser();
+        String expected = "justin";
+
+        assert expected.equals(actual.getUsername());
+    }
+
+    @Test
+    void testGetCurrentUsersFeed() {
+        Feed actual = feedManager.getCurrentUsersFeed();
+
+        assert !actual.getPosts().isEmpty();
+    }
+
+    @Test
+    void testSetCurrentUsersFeed() {
+        Feed emptyFeed = new Feed(new ArrayList<>());
+        FeedManager newFeedManager = new FeedManager(friend1, emptyFeed);
+        Feed updatedFeed = newFeedManager.getCurrentUsersFeed();
+
+        assert updatedFeed.getPosts().isEmpty();
+    }
+
     private static void setupUserFollowing() {
-        currentUser = new User("justin", "1234", "" ,UUID.randomUUID().toString());
-        friend1 = new User("glen", "1111", "" ,UUID.randomUUID().toString());
-        friend2 = new User("eric", "2222", "" ,UUID.randomUUID().toString());
+        currentUser = new User("justin", "1234", "", UUID.randomUUID().toString());
+        friend1 = new User("glen", "1111", "", UUID.randomUUID().toString());
+        friend2 = new User("eric", "2222", "", UUID.randomUUID().toString());
         currentUser.addFollowing(friend1);
         currentUser.addFollowing(friend2);
     }
@@ -141,17 +164,3 @@ public class FeedManagerTest {
         return new Feed(allPosts);
     }
 }
-//    @Test
-//    void testGetCurrentUser() {
-//
-//    }
-//
-////    @Test
-////    void testGetCurrentUsersFeed() {
-////
-////    }
-//
-//    @Test
-//    void testSetCurrentUsersFeed() {
-//
-//    }

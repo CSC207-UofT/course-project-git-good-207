@@ -29,6 +29,18 @@ public class FeedTest {
 
     @Test
     void testGetPosts() {
-        assert !this.feed.getPosts().isEmpty();
+        assert !feed.getPosts().isEmpty();
+    }
+
+    @Test
+    void testGetDisplayedPosts() {
+        assert feed.getDisplayedPosts().size() == 2;
+    }
+
+    @Test
+    void testSetDisplayedPosts() {
+        ArrayList<Post> emptyPostList = new ArrayList<>();
+        feed.setDisplayedPosts(emptyPostList);
+        assert feed.getDisplayedPosts().isEmpty();
     }
 }

@@ -60,7 +60,7 @@ public class FeedController {
      * @param posts An ArrayList of Posts representing the selection of displayed Posts on a Feed.
      * @return a String representing a selection of displayed Posts' titles on a Feed.
      */
-    private String generateDisplayedPosts(ArrayList<Post> posts) {
+    public String generateDisplayedPosts(ArrayList<Post> posts) {
         this.postsActionMap = new HashMap<>();
         StringBuilder postsString = new StringBuilder("Enter a post number for a detailed view of " +
                 "that post or enter 99 to choose a different feed filter: ");
@@ -110,7 +110,7 @@ public class FeedController {
      * @param numOfDisplayedPosts The number of displayed Posts on a Feed.
      * @return an int representing the Post that the user selects.
      */
-    private int getSelectedPostInput(String postsString, int numOfDisplayedPosts) {
+    public int getSelectedPostInput(String postsString, int numOfDisplayedPosts) {
         int postNumber = -1;
 
         while (postNumber < 0 || (postNumber > numOfDisplayedPosts - 1 && postNumber != 99)) {
@@ -130,7 +130,7 @@ public class FeedController {
      *
      * @return an ArrayList of ints representing the choice of filter and the type of cuisine (if filtering by cuisine).
      */
-    private ArrayList<Integer> getFilterInput() {
+    public ArrayList<Integer> getFilterInput() {
         int filterInput = -1;
         int cuisineInput = 0;
 
@@ -161,7 +161,7 @@ public class FeedController {
      *
      * @return an int representing the cuisine type that the user chooses to filter the Feed with.
      */
-    private int getCuisineInput() {
+    public int getCuisineInput() {
         int cuisineInput = -1;
 
         while (cuisineInput < 0 || (cuisineInput > 6 && cuisineInput != 99)) {
