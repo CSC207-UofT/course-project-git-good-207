@@ -1,4 +1,4 @@
-package use_cases;
+package use_cases.Filters;
 
 import entities.Feed;
 import entities.Post;

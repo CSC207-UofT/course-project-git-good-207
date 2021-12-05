@@ -1,4 +1,4 @@
-package use_cases;
+package use_cases.Filters;
 
 import entities.Feed;
 import entities.Post;
@@ -47,7 +47,7 @@ public class Filter {
      * @param maxDisplayedPosts An ArrayList of ten Posts maximum.
      * @return an ArrayList of Posts sorted from the most recent to the least.
      */
-    private ArrayList<Post> sortByPostedTime(ArrayList<Post> maxDisplayedPosts) {
+    public ArrayList<Post> sortByPostedTime(ArrayList<Post> maxDisplayedPosts) {
         // Sort from most recent to oldest
         Comparator<Post> byPostedTime = (p1, p2) -> {
             if (p1.getCreatedTime().isBefore(p2.getCreatedTime())) {
@@ -67,10 +67,11 @@ public class Filter {
      * @param tempDisplayedPosts An ArrayList of Posts.
      * @return an ArrayList of ten Posts maximum.
      */
-    private ArrayList<Post> limitNumPosts(ArrayList<Post> tempDisplayedPosts) {
+    public ArrayList<Post> limitNumPosts(ArrayList<Post> tempDisplayedPosts) {
+        int numPostsLimit = 10;
         ArrayList<Post> maxDisplayedPosts = new ArrayList<>();
-        if (!this.checkNumPosts(tempDisplayedPosts)) {
-            for (int i=0; i < 10; i++) {
+        if (!this.checkNumPosts(tempDisplayedPosts, numPostsLimit)) {
+            for (int i=0; i < numPostsLimit; i++) {
                 maxDisplayedPosts.add(tempDisplayedPosts.get(i));
             }
             return maxDisplayedPosts;
@@ -83,7 +84,7 @@ public class Filter {
      * @param tempDisplayedPosts An ArrayList of Posts.
      * @return a boolean whether tempDisplayedPosts has less than or equal to ten posts.
      */
-    private boolean checkNumPosts(ArrayList<Post> tempDisplayedPosts) {
-        return tempDisplayedPosts.size() <= 10;
+    public boolean checkNumPosts(ArrayList<Post> tempDisplayedPosts, int numPostsLimit) {
+        return tempDisplayedPosts.size() <= numPostsLimit;
     }
 }
