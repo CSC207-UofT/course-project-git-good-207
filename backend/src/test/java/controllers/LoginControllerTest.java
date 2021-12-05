@@ -4,7 +4,6 @@ import entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import use_cases.LoginManager;
-import user_interface.RecipeAppInOut;
 
 
 import java.util.ArrayList;
