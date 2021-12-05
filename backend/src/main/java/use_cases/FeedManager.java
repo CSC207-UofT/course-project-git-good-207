@@ -1,6 +1,7 @@
 package use_cases;
 
 import entities.*;
+import use_cases.Filters.*;
 
 import java.util.ArrayList;
 
