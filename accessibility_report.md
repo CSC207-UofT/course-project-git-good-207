@@ -43,6 +43,8 @@
 
 If we were to market our program, we would target teenagers, young and older adults because they are the ones who would most likely be interested in cooking and using recipes. Since they cook more, they are likely to contribute to the program by sharing recipes and get the most benefit from using the app. If we wanted to narrow down the target population, we could target people who "like to cook." However, we would most likely want to target a wider audience since it is also hard to determine who exactly "likes to cook," and it would be better to target people who are likely to cook because even those who don't particularly enjoy it have to eat and could benefit from browsing easy-to-follow recipes that cater to their taste.
 
+As suggested by our program name, we tried to brand our program as something similar to Instagram. Seeing the popularity of Instagram, we wanted to make our program as digitally interactive as we can with features such as following other users, liking, commenting on recipe posts, and having your own feed of posts to browse. By making our program more community-based, we believe that it will capture and share the creativity of the various application users, making people's cooking experiences more exciting and worthwhile.
+
 ## Program usage by other demographics
 
 Our program is likely to be used by the majority of people since everyone has to eat and probably cook at some point, but the app would not be used as much by very young people and very old people who are unlikely to cook for themselves or be interested in sharing recipes. It would also not be used by disabled people who cannot cook and those who are blind since our application is displayed on a screen.
