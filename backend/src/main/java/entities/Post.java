@@ -15,14 +15,16 @@ public class Post extends PostableItem {
     private final ArrayList<Comment> comments;
     private final Recipe recipe;
     private final String category;
+    private final String image_url;
 
     // constructor
-    public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category, String id) {
+    public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category, String image_url, String id) {
         super(authorId, postedTime, id);
         this.likedUsers = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.recipe = recipe;
         this.category = category;
+        this.image_url = image_url;
     }
 
     /**
@@ -60,6 +62,12 @@ public class Post extends PostableItem {
      * the Post object
      */
     public String getId() { return this.id; }
+
+    /**
+     * @return the image url of recipe on post
+     * the Post object
+     */
+    public String getImageUrl() { return this.image_url; }
 
     /**
      * @return Return the time Post was created

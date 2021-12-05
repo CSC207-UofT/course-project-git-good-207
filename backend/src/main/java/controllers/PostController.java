@@ -45,11 +45,16 @@ public class PostController {
                 String recipeSteps = this.inOut.getInput(promptRecipeSteps);
 
                 Recipe recipe = recipeManager.createRecipe(recipeTitle, allIngredients, getRecipeStepsList(recipeSteps), UUID.randomUUID().toString());
-                String category = this.inOut.getInput("What is the recipe category? (Type 'back' to discard draft and return to main menu)");
+                String category = this.inOut.getInput("What is the recipe category? (Categories: Chinese/Italian/American/Japanese/French/Mexican/Others. Type 'back' to discard draft and return to main menu)");
                 if (category.toLowerCase().contains("back")) {
                     this.inOut.setOutput("Post deleted. Returning to main menu.");
                 } else {
-                    postManager.createPost(currUser, timeNow, recipe, category, UUID.randomUUID().toString());
+                    String get_image = getImageUrl();
+                    if (!get_image.equals("N/A")) {
+                        postManager.createPost(currUser, timeNow, recipe, category, get_image, UUID.randomUUID().toString());
+                    } else {
+                        postManager.createPost(currUser, timeNow, recipe, category, "https://i.kym-cdn.com/photos/images/facebook/001/715/715/240.jpg", UUID.randomUUID().toString());
+                    }
                     this.inOut.setOutput("Post successfully created!");
                 }
         }
@@ -59,6 +64,19 @@ public class PostController {
         this.displayPost(selectedPost.getId());
         int postAction = this.getPostActionInput();
         this.runPostAction(selectedPost, postAction);
+    }
+
+    /**
+     * Return image url from user input. Return N/A if no image selected.
+     *
+     * @return String image url that user entered or N/A
+     */
+    private String getImageUrl() {
+        String user_input = this.inOut.getInput("If you'd like to add an image, please enter recipe image url. Else, enter N/A");
+        if (user_input.toUpperCase().contains("N/A") || user_input.equals("")) {
+            return "N/A";
+        }
+        return user_input;
     }
 
     /**
@@ -215,15 +233,12 @@ public class PostController {
      * @param id the id of the post to be displayed
      */
     public void displayPost(String id) {
-        String header = getPostHeader(id);
-        String recipeInfo = getRecipeInfo(id);
-        String comments = getPostComments(id);
-        String likes = getPostLikes(id);
 
-        this.inOut.setOutput(header);
-        this.inOut.setOutput(recipeInfo);
-        this.inOut.setOutput(likes);
-        this.inOut.setOutput(comments);
+        this.inOut.setOutput(getPostHeader(id));
+        this.inOut.setOutput(postManager.getPostImage(id));
+        this.inOut.setOutput(getRecipeInfo(id));
+        this.inOut.setOutput(getPostLikes(id));
+        this.inOut.setOutput(getPostComments(id));
 
     }
 

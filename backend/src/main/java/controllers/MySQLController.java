@@ -91,7 +91,7 @@ public class MySQLController extends DatabaseManager {
         // add the new ones
         for (Post post: user.getPosts()){
             this.addNewPost(new Post(user.getId(), post.getTime(), post.getRecipe(),
-                    post.getCategory(), post.getId()));
+                    post.getCategory(), post.getImageUrl(), post.getId()));
         }
     }
 

@@ -68,9 +68,9 @@ public class PostManager {
      * @param recipe a recipe object containing the info of the recipe
      * @param category which category it belongs
      */
-    public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category, String id)
+    public void createPost(User owner, LocalDateTime postedTime, Recipe recipe, String category, String image_url, String id)
     {
-        Post p = new Post(owner.getId(), postedTime, recipe, category, id);
+        Post p = new Post(owner.getId(), postedTime, recipe, category, image_url, id);
         this.createPost(p);
 
     }
@@ -185,6 +185,15 @@ public class PostManager {
      */
     public String getPostCategory(String postId){
         return this.getSpecificPost(postId).getCategory();
+    }
+
+    /**
+     * Given the post id returns the image url of its recipe
+     * @param postId id of the post
+     * @return category of the post
+     */
+    public String getPostImage(String postId){
+        return this.getSpecificPost(postId).getImageUrl();
     }
 
     /**
