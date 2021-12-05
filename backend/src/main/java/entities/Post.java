@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
  * A Post that Users make on Foodstagram.
- * Stores a list of Users ids who have liked the post, created time, comments on the post, associated User id, a Recipe, a String which is the category of the post (i.e. “Chinese”, “Indian”, “Italian”)
+ * Stores a list of Users ids who have liked the post, created time, comments on the post, associated User id, a Recipe, a String which is the category of the post (i.e. "Chinese" "Indian", "Italian")
  * Collaborators: Comment, Recipe, User
  */
 public class Post extends PostableItem {

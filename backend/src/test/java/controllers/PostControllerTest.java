@@ -137,7 +137,7 @@ class PostControllerTest {
                 "Liked by (0):\n" +
                 "\n" +
                 "\n" +
-                "Comments:\n" +
+                "Comments (0):\n" +
                 "\n";
 
         outputs.clear();
