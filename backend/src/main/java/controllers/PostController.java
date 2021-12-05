@@ -45,7 +45,7 @@ public class PostController {
                 String recipeSteps = this.inOut.getInput(promptRecipeSteps);
 
                 Recipe recipe = recipeManager.createRecipe(recipeTitle, allIngredients, getRecipeStepsList(recipeSteps), UUID.randomUUID().toString());
-                String category = this.inOut.getInput("What is the recipe category? (Type 'back' to discard draft and return to main menu)");
+                String category = this.inOut.getInput("What is the recipe category? Choose from: Chinese/French/American/Japanese/Mexican/Italian/Others (Type 'back' to discard draft and return to main menu)");
                 if (category.toLowerCase().contains("back")) {
                     this.inOut.setOutput("Post deleted. Returning to main menu.");
                 } else {
