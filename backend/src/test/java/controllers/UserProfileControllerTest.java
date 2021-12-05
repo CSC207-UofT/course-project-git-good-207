@@ -1,8 +1,7 @@
 package controllers;
 
-import entities.*;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,21 +11,17 @@ import use_cases.UserManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.UUID;
 
 class UserProfileControllerTest {
-    static final MySQLController mySQLController = new MySQLController();
-    static final LoginManager loginManager = new LoginManager(mySQLController);
-    static final UserManager userManager = new UserManager(mySQLController);
-    final DummyInOut inOut = new DummyInOut();
-    final UserProfileController userProfileController = new UserProfileController(inOut, mySQLController, loginManager);
+    private static final MySQLController mySQLController = new MySQLController();
+    private static final LoginManager loginManager = new LoginManager(mySQLController);
+    private static final UserManager userManager = new UserManager(mySQLController);
+    private static final DummyInOut inOut = new DummyInOut();
+    private static final UserProfileController userProfileController = new UserProfileController(inOut, mySQLController, loginManager);
     final ArrayList<String> inputs = new ArrayList<>();
 
-    @BeforeAll
-    static void setup() {
-        User tester = new User("tester", "1234", "hi im tester", UUID.randomUUID().toString());
-        userManager.followUser(tester, userManager.findUser("shawn"));
-        mySQLController.addNewUser(tester);
+    @BeforeEach
+    void setup() {
         loginManager.login("tester", "1234");
     }
 
@@ -41,20 +36,20 @@ class UserProfileControllerTest {
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.BROWSEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
-        String actual = outputs.get(0);
+        String output = String.join("", outputs);
 
-        assertEquals("Either target user already followed, or target user is yourself!", actual);
+        assertTrue(output.endsWith("Either target user already followed, or target user is yourself!"));
     }
 
     @Test
     void testRunFollowUserValid() {
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("eric","0"));
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("shawn","0"));
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.BROWSEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
-        String actual = outputs.get(0);
+        String output = String.join("", outputs);
 
-        assertEquals("Successfully followed the target user!", actual);
+        assertTrue(output.endsWith("Successfully followed the target user!"));
     }
 
     @Test
@@ -63,20 +58,21 @@ class UserProfileControllerTest {
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.BROWSEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
-        String actual = outputs.get(0);
+        String output = String.join("", outputs);
 
-        assertEquals("Successfully unfollowed the target user!", actual);
+        assertTrue(output.endsWith("User is not followed to begin with!"));
     }
 
     @Test
     void testRunUnfollowUserValid() {
+        userManager.followUser(loginManager.getCurrUser(), userManager.findUser("shawn"));
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList("shawn","0"));
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.BROWSEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
-        String actual = outputs.get(0);
+        String output = String.join("", outputs);
 
-        assertEquals("User is not followed to begin with!", actual);
+        assertTrue(output.endsWith("Successfully unfollowed the target user!"));
     }
 
     @Test
@@ -84,7 +80,6 @@ class UserProfileControllerTest {
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList("troy"));
         inOut.setInput(inputs);
         userProfileController.runBrowseProfile();
-
         String output = String.join("", inOut.getOutputs());
 
         assertTrue(output.endsWith("Error! Either user is not in the database or user is yourself! " +
@@ -98,9 +93,9 @@ class UserProfileControllerTest {
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
-        String actual = outputs.get(0);
+        String output = String.join("", outputs);
 
-        assertEquals("Username entered is the same as the old one. Returning to main page.", actual);
+        assertTrue(output.endsWith("Username entered is the same as the old one. Returning to main page."));
     }
 
     @Test
@@ -109,9 +104,9 @@ class UserProfileControllerTest {
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
-        String actual = outputs.get(0);
+        String output = String.join("", outputs);
 
-        assertEquals("Successfully changed username to: " + "tester!" + "\n" + "Returning to main page.", actual);
+        assertTrue(output.endsWith("Successfully changed username to: " + "tester!" + "\n" + "Returning to main page."));
     }
 
     @Test
@@ -120,9 +115,9 @@ class UserProfileControllerTest {
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
-        String actual = outputs.get(0);
+        String output = String.join("", outputs);
 
-        assertEquals("Bio given is the same as the old one. Returning to main page", actual);
+        assertTrue(output.endsWith("Bio given is the same as the old one. Returning to main page"));
     }
 
     @Test
@@ -131,9 +126,9 @@ class UserProfileControllerTest {
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
-        String actual = outputs.get(0);
+        String output = String.join("", outputs);
 
-        assertEquals("Successfully changed bio to: " + "Hi!" + "\n" + "Returning to main page.", actual);
+        assertTrue(output.endsWith("Successfully changed bio to: " + "Hi!" + "\n" + "Returning to main page."));
     }
 
     @Test
@@ -142,9 +137,9 @@ class UserProfileControllerTest {
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
-        String actual = outputs.get(0);
+        String output = String.join("", outputs);
 
-        assertEquals("Password entered is the same as the old one. Returning to main page", actual);
+        assertTrue(output.endsWith("Password entered is the same as the old one. Returning to main page"));
     }
 
     @Test
@@ -153,8 +148,8 @@ class UserProfileControllerTest {
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
-        String actual = outputs.get(0);
+        String output = String.join("", outputs);
 
-        assertEquals("Successfully changed password to: " + "12345" + "\n" + "Returning to main page.", actual);
+        assertTrue(output.endsWith("Successfully changed password to: " + "12345" + "\n" + "Returning to main page."));
     }
 }
