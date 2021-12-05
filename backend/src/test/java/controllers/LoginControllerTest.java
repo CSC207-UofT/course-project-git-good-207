@@ -9,6 +9,7 @@ import user_interface.RecipeAppInOut;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,9 +21,10 @@ class LoginControllerTest {
     final ArrayList<String> inputs = new ArrayList<>();
 
     @BeforeEach
-    void clearInputs(){
+    void clearInputs() {
         inputs.clear();
     }
+
     @Test
     void testRun() {
         loginManager.login("shawn", "1234");
@@ -33,7 +35,18 @@ class LoginControllerTest {
     }
 
     @Test
-    void testRunWelcomePageSignUpValid(){
+    void testRunWelcomePageInvalidInput() {
+        ArrayList<String> input = new ArrayList<>(List.of("hey"));
+        inOut.setInput(input);
+        loginController.runWelcomePage();
+        ArrayList<String> actualOutputs = inOut.getOutputs();
+        String expectedOutput = "You entered an invalid action input.";
+
+        assertTrue(actualOutputs.contains(expectedOutput));
+    }
+
+    @Test
+    void testRunWelcomePageSignUpValid() {
         ArrayList<String> input = new ArrayList<>(Arrays.asList("0", "username", "1234"));
         inOut.setInput(input);
         loginController.runWelcomePage();
@@ -47,7 +60,7 @@ class LoginControllerTest {
     }
 
     @Test
-    void testRunWelcomePageLoginValid(){
+    void testRunWelcomePageLoginValid() {
         ArrayList<String> input = new ArrayList<>(Arrays.asList("1", "shawn", "1234"));
         inOut.setInput(input);
         loginController.runWelcomePage();
@@ -58,7 +71,7 @@ class LoginControllerTest {
     }
 
     @Test
-    void testRunWelcomePageSignUpInvalid(){
+    void testRunWelcomePageSignUpInvalid() {
         ArrayList<String> input = new ArrayList<>(Arrays.asList("0", "shawn", "1234", "username2", "1234"));
         inOut.setInput(input);
         loginController.runWelcomePage();
@@ -72,7 +85,7 @@ class LoginControllerTest {
     }
 
     @Test
-    void testRunWelcomePageLoginInvalid(){
+    void testRunWelcomePageLoginInvalid() {
         ArrayList<String> input = new ArrayList<>(Arrays.asList("1", "thisuserdoesntexist", "1234", "shawn", "1234"));
         inOut.setInput(input);
         loginController.runWelcomePage();
@@ -81,10 +94,11 @@ class LoginControllerTest {
 
         assertTrue(actualOutputs.contains(expectedOutput));
     }
+
     private void deleteUser(String username) {
         User[] allUsers = this.mySQLController.getAllUsers();
-        for (User user: allUsers){
-            if (user.getUsername().equals(username)){
+        for (User user : allUsers) {
+            if (user.getUsername().equals(username)) {
                 this.mySQLController.deleteUser(user);
             }
         }
