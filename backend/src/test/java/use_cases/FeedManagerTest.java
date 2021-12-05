@@ -109,7 +109,8 @@ public class FeedManagerTest {
     @Test
     void testSetCurrentUsersFeed() {
         Feed emptyFeed = new Feed(new ArrayList<>());
-        FeedManager newFeedManager = new FeedManager(friend1, emptyFeed);
+        FeedManager newFeedManager = new FeedManager(friend1, feedManager.getCurrentUsersFeed());
+        newFeedManager.setCurrentUsersFeed(emptyFeed);
         Feed updatedFeed = newFeedManager.getCurrentUsersFeed();
 
         assert updatedFeed.getPosts().isEmpty();
