@@ -1,0 +1,56 @@
+.login-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+}
+
+.login-card {
+  max-width: 400px;
+  margin-top: 2rem;
+  background-color: rgb(141, 0, 162);
+  color: white;
+  height: 500px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-title {
+  margin-top: 1rem;
+}
+
+.card-content-wrapper {
+  margin-top: 1rem;
+}
+
+.login-form-unit {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-button {
+  margin-bottom: 1rem;
+}
+
+.login-header-image {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/GordonRamsay.jpg/1024px-GordonRamsay.jpg');
+  background-size: cover;
+}
+
+.login-title {
+  font-size: x-large;
+}
+
+.login-date {
+  color: white;
+}
+
+.login-form-label {
+  font-size: medium;
+  margin: 3rem 0 1rem 0;
+}

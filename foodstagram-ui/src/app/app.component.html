@@ -1,0 +1,7 @@
+<div class="main" *ngIf="!user">
+  <app-login></app-login>
+</div>
+<div class="main" *ngIf="user">
+  <app-navbar></app-navbar>
+  <router-outlet></router-outlet>
+</div>

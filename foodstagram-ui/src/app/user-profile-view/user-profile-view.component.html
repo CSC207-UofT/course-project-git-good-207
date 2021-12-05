@@ -1,0 +1,47 @@
+<div class="user-profile-view-header">
+  <div class="username-view">
+    <img 
+      class="user-profile-image" 
+      src="https://upload.wikimedia.org/wikipedia/commons/d/d5/GordonRamsay.jpg"
+      alt="The user's profile image"
+    >
+    <h1>{{ user.name }}</h1>
+    <button mat-button class="large-button">FOLLOW</button>
+  </div>
+  <span class="user-description">I am a student that loves to cook!</span>
+</div>
+<mat-divider></mat-divider>
+<div class="user-profile-view-posts-header">
+  <h2>Eric's Posts</h2>
+</div>
+<div class="user-profile-view-posts">
+  <div *ngFor="let post of usersPosts" class="post">
+    <mat-card class="post-card">
+      <mat-card-header>
+        <div mat-card-avatar class="post-header-image"></div>
+        <mat-card-title>{{ post.authorUsername }}</mat-card-title>
+        <mat-card-subtitle>
+          <span class="post-date">{{ post.postDate }}</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="{{post.imageUrl}}" alt="{{post.postTitle}}">
+      <mat-card-content>
+        <div class="recipe-ingredients">
+          <span class="recipe-ingredients-title">Ingredients</span>
+          <span *ngFor="let ingredient of post.postIngredients" class="recipe-ingredient">{{ ingredient }}</span>
+        </div>
+        <div class="recipe-steps">
+          <span class="recipe-steps-title">Steps</span>
+          <span *ngFor="let step of post.postSteps" class="recipe-step">{{ step }}</span>
+        </div>
+        <div class="likes">
+          Likes ({{ post.likeCount }})
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="likePost(post)">LIKE</button>
+        <button mat-button>COMMENT</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

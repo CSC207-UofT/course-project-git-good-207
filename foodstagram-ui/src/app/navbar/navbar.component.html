@@ -1,0 +1,26 @@
+<div class="nav">
+  <span class="nav-items">
+    <span class="nav-title" [routerLink]="['']">Foodstagram</span>
+    <span class="nav-item">
+      <form class="user-search-form">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Search for a User</mat-label>
+          <input type="text"
+                 aria-label="Number"
+                 matInput
+                 [formControl]="userSearch"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="openUserProfile()">
+            <mat-option *ngFor="let option of filteredUsers | async" [value]="option">
+              <span (click)="openUserProfile()">{{option}}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </span>
+    <div class="navbar-right-items">
+      <span class="nav-item" [routerLink]="['create-post']">Create a Post</span>
+      <span class="nav-item" (click)="logout()">Logout</span>
+    </div>
+  </span>
+</div>
