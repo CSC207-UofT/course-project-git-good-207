@@ -44,9 +44,9 @@ public class LoginController {
         this.inOut.setOutput(welcomeMessage);
 
         Integer welcomeAction;
-        try{
+        try {
             welcomeAction = Integer.parseInt(inOut.getInput(welcomeActionPrompt));
-        } catch (NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
             welcomeAction = DEFAULT_ACTION;
         }
 
