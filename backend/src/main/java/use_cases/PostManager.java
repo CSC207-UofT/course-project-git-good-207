@@ -190,7 +190,7 @@ public class PostManager {
     /**
      * Given the post id returns the image url of its recipe
      * @param postId id of the post
-     * @return category of the post
+     * @return image_url of the post
      */
     public String getPostImage(String postId){
         return this.getSpecificPost(postId).getImageUrl();

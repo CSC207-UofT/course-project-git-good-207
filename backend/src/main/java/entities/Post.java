@@ -65,7 +65,7 @@ public class Post extends PostableItem {
 
     /**
      * @return the image url of recipe on post
-     * the Post object
+     *
      */
     public String getImageUrl() { return this.image_url; }
 
