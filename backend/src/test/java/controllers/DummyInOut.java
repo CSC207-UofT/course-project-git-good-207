@@ -30,4 +30,6 @@ public class DummyInOut implements InOut {
     public ArrayList<String> getOutputs() {
         return outputs;
     }
+
+    public void clearOutputs() { outputs.clear(); }
 }

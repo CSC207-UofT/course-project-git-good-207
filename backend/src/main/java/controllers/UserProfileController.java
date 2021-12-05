@@ -114,8 +114,7 @@ public class UserProfileController {
     private void runChangeUsernameDisplay(User user, String newUsername) {
         if (this.userManager.changeUsername(user, newUsername)) {
             this.userManager.changeUsername(user, newUsername);
-            this.inOut.setOutput("Successfully changed username to: " + newUsername + "\n");
-            this.inOut.setOutput("Returning to main page.");
+            this.inOut.setOutput("Successfully changed username to: " + newUsername + "\n" + "Returning to main page.");
         } else {
             this.inOut.setOutput("Username entered is the same as the old one. Returning to main page.");
         }
@@ -127,8 +126,7 @@ public class UserProfileController {
     private void runChangePasswordDisplay(User user, String newPassword) {
         if (this.userManager.changePassword(user, newPassword)) {
             this.userManager.changePassword(user, newPassword);
-            this.inOut.setOutput("Successfully changed password to: " + newPassword + "\n");
-            this.inOut.setOutput("Returning to main page.");
+            this.inOut.setOutput("Successfully changed password to: " + newPassword + "\n" + "Returning to main page.");
         } else {
             this.inOut.setOutput("Password entered is the same as the old one. Returning to main page");
         }
@@ -141,8 +139,7 @@ public class UserProfileController {
         if (this.userManager.changeBio(user, newBio)) {
             user.setBio(newBio);
             this.databaseManager.updateUser(user);
-            this.inOut.setOutput("Successfully changed bio to: " + newBio + "\n");
-            this.inOut.setOutput("Returning to main page.");
+            this.inOut.setOutput("Successfully changed bio to: " + newBio + "\n" + "Returning to main page.");
         } else {
             this.inOut.setOutput("Bio given is the same as the old one. Returning to main page");
         }
