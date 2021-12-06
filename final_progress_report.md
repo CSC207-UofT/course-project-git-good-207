@@ -7,7 +7,7 @@
 ## Individual Progress Report
 
 ### Glen
-In Phase 2, I focused on bug extermination and increasing testing coverage. With the help of Shawn's inOut dummy I was able to test my UserProfileControler. Additionally, minor refactoring was done in UserManager. With the help of the team I also made the presentation according to what is expected on quercus. 
+In Phase 2, I focused on bug extermination and increasing testing coverage. With the help of Shawn's inOut dummy I was able to test my UserProfileController. Additionally, minor refactoring was done in UserManager. With the help of the team I also made the presentation according to what is expected on quercus. 
 branch: https://github.com/CSC207-UofT/course-project-git-good-207/tree/notnine-3.0
 
 ### Yolanda
@@ -15,6 +15,7 @@ In Phase 2, I improved post creation in Post Controller by taking care of more i
 I also refactored my code to reduce repetition using a helper. I edited and polished the Design Document in accordance with the TA feedback.
 
 ### Justin
+With regards to Phase 2, I implemented unit testings for all the Filter and Feed classes. With the creation of the DummyInOut interface by Shawn, I was able to conduct testings for FeedController and tested for invalid inputs too. I increased the complexity of unit tests for Feed and FeedManager as suggested by the TA. Furthermore, I created our presentation slides with the help of some others based on our design document. 
 
 ### Eric
 My main responsibility for phase 2 was creating our web UI using Angular. This was a large chunk of work, but I was able to get the UI nearly fully "functional" (i.e. I implemented all of the UI, but without any real business logic or real data, since we did not have enough time to expose a REST API from our Java app. I implemented a Feed with likeable posts, a post creation menu, a login/logout system, a user search bar with instant search (like Instagram's UI), a user profile page, and more.
