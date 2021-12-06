@@ -25,6 +25,16 @@ export interface PostComment {
 })
 
 export class FeedComponent implements OnInit {
+  public filters: any[] = [
+    { value: 'Chinese' },
+    { value: 'Italian' },
+    { value: 'Japanese' },
+    { value: 'Rwandan' },
+    { value: 'Polish' },
+    { value: 'American' },
+    { value: 'Canadian' }
+  ]
+
   public allPosts: Post[] = [
     {
       postId: '1',
