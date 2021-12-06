@@ -24,3 +24,10 @@ My main responsibility for phase 2 was creating our web UI using Angular. This w
 With respect with Phase 1 the changes I did for Phase 2 were involving the PostManager, Post, TestPostManager and MysqlController classes. In the first one having read the review from the TA on the phase 1, I notice that I could add more javadocs and improve the exceptions handling that was on the class. Similarly for TestPostManager I add more testcases in order to increase the coverage by trying to test each method at least once. On the other hand, for Post it was mostly related to javadocs likewise with MysqlController.
 
 ### Shawn
+My initial focus for phase 2 was to expose a REST API from our Java app, so that we could implement a working web UI for our project.
+Unfortunately, this was more complex and time-consuming than originally predicted when planning for phase two (particularly the creation of HTTP mapping and refactoring our controllers to implement a REST API).
+So, though I spent a significant amount of time researching and trying to figure this out, it ended up not being implemented due to time constraints.  
+
+Thus, the rest of my work in phase 2 was focused on testing and bug fixing the program as per TA feedback.
+I created the DummyInOut class which implements our InOut interface and uses Strings arrays to keep track of input and output instead of System.out/System.in. This made it possible for us to thoroughly test, through unit test creation, the controller classes which utilized our InOut interface.
+Additionally, I made unit tests for LoginController, PostController, CountableIngredient, MeasurableIngredient, PostableItem, and Recipe and worked to fix any bugs found during testing such as those in LoginController.
