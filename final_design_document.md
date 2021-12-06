@@ -117,15 +117,11 @@ process. For example, we agreed to put curly braces on the same line as methods 
 
 * We agreed on naming conventions like camelCase and descriptive variable and method names. Here is an example PR where peer feedback resulted in clearer method naming: https://github.com/CSC207-UofT/course-project-git-good-207/pull/43
 
-* While only Eric worked on the web UI, his code was compliant with Angular's style guide https://angular.io/guide/styleguide.  
-
 ## Testing
 
-* Our Phase 0 submission had only one unit test file, just to make sure our JUnit was working. In Phase 1, we aimed to
+Our Phase 0 submission had only one unit test file, just to make sure our JUnit was working. In Phase 1, we aimed to
 cover all methods across our codebase that made sense to test (i.e. simple, limited dependencies). We did not use a 
 Mock framework like Mockito, as this was more advanced, but we may look into this later on, time permitting.
-
-* In Phase 2, we increased our unit test coverage and implemented a dummy InOut interface to be able to write tests without using the real InOut interface.
 
 ## Refactoring
 
@@ -145,7 +141,7 @@ classes within the package structure. To do so, you simply need to know what lay
 belongs to, or you can reference the CRC cards (as they directly reflect our package structure).
 
 
-* Based on TA feedback, we relocated some classes to better reflect their use. For example, InOut and ShellAction were originally in the Entities package, but we moved them to the Controllers package, as they were more related to user interaction logic, which we handle in our Controllers.
+* Based on TA feedback, we relocated some classes to better reflect their use. For example, InOut and ShellAction were originally in the Entities package, but we moved them to the Controllers package, as they were more related to user interaction logic, which we handle in our Controllers. We also placed all the Filter classes under a Filters subpackage within the use cases package so that the use cases package is not too long.
 
 
 ## Functionality
