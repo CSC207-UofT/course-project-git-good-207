@@ -9,7 +9,7 @@ Our project is a recipe saving and sharing app where the user can create recipes
 * Every Post, Recipe, and User (entities) have a unique ID. This will allow us to identify them uniquely within the program.  
 
 
-* We strived to adhere to the Dependency Rule, which means that our source code dependencies can only point inwards. Nothing in the inner layers can know or depend on anything from something in the outer layers. For example, we abstracted DatabaseManager (use case) and extended it with MySQLController (controller) so that our Use Case classes would not have to depend on our database implementation. They would call on an instance of DatabaseManager instead of MySQLController so the use cases won't call anything from the Controllers. We also made sure that outer layers only called on the same layer or the layer just below them without skipping layers.
+* We strived to adhere to the Dependency Rule, which means that our source code dependencies can only point inwards. Nothing in the inner layers can know or depend on anything from something in the outer layers. For example, we abstracted DatabaseManager (use case) and extended it with MySQLController (controller) so that our Use Case classes would not have to depend on our database implementation. They would call on an instance of DatabaseManager instead of MySQLController so the use cases won't call anything from the Controllers (see diagram; solid arrows = dependency. Blank arrows = "implements"). We also made sure that outer layers only called on the same layer or the layer just below them without skipping layers.
 
 ![image](https://user-images.githubusercontent.com/91029993/144873124-9ef60742-e2e5-48e2-bccd-3e2359d0591c.png)
 
@@ -123,6 +123,7 @@ process. For example, we agreed to put curly braces on the same line as methods 
 Our Phase 0 submission had only one unit test file, just to make sure our JUnit was working. In Phase 1, we aimed to
 cover all methods across our codebase that made sense to test (i.e. simple, limited dependencies). We did not use a 
 Mock framework like Mockito, as this was more advanced, but we may look into this later on, time permitting.
+In Phase 2, we improved our test coverage and implemented tests for every single class from controller to entity.
 
 ## Refactoring
 
