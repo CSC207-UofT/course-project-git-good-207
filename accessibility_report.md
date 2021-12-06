@@ -7,28 +7,33 @@
 * In our app, every user is equal and no user has special privileges. We intend for all the app functions to be available for all users such as making and browsing posts. All users have same level of privacy and security in our app.
 * Our design is also neutral and as appealing as possible to all users
 * In the future, we could make our app comply even more with this principle by implementing a text-to-speech feature which can read out the recipes to the user if user has vision impairments
+* * Our web UI (written in Angular) has alt text on browser elements (i.e. images, buttons etc.) and is compatible with software that allows vision-impaired people to browse webpages.
 
 ### Flexibility in Use
 
 * Our program follows this principle since it is usable from the commandline and the web UI
 * We also allow flexibility in how the user wants to view their feed by allowing them to filter their feed according to their preferences
 * Possible way to make our program even more flexible would be to make it accessible on more platforms or make it an Android app
+* Our web UI is responsive, meaning the UI is functional in a wide range of browsers (Chrome, Safari, etc.) and browser window sizes (i.e. 960x680, 1440x1024, etc. etc.)
 
 ### Simple and Intuitive Use
 
 * All instructions when accessing app features such as creating posts are as clear and straightforward as possible
 * We made use of effective prompting as well as feedback such as "Post successfully created!" after task completion
 * Options after logging in are clearly indicated
+* Our web UI uses simple components that are commonly used UI elements to make the user experience as intuitive as possible.
 
 ### Perceptible Information
 
 * In the web UI, we organized the text so that "titles" would appear larger and easier to read on posts such as the subtitle of "Ingredients"
 * Text is in a legible font and has a distinct contrast to the background so it's easy to read
+* Our web UI has a consistent user experience for a wide range of browser zoom sizes. As a result, the user can set the browser zoom to be perceptible for them without sacrificing user experience.
 
 ### Tolerance for Error
 
 * When completing tasks such as creating recipes or logging in, our app warns the user when there's an invalid input, and it gives the user the opportunity to try again
 * In the future, to better comply with this principle, we could implement fail safe features such as "locking" the account after a certain number of login failures
+* Our web UI is not fully functional as we did not have enough time to expose an API to it from our Java program, but it is designed to validate inputs like post creation with Angular's FormGroup directive.
 
 ### Low Physical Effort
 
@@ -37,7 +42,7 @@
 ### Size and Space for Approach and Use
 
 * This principle is not very applicable to our program because the user probably just operates it on an electronic device by themselves, and there is not really an issue of physical posture or usage space that we can control with our app
-* However, something to facilitate usage would be to use high contrast UI to allow user to see the text on the app from a distance
+* However, as previously mentioned, our web UI is compatible with a variety of browser window sizes and browser zooms. As a result, our app is accessible from a variety of devices. For example, a person who does not have enough desk space for a large monitor could still use our web app.
 
 ## Marketing the program
 
