@@ -20,6 +20,8 @@ Our project is a recipe saving and sharing app where the user can create recipes
 
 * Our codebase is definitely modular and testable without the UI, Database, et cetera. By using an abstracted InOut interface in our Controllers, this allowed us to use Spring Boot when creating a web UI while making minimal modifications to our original code. 
 
+* In phase 2, we decided to implement a web UI using the Typescript-based Angular framework. We planned on refactoring our Java program to use Sprint Boot to expose a REST API to the web app, but ended up not having enough time to implement Spring Boot. As a result, we added unit tests/bugfixes to our Java app and implemented our web UI without any real data or API ("business logic") functionality.
+
 
 ## SOLID Design
 
