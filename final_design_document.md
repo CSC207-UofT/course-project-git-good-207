@@ -92,14 +92,16 @@ sorting the posts from the most recent to least.
 We made use of GitHub issues as a platform for us to keep track of what each team member is working on.
 At the same time, the issues allow those who need to work on the same aspect of our program to collaborate and discuss
 directly and precisely on each other’s implementation plans. The issues also serve as a history of our progress should 
-we need to refer back to previous implementations.
+we need to refer back to previous implementations. Additionally we use the feature that allow us to show what kind of issue
+we were working on: e.g bugs, features or docummentation.
 
 ### Pull Requests
 
 We required everyone to create a pull request for new code and we never committed code directly to our main branch.
 This way, we could ensure that code worked, met our style/best practices requirements, and was designed correctly
 before it could be merged into our main branch. Before merging, at least one other team member would review and approve
-the pull request.
+the pull request. Similarly, we hold discussions inside the pull requests were each of the reviewers explained his/her point
+of view of the problem and gave some feedback creating a place where everyone's voice is heard.
 
 ## Code Style
 
