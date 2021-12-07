@@ -389,6 +389,18 @@ public class MySQLController extends DatabaseManager {
             HashMap<String, User> postLike = new HashMap<>();
             String postQuery = "SELECT * FROM `likes` INNER JOIN `user_info` ON user_info.user_id = likes.user_id";
             ResultSet likesResult = this.connection.createStatement().executeQuery(postQuery);
+            while (likesResult.next()) {
+                // I need to create the user with all the information
+                // (String username, String password, String bio, String id)
+                String username = likesResult.getString("username");
+                String password = likesResult.getString("password");
+                String bio = likesResult.getString("bio");
+                String userId = likesResult.getString("user_id");
+                // now I just need the post ID
+                String postId = likesResult.getString("post_id");
+                postLike.put(postId, new User(username, password, bio, userId));
+            }
+            return postLike;
 
         } catch (Exception e) {
             e.printStackTrace();
