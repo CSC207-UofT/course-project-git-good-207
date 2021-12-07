@@ -56,9 +56,12 @@ public class PostController {
     }
 
     protected void browsePost(Post selectedPost) {
-        this.displayPost(selectedPost.getId());
-        int postAction = this.getPostActionInput();
-        this.runPostAction(selectedPost, postAction);
+        int postAction = -1;
+        while (postAction != 99) {
+            this.displayPost(selectedPost.getId());
+            postAction = this.getPostActionInput();
+            this.runPostAction(selectedPost, postAction);
+        }
     }
 
     /**
@@ -239,7 +242,7 @@ public class PostController {
         for (String likedUser: likesInfo){
             likesDisplay.append(likedUser).append("\n");
         }
-        return likesDisplay.append("\n\n").toString();
+        return likesDisplay.toString();
     }
 
     /**
@@ -250,7 +253,7 @@ public class PostController {
      */
     private String getPostComments(String id) {
         String[] comments = postManager.getPostComments(id);
-        StringBuilder formattedComments = new StringBuilder("Comments (").append(comments.length).append("):\n\n");
+        StringBuilder formattedComments = new StringBuilder("Comments (").append(comments.length).append("):\n");
         for (String comment: comments) {
             formattedComments.append(comment).append("\n");
         }
@@ -302,13 +305,11 @@ public class PostController {
             case 0:
                 // Call PostController to add like
                 this.interactPost(selectedPost.getId(), this.loginManager.getCurrUser(), false);
-                this.displayPost(selectedPost.getId());
                 break;
             case 1:
                 // Call PostController to add comment
                 Comment newComment = this.getUserComment();
                 this.interactPost(selectedPost.getId(), newComment, true);
-                this.displayPost(selectedPost.getId());
                 break;
             case 99:
                 this.inOut.setOutput("Returning to main menu.");
