@@ -121,12 +121,12 @@ public class MySQLController extends DatabaseManager {
     public boolean updateUser(User user){
         try {
             String query = "UPDATE `user_info` SET `username`= ?, `password`=?, `bio`=? " +
-                    "WHERE `username`=?";
+                    "WHERE `user_id`=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getBio());
-            preparedStatement.setString(4, user.getUsername());
+            preparedStatement.setString(4, user.getId());
             preparedStatement.execute();
             this.updatePostsFromUser(user);
             // update follows
