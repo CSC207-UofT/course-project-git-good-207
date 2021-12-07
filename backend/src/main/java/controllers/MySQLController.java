@@ -8,12 +8,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.UUID;
 
 public class MySQLController extends DatabaseManager {
     public MySQLController() {
         try {
             this.connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:8889/foodstagram",
+                    "jdbc:mysql://localhost:3306/foodstagram",
                     "admin",
                     "1234");
         } catch (Exception e) {
@@ -383,6 +384,47 @@ public class MySQLController extends DatabaseManager {
         }
     }
 
+    private HashMap<String, User> getAllLikes(){
+        try {
+            HashMap<String, User> postLike = new HashMap<>();
+            String postQuery = "SELECT * FROM `likes` INNER JOIN `user_info` ON user_info.user_id = likes.user_id";
+            ResultSet likesResult = this.connection.createStatement().executeQuery(postQuery);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new HashMap<String, User>();
+        }
+    }
+
+
+    private HashMap<String, Comment> getAllComments(){
+        try {
+            HashMap<String, Comment> postComment = new HashMap<>();
+            String postQuery = "SELECT * FROM `comments` INNER JOIN `user_info` ON user_info.user_id = comments.user_id";
+            ResultSet commentsResult = this.connection.createStatement().executeQuery(postQuery);
+            while (commentsResult.next()) {
+                // I need to create the user with all the information
+                // (String username, String password, String bio, String id)
+                String username = commentsResult.getString("username");
+                String password = commentsResult.getString("password");
+                String bio = commentsResult.getString("bio");
+                String userId = commentsResult.getString("user_id");
+                // I need to create comment
+                // (String commentText, String authorId, LocalDateTime dateTime, String id)
+                String commentText = commentsResult.getString("comment_text");
+                String postId = commentsResult.getString("post_id");
+                LocalDateTime postedTime = commentsResult.getTimestamp("comment_time").toLocalDateTime();
+                String commentId = UUID.randomUUID().toString();
+                postComment.put(postId, new Comment(commentText, userId, postedTime, commentId));
+            }
+            return postComment;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new HashMap<String, Comment>();
+        }
+    }
+
     /**
      * Gets all the posts stored in the database.
      * @return an Array of all the posts stored in the database.
@@ -408,6 +450,17 @@ public class MySQLController extends DatabaseManager {
                 posts[postsCounter] = postData.get(postId);
                 postsCounter ++;
             }
+            // add all the comments to the post
+
+            HashMap<String, Comment> commentsHashMap = this.getAllComments();
+            for (String postId: commentsHashMap.keySet()) {
+                for (int i = 0; i <= posts.length; i++) {
+                    if (posts[i].getId().equals(postId)){
+                        posts[i].addComment(commentsHashMap.get(postId));
+                    }
+                }
+            }
+
             return posts;
         } catch (Exception e) {
             e.printStackTrace();
@@ -615,6 +668,45 @@ public class MySQLController extends DatabaseManager {
                 preparedStmt.setString(3, steps.get(i));
                 preparedStmt.execute();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Saves the like in the database on a given post
+     * @param post post object which is being given a like
+     * @param user user object that is giving the like
+     */
+    public void likePost(Post post, User user){
+        try {
+                String query = "INSERT INTO `likes`(`user_id`, `post_id`, `category`) VALUES (?,?,?)";
+                PreparedStatement preparedStmt = connection.prepareStatement(query);
+                preparedStmt.setString(1, user.getId());
+                preparedStmt.setString(2, post.getId());
+                preparedStmt.setString(3, post.getCategory());
+                preparedStmt.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Saves the comment in the database of a given post
+     * @param post post object which is being commented on
+     * @param comment comment that stores the information about it
+     */
+    public void commentPost(Post post, Comment comment){
+        try {
+                String query = "INSERT INTO `comments`(`user_id`, `post_id`, `comment_time`, `comment_text`) " +
+                        "VALUES (?,?,?,?)";
+
+                PreparedStatement preparedStmt = connection.prepareStatement(query);
+                preparedStmt.setString(1, comment.getAuthorId());
+                preparedStmt.setString(2, post.getId());
+                preparedStmt.setTimestamp(3, Timestamp.valueOf(comment.getCreatedTime()));
+                preparedStmt.setString(4, comment.getCommentText());
+                preparedStmt.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
