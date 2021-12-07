@@ -6,6 +6,7 @@ import entities.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /*
     add a new post, comment/like a Post
@@ -135,12 +136,15 @@ public class PostManager {
      */
     public String[] getPostLikedUsers(String postId){
 
-        ArrayList<User> likedUsers = this.getSpecificPost(postId).getLikedUsers();
-        String[] likes = new String[likedUsers.size()];
-        for (int i = 0; i < likedUsers.size(); i++) {
-            likes[i] = userManager.getUsername(likedUsers.get(i));
+        if (Objects.nonNull(this.getSpecificPost(postId))){
+            ArrayList<User> likedUsers = this.getSpecificPost(postId).getLikedUsers();
+            String[] likes = new String[likedUsers.size()];
+            for (int i = 0; i < likedUsers.size(); i++) {
+                likes[i] = userManager.getUsername(likedUsers.get(i));
+            }
+            return likes;
         }
-        return likes;
+        return new String[0];
     }
 
     /**
@@ -151,12 +155,17 @@ public class PostManager {
      */
     public String[] getPostComments(String postId){
 
-        ArrayList<Comment> commentObjects = this.getSpecificPost(postId).getComments();
-        String[] comments = new String[commentObjects.size()];
-        for (int i = 0; i < commentObjects.size(); i++) {
-            comments[i] = userManager.getUsernameById(commentObjects.get(i).getAuthorId()) + ": " + commentObjects.get(i).getCommentText();
+        if (Objects.nonNull(this.getSpecificPost(postId))){
+            ArrayList<Comment> commentObjects = this.getSpecificPost(postId).getComments();
+            String[] comments = new String[commentObjects.size()];
+            for (int i = 0; i < commentObjects.size(); i++) {
+                comments[i] = userManager.getUsernameById(commentObjects.get(i).getAuthorId()) + ": " + commentObjects.get(i).getCommentText();
+            }
+            return comments;
         }
-        return comments;
+
+        return new String[0];
+
     }
 
     /**
@@ -175,7 +184,10 @@ public class PostManager {
      * @return author of the post
      */
     public String getPostAuthor(String postId){
-        return this.getSpecificPost(postId).getAuthorId();
+        if (Objects.nonNull(this.getSpecificPost(postId))){
+            return this.getSpecificPost(postId).getAuthorId();
+        }
+        return "";
     }
 
     /**
@@ -184,7 +196,10 @@ public class PostManager {
      * @return category of the post
      */
     public String getPostCategory(String postId){
-        return this.getSpecificPost(postId).getCategory();
+        if (Objects.nonNull(this.getSpecificPost(postId))){
+            return this.getSpecificPost(postId).getCategory();
+        }
+        return "";
     }
 
     /**
@@ -193,6 +208,9 @@ public class PostManager {
      * @return time this post was posted
      */
     public LocalDateTime getPostedTime(String postId){
-        return this.getSpecificPost(postId).getCreatedTime();
+        if (Objects.nonNull(this.getSpecificPost(postId))){
+            return this.getSpecificPost(postId).getCreatedTime();
+        }
+        return null;
     }
 }

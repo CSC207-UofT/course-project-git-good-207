@@ -67,7 +67,27 @@ class PostManagerTest {
     }
 
     @Test
-    void getPosts() {
-        assert this.postManager.getPosts().size() == 1;
+    void testGetPostCategory(){
+        this.postManager.createPost(this.samplePost);
+        assert this.postManager.getPostCategory(this.samplePost.getId()).equals("latin-american");
+    }
+
+    @Test
+    void testGetPostAuthor(){
+        this.postManager.createPost(this.samplePost);
+        assert this.postManager.getPostAuthor(this.samplePost.getId()).equals("James");
+    }
+
+    @Test
+    void testGetPostedTime(){
+        this.postManager.createPost(this.samplePost);
+        assert this.postManager.getPostedTime(this.samplePost.getId()).equals(this.samplePost.getCreatedTime());
+
+    }
+
+    @Test
+    void testGetPostRecipe(){
+        this.postManager.createPost(this.samplePost);
+        assert this.postManager.getPostRecipe(this.samplePost.getId()).equals(this.samplePost.getRecipe());
     }
 }
