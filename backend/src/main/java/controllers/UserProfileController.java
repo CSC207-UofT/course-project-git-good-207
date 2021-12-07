@@ -74,7 +74,12 @@ public class UserProfileController {
             if (choice == 0) {
                 this.runFollowUser(this.loginManager.getCurrUser(), targetUser);
             } else if (choice == 1) {
-                this.runDisplayUserPosts(targetUser);
+                if (this.runCheckUserAtleastOnePost(targetUser)) {
+                    this.runDisplayUserPosts(targetUser);
+                }
+                else {
+                    this.inOut.setOutput("Target user has no posts! Returning to main menu");
+                }
 
             }
         } else {
@@ -269,5 +274,15 @@ public class UserProfileController {
         }
 
         return postNumber;
+    }
+
+    /**
+     * Return true if user has at least 1 post, false otherwise
+     *
+     * @param user the user to check whether they have at least 1 post
+     * @return boolean true if user has at least 1 post, false otherwise
+     */
+    private boolean runCheckUserAtleastOnePost(User user) {
+        return (this.userManager.generateUserPostsMap(user).size() > 0);
     }
 }
