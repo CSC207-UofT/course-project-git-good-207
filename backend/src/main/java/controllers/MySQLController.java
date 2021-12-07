@@ -435,6 +435,30 @@ public class MySQLController extends DatabaseManager {
         }
     }
 
+    private void addCommentsPosts(Post[] posts){
+        // add all the comments to the post
+        HashMap<String, Comment> commentsHashMap = this.getAllComments();
+        for (String postId: commentsHashMap.keySet()) {
+            for (Post post : posts) {
+                if (post.getId().equals(postId)) {
+                    post.addComment(commentsHashMap.get(postId));
+                }
+            }
+        }
+    }
+
+    private void addLikesPosts(Post[] posts){
+        // add all the likes
+        HashMap<String, User> likesHashMap = this.getAllLikes();
+        for (String postId: likesHashMap.keySet()) {
+            for (Post post : posts) {
+                if (post.getId().equals(postId)) {
+                    post.addLike(likesHashMap.get(postId));
+                }
+            }
+        }
+    }
+
     /**
      * Gets all the posts stored in the database.
      * @return an Array of all the posts stored in the database.
@@ -460,25 +484,9 @@ public class MySQLController extends DatabaseManager {
                 posts[postsCounter] = postData.get(postId);
                 postsCounter ++;
             }
-            // add all the comments to the post
-            HashMap<String, Comment> commentsHashMap = this.getAllComments();
-            for (String postId: commentsHashMap.keySet()) {
-                for (Post post : posts) {
-                    if (post.getId().equals(postId)) {
-                        post.addComment(commentsHashMap.get(postId));
-                    }
-                }
-            }
-            // add all the likes
-            HashMap<String, User> likesHashMap = this.getAllLikes();
-            for (String postId: likesHashMap.keySet()) {
-                for (Post post : posts) {
-                    if (post.getId().equals(postId)) {
-                        post.addLike(likesHashMap.get(postId));
-                    }
-                }
-            }
 
+            this.addCommentsPosts(posts);
+            this.addLikesPosts(posts);
 
             return posts;
         } catch (Exception e) {
@@ -717,14 +725,16 @@ public class MySQLController extends DatabaseManager {
      */
     public void commentPost(Post post, Comment comment){
         try {
-                String query = "INSERT INTO `comments`(`user_id`, `post_id`, `comment_time`, `comment_text`) " +
-                        "VALUES (?,?,?,?)";
+                String query = "INSERT INTO `comments`(`user_id`, `post_id`, `comment_time`, `comment_text`, " +
+                        "`comment_id`) " +
+                        "VALUES (?,?,?,?,?)";
 
                 PreparedStatement preparedStmt = connection.prepareStatement(query);
                 preparedStmt.setString(1, comment.getAuthorId());
                 preparedStmt.setString(2, post.getId());
                 preparedStmt.setTimestamp(3, Timestamp.valueOf(comment.getCreatedTime()));
                 preparedStmt.setString(4, comment.getCommentText());
+                preparedStmt.setString(5, comment.getId());
                 preparedStmt.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -760,16 +770,7 @@ public class MySQLController extends DatabaseManager {
     private void insertCommentsDB(Post post, Iterable<Comment> comments) {
         try {
             for (Comment comment: comments) {
-                String query = "INSERT INTO `comments`(`user_id`, `post_id`, `comment_time`, `comment_text`, `comment_id`) " +
-                        "VALUES (?,?,?,?,?)";
-
-                PreparedStatement preparedStmt = connection.prepareStatement(query);
-                preparedStmt.setString(1, comment.getAuthorId());
-                preparedStmt.setString(2, post.getId());
-                preparedStmt.setTimestamp(3, Timestamp.valueOf(comment.getCreatedTime()));
-                preparedStmt.setString(4, comment.getCommentText());
-                preparedStmt.setString(5, comment.getId());
-                preparedStmt.execute();
+                this.commentPost(post, comment);
             }
         } catch (Exception e) {
             e.printStackTrace();
