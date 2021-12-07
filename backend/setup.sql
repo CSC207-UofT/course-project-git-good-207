@@ -31,7 +31,8 @@ CREATE TABLE `comments` (
                             `user_id` text NOT NULL,
                             `post_id` text NOT NULL,
                             `comment_time` timestamp NULL DEFAULT NULL,
-                            `comment_text` text NOT NULL
+                            `comment_text` text NOT NULL,
+                            `comment_id` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
