@@ -9,8 +9,9 @@ Our project is a recipe saving and sharing app where the user can create recipes
 * Every Post, Recipe, and User (entities) have a unique ID. This will allow us to identify them uniquely within the program.  
 
 
-* We strived to adhere to the Dependency Rule, which means that our source code dependencies can only point inwards. Nothing in the inner layers can know or depend on anything from something in the outer layers. For example, we abstracted DatabaseManager (use case) and extended it with MySQLController (controller) so that our Use Case classes would not have to depend on our database implementation. We made sure that outer layers only called on the same layer or the layer just below them without skipping layers.
+* We strived to adhere to the Dependency Rule, which means that our source code dependencies can only point inwards. Nothing in the inner layers can know or depend on anything from something in the outer layers. For example, we abstracted DatabaseManager (use case) and extended it with MySQLController (controller) so that our Use Case classes would not have to depend on our database implementation. They would call on an instance of DatabaseManager instead of MySQLController so the use cases won't call anything from the Controllers (see diagram; solid arrows = dependency. Blank arrows = "implements"). We also made sure that outer layers only called on the same layer or the layer just below them without skipping layers.
 
+![image](https://user-images.githubusercontent.com/91029993/144873124-9ef60742-e2e5-48e2-bccd-3e2359d0591c.png)
 
 * We discussed making DatabaseManager a Singleton class, so we wouldn’t have to pass it in everywhere we used it. However, we realized that this would not make sense. Since we had abstracted DatabaseManager, we realized that we could not make DatabaseManager a Singleton, since a Singleton is a final class. This conflicted with the abstract definition of DatabaseManager (a class cannot be both final and abstract).
 
@@ -19,6 +20,8 @@ Our project is a recipe saving and sharing app where the user can create recipes
 
 
 * Our codebase is definitely modular and testable without the UI, Database, et cetera. By using an abstracted InOut interface in our Controllers, this allowed us to use Spring Boot when creating a web UI while making minimal modifications to our original code. 
+
+* In phase 2, we decided to implement a web UI using the Typescript-based Angular framework. We planned on refactoring our Java program to use Sprint Boot to expose a REST API to the web app, but ended up not having enough time to implement Spring Boot. As a result, we added unit tests/bugfixes to our Java app and implemented our web UI without any real data or API ("business logic") functionality.
 
 
 ## SOLID Design
@@ -92,14 +95,16 @@ sorting the posts from the most recent to least.
 We made use of GitHub issues as a platform for us to keep track of what each team member is working on.
 At the same time, the issues allow those who need to work on the same aspect of our program to collaborate and discuss
 directly and precisely on each other’s implementation plans. The issues also serve as a history of our progress should 
-we need to refer back to previous implementations.
+we need to refer back to previous implementations. Additionally we use the feature that allow us to show what kind of issue
+we were working on: e.g bugs, features or docummentation.
 
 ### Pull Requests
 
 We required everyone to create a pull request for new code and we never committed code directly to our main branch.
 This way, we could ensure that code worked, met our style/best practices requirements, and was designed correctly
 before it could be merged into our main branch. Before merging, at least one other team member would review and approve
-the pull request.
+the pull request. Similarly, we hold discussions inside the pull requests were each of the reviewers explained his/her point
+of view of the problem and gave some feedback creating a place where everyone's voice is heard.
 
 ## Code Style
 
@@ -118,6 +123,7 @@ process. For example, we agreed to put curly braces on the same line as methods 
 Our Phase 0 submission had only one unit test file, just to make sure our JUnit was working. In Phase 1, we aimed to
 cover all methods across our codebase that made sense to test (i.e. simple, limited dependencies). We did not use a 
 Mock framework like Mockito, as this was more advanced, but we may look into this later on, time permitting.
+In Phase 2, we improved our test coverage and implemented tests for every single class from controller to entity.
 
 ## Refactoring
 
@@ -137,7 +143,7 @@ classes within the package structure. To do so, you simply need to know what lay
 belongs to, or you can reference the CRC cards (as they directly reflect our package structure).
 
 
-* Based on TA feedback, we relocated some classes to better reflect their use. For example, InOut and ShellAction were originally in the Entities package, but we moved them to the Controllers package, as they were more related to user interaction logic, which we handle in our Controllers.
+* Based on TA feedback, we relocated some classes to better reflect their use. For example, InOut and ShellAction were originally in the Entities package, but we moved them to the Controllers package, as they were more related to user interaction logic, which we handle in our Controllers. We also placed all the Filter classes under a Filters subpackage within the use cases package so that the use cases package is not too long.
 
 
 ## Functionality

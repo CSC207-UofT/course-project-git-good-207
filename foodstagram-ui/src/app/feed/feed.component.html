@@ -1,4 +1,12 @@
 <div class="feed-wrapper">
+  <mat-form-field appearance="fill">
+    <mat-label><span class="filter-text">Filter Feed</span></mat-label>
+    <mat-select>
+      <mat-option *ngFor="let filter of filters" [value]="filter.value">
+        {{filter.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <div *ngFor="let feedPost of filteredPosts" class="post">
     <mat-card class="post-card">
       <mat-card-header>
