@@ -424,7 +424,7 @@ public class MySQLController extends DatabaseManager {
                 String commentText = commentsResult.getString("comment_text");
                 String postId = commentsResult.getString("post_id");
                 LocalDateTime postedTime = commentsResult.getTimestamp("comment_time").toLocalDateTime();
-                String commentId = UUID.randomUUID().toString();
+                String commentId = commentsResult.getString("comment_id");
                 postComment.put(postId, new Comment(commentText, userId, postedTime, commentId));
             }
             return postComment;
