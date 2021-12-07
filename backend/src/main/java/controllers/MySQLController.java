@@ -412,14 +412,12 @@ public class MySQLController extends DatabaseManager {
     private HashMap<String, Comment> getAllComments(){
         try {
             HashMap<String, Comment> postComment = new HashMap<>();
-            String postQuery = "SELECT * FROM `comments` INNER JOIN `user_info` ON user_info.user_id = comments.user_id";
+            String postQuery = "SELECT * FROM `comments` INNER JOIN `user_info` ON user_info.user_id = " +
+                    "comments.user_id";
             ResultSet commentsResult = this.connection.createStatement().executeQuery(postQuery);
             while (commentsResult.next()) {
                 // I need to create the user with all the information
                 // (String username, String password, String bio, String id)
-                String username = commentsResult.getString("username");
-                String password = commentsResult.getString("password");
-                String bio = commentsResult.getString("bio");
                 String userId = commentsResult.getString("user_id");
                 // I need to create comment
                 // (String commentText, String authorId, LocalDateTime dateTime, String id)
@@ -463,15 +461,24 @@ public class MySQLController extends DatabaseManager {
                 postsCounter ++;
             }
             // add all the comments to the post
-
             HashMap<String, Comment> commentsHashMap = this.getAllComments();
             for (String postId: commentsHashMap.keySet()) {
-                for (int i = 0; i <= posts.length; i++) {
-                    if (posts[i].getId().equals(postId)){
-                        posts[i].addComment(commentsHashMap.get(postId));
+                for (Post post : posts) {
+                    if (post.getId().equals(postId)) {
+                        post.addComment(commentsHashMap.get(postId));
                     }
                 }
             }
+            // add all the likes
+            HashMap<String, User> likesHashMap = this.getAllLikes();
+            for (String postId: likesHashMap.keySet()) {
+                for (Post post : posts) {
+                    if (post.getId().equals(postId)) {
+                        post.addLike(likesHashMap.get(postId));
+                    }
+                }
+            }
+
 
             return posts;
         } catch (Exception e) {
