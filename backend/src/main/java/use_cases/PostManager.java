@@ -51,11 +51,11 @@ public class PostManager {
             if (post.getId().equals(targetPost.getId())) {
                 if (type) {
                     post.addComment((Comment) obj);
-                    //TODO: call the specific method for commenting the post
+                    this.databaseManager.commentPost(targetPost, (Comment) obj);
                 }
                 else {
                     post.addLike((User) obj);
-                    //TODO: call the specific method for liking a post
+                    this.databaseManager.likePost(targetPost, (User) obj);
                 }
                 this.databaseManager.editPost(post);
                 return true;
