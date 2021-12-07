@@ -13,6 +13,9 @@ public abstract class DatabaseManager {
      */
     public abstract void addNewPost(Post newPost);
 
+    //TODO: Add a method for saving the like of a post in the database
+    //TODO: Add a methods for saving the comment made on a post in the database
+
     /**
      * Edit the Post saved in the Database
      * @param newPost The Post to save to the database.
