@@ -151,6 +151,7 @@ public class UserManager {
             return false;
         } else {
             user.setUsername(newUsername);
+            this.databaseManager.updateUser(user);
             return true;
         }
     }
@@ -167,6 +168,7 @@ public class UserManager {
             return false;
         } else {
             user.setPassword(newPassword);
+            this.databaseManager.updateUser(user);
             return true;
         }
     }
