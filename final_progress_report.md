@@ -22,6 +22,7 @@ My main responsibility for phase 2 was creating our web UI using Angular. This w
 
 ### Sebastian
 With respect with Phase 1 the changes I did for Phase 2 were involving the PostManager, Post, TestPostManager and MysqlController classes. In the first one having read the review from the TA on the phase 1, I notice that I could add more javadocs and improve the exceptions handling that was on the class. Similarly for TestPostManager I add more testcases in order to increase the coverage by trying to test each method at least once. On the other hand, for Post it was mostly related to javadocs likewise with MysqlController.
+On the other hand, for Phase 2 I solved the bug that didn't allowed the user to save the likes and comments across sessions. That involved working with the database (researching how to do join querys) plus the controllers in order to achieve what we think is a great feature for users: https://github.com/CSC207-UofT/course-project-git-good-207/pull/137 https://github.com/CSC207-UofT/course-project-git-good-207/pull/139
 
 ### Shawn
 My initial focus for phase 2 was to expose a REST API from our Java app, so that we could implement a working web UI for our project.
