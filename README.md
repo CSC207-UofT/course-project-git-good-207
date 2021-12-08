@@ -51,3 +51,4 @@ These instructions are based off of https://angular.io/guide/setup-local.
 2. In your terminal, run "npm install -g @angular/cli"  
 3. Run the command "ng serve --open"  
 4. A browser window should open with the web frontend.  
+Note: the web frontend will be hosted at localhost:4200 and can be accessed by typing that address in your web browser (when the development server, ng serve, is running).
