@@ -159,5 +159,5 @@ they can access it during a different run of the program.
 Additionally, based on TA feedback, we added the option to perform no action in certain scenarios. For example, when viewing a Post,
 we decided that it would make sense to allow the user to return to the previous menu without liking, commenting, etc. on the Post. 
 We also tried our best to detect and deal with invalid input from the user. In phase 2, we addressed improving the flow of our program
-when interacting with posts.
+when interacting with posts. Finally, for given the TA feedback we modify the code so that now the likes and comments could be saved across sessions plues it could be multiple of these per post: https://github.com/CSC207-UofT/course-project-git-good-207/pull/139 https://github.com/CSC207-UofT/course-project-git-good-207/pull/137
 
