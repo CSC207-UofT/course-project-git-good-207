@@ -8,6 +8,10 @@
 
 ### Glen
 In Phase 2, I focused on bug extermination and increasing testing coverage. With the help of Shawn's inOut dummy I was able to test my UserProfileController. Additionally, minor refactoring was done in UserManager. With the help of the team I also made the presentation according to what is expected on quercus. 
+The PR below fixed a bug related to viewing a user with 0 posts. 
+https://github.com/CSC207-UofT/course-project-git-good-207/pull/132
+The PR below added tests for the UserProfileController class. 
+https://github.com/CSC207-UofT/course-project-git-good-207/pull/130 
 
 ### Yolanda
 In Phase 2, I improved post creation in Post Controller by taking care of more invalid input such as multiple-word ingredients and lack of spaces in ingredients.
