@@ -384,9 +384,9 @@ public class MySQLController extends DatabaseManager {
         }
     }
 
-    private HashMap<String, User> getAllLikes(){
+    private HashMap<String, ArrayList<User>> getAllLikes(){
         try {
-            HashMap<String, User> postLike = new HashMap<>();
+            HashMap<String, ArrayList<User>> postIdLikes = new HashMap<>();
             String postQuery = "SELECT * FROM `likes` INNER JOIN `user_info` ON user_info.user_id = likes.user_id";
             ResultSet likesResult = this.connection.createStatement().executeQuery(postQuery);
             while (likesResult.next()) {
@@ -398,20 +398,27 @@ public class MySQLController extends DatabaseManager {
                 String userId = likesResult.getString("user_id");
                 // now I just need the post ID
                 String postId = likesResult.getString("post_id");
-                postLike.put(postId, new User(username, password, bio, userId));
+                if (!postIdLikes.containsKey(postId)) {
+                    ArrayList<User> likingUserList = new ArrayList<User>();
+                    likingUserList.add(new User(username, password, bio, userId));
+                    postIdLikes.put(postId, likingUserList);
+                } else {
+                    postIdLikes.get(postId).add(new User(username, password, bio, userId));
+                }
+
             }
-            return postLike;
+            return postIdLikes;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new HashMap<String, User>();
+            return new HashMap<String, ArrayList<User>>();
         }
     }
 
 
-    private HashMap<String, Comment> getAllComments(){
+    private HashMap<String, ArrayList<Comment>> getAllComments(){
         try {
-            HashMap<String, Comment> postComment = new HashMap<>();
+            HashMap<String, ArrayList<Comment>> postComments = new HashMap<>();
             String postQuery = "SELECT * FROM `comments` INNER JOIN `user_info` ON user_info.user_id = " +
                     "comments.user_id";
             ResultSet commentsResult = this.connection.createStatement().executeQuery(postQuery);
@@ -425,23 +432,49 @@ public class MySQLController extends DatabaseManager {
                 String postId = commentsResult.getString("post_id");
                 LocalDateTime postedTime = commentsResult.getTimestamp("comment_time").toLocalDateTime();
                 String commentId = commentsResult.getString("comment_id");
-                postComment.put(postId, new Comment(commentText, userId, postedTime, commentId));
+                if (!postComments.containsKey(postId)){
+                    ArrayList<Comment> commentArrayList = new ArrayList<Comment>();
+                    commentArrayList.add(new Comment(commentText, userId, postedTime, commentId));
+                    postComments.put(postId, commentArrayList);
+                } else {
+                    postComments.get(postId).add(new Comment(commentText, userId, postedTime, commentId));
+                }
+
             }
-            return postComment;
+            return postComments;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new HashMap<String, Comment>();
+            return new HashMap<String, ArrayList<Comment>>();
         }
     }
 
+
+    private void lookForPostAndComment(Post[] posts, HashMap<String, ArrayList<Comment>> commentsHashMap,
+                                       String postId){
+        for (Post post : posts) {
+            if (post.getId().equals(postId)) {
+                for (Comment comment: commentsHashMap.get(postId)){
+                    post.addComment(comment);
+                }
+            }
+        }
+    }
+
+
     private void addCommentsPosts(Post[] posts){
         // add all the comments to the post
-        HashMap<String, Comment> commentsHashMap = this.getAllComments();
+        HashMap<String, ArrayList<Comment>> commentsHashMap = this.getAllComments();
         for (String postId: commentsHashMap.keySet()) {
-            for (Post post : posts) {
-                if (post.getId().equals(postId)) {
-                    post.addComment(commentsHashMap.get(postId));
+            this.lookForPostAndComment(posts, commentsHashMap, postId);
+        }
+    }
+
+    private void lookForPostAndLike(Post[] posts, HashMap<String, ArrayList<User>> likesHashMap, String postId){
+        for (Post post : posts) {
+            if (post.getId().equals(postId)) {
+                for (User user: likesHashMap.get(postId)){
+                    post.addLike(user);
                 }
             }
         }
@@ -449,13 +482,9 @@ public class MySQLController extends DatabaseManager {
 
     private void addLikesPosts(Post[] posts){
         // add all the likes
-        HashMap<String, User> likesHashMap = this.getAllLikes();
+        HashMap<String, ArrayList<User>> likesHashMap = this.getAllLikes();
         for (String postId: likesHashMap.keySet()) {
-            for (Post post : posts) {
-                if (post.getId().equals(postId)) {
-                    post.addLike(likesHashMap.get(postId));
-                }
-            }
+            this.lookForPostAndLike(posts, likesHashMap, postId);
         }
     }
 
