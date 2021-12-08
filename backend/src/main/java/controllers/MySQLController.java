@@ -14,7 +14,7 @@ public class MySQLController extends DatabaseManager {
     public MySQLController() {
         try {
             this.connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:8889/foodstagram",
+                    "jdbc:mysql://localhost:3306/foodstagram",
                     "admin",
                     "1234");
         } catch (Exception e) {
@@ -403,7 +403,7 @@ public class MySQLController extends DatabaseManager {
                     userArray.add(new User(username, password, bio, userId));
                     postLike.put(postId, userArray);
                 } else {
-                    postLike.get(postId);
+                    postLike.get(postId).add(new User(username, password, bio, userId));
                 }
 
             }
