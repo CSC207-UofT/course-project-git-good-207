@@ -44,6 +44,8 @@ public class UserProfileController {
 
     /**
      * Return the choices available for user
+     *
+     * @return a string representing options for the user
      */
     private String getCustomizeProfileScreen() {
         return "Select which option you'd like to customize:\n" +

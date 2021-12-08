@@ -27,5 +27,8 @@ public class Comment extends PostableItem {
         return this.commentText;
     }
 
+    /**
+     * Sets the Comment's text.
+     */
     public void setCommentText(String commentText) { this.commentText = commentText; }
 }

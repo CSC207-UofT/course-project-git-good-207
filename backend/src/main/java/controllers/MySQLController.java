@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
-import java.util.UUID;
 
 public class MySQLController extends DatabaseManager {
     public MySQLController() {
@@ -53,16 +52,6 @@ public class MySQLController extends DatabaseManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private User getUser(String userId){
-        User[] users = this.getAllUsers();
-        for (User user: users){
-            if (user.getId().equals(userId)) {
-                return user;
-            }
-        }
-        return null;
     }
 
     private boolean userHasPostsDB(User user) {
@@ -433,7 +422,7 @@ public class MySQLController extends DatabaseManager {
                 LocalDateTime postedTime = commentsResult.getTimestamp("comment_time").toLocalDateTime();
                 String commentId = commentsResult.getString("comment_id");
                 if (!postComments.containsKey(postId)){
-                    ArrayList<Comment> commentArrayList = new ArrayList<Comment>();
+                    ArrayList<Comment> commentArrayList = new ArrayList<>();
                     commentArrayList.add(new Comment(commentText, userId, postedTime, commentId));
                     postComments.put(postId, commentArrayList);
                 } else {
@@ -445,7 +434,7 @@ public class MySQLController extends DatabaseManager {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new HashMap<String, ArrayList<Comment>>();
+            return new HashMap<>();
         }
     }
 

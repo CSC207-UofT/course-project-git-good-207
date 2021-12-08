@@ -67,9 +67,11 @@ public class PostManager {
         return false;
     }
 
-    /**
-     * Creates a post and adds it to the list of post
+    /** Return true if new_like_user did not already like the post. False otherwise.
+     *
      * @param targetPost post of interest
+     * @param new_like_user user that currently wants to like the post
+     * @return true if user did not already like the post
      */
     public boolean userDidNotAlreadyLike(Post targetPost, User new_like_user) {
         for (User user: targetPost.getLikedUsers()) {
