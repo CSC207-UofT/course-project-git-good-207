@@ -264,13 +264,18 @@ public class UserProfileController {
      * @return an int representing the Post that the user selects.
      */
     private int getSelectedPostInput(String userPostsString) {
-        int postNumber = -700;
+        int postNumber;
 
         try {
             String postSelection = this.inOut.getInput(userPostsString);
             postNumber = Integer.parseInt(postSelection);
+            if (!userPostsString.contains(postSelection)) {
+                this.inOut.setOutput("You entered an invalid action input.");
+                postNumber = getSelectedPostInput(userPostsString);
+            }
         } catch (NumberFormatException nfe) {
             this.inOut.setOutput("You entered an invalid action input.");
+            postNumber = getSelectedPostInput(userPostsString);
         }
 
         return postNumber;
