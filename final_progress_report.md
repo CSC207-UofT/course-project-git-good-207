@@ -8,8 +8,8 @@
 
 ### Glen
 In Phase 2, I focused on bug extermination and increasing testing coverage. With the help of Shawn's inOut dummy I was able to test my UserProfileController. Additionally, minor refactoring was done in UserManager. With the help of the team I also made the presentation according to what is expected on quercus. 
-This PR fixed a bug related to viewing a user with 0 posts: https://github.com/CSC207-UofT/course-project-git-good-207/pull/132
-This PR added tests for the UserProfileController class: https://github.com/CSC207-UofT/course-project-git-good-207/pull/130 
+In this PR I recoded my branch into Clean-architecture, added the actons: different user, follow them, check our following list and added the 2 functions in databasemanager to return dummyusers: https://github.com/CSC207-UofT/course-project-git-good-207/pull/17
+In this PR I Added unit tests for UserManager and User. I decreased smell in: UserProfilePresenter, UserManager. Additionally, I added the Option to return to main menu and implemented the actions: Following a user, unfollowing a user, browsing a user, viewing a user's posts using the PostController. I also added Javadocs for all the methods that were present: https://github.com/CSC207-UofT/course-project-git-good-207/pull/67/files
 
 ### Yolanda
 In Phase 2, I improved post creation in Post Controller by taking care of more invalid input such as multiple-word ingredients and lack of spaces in ingredients. I also refactored my code to reduce repetition using a helper. I helped discover more bugs in our program and fixed the problem of encountering an error when entering invalid input when choosing a post. I edited and polished the Design Document in accordance with the TA feedback and wrote out the Accessibility Report. An important pull request I made was https://github.com/CSC207-UofT/course-project-git-good-207/pull/43 because I completed PostController for creating posts and recipes which is a major feature of the program; moreover, I introduced a new RecipeManager class to facilitate this process.
