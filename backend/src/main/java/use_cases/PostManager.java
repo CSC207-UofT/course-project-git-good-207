@@ -54,14 +54,30 @@ public class PostManager {
                     this.databaseManager.commentPost(targetPost, (Comment) obj);
                 }
                 else {
-                    post.addLike((User) obj);
-                    this.databaseManager.likePost(targetPost, (User) obj);
+                    if (userDidNotAlreadyLike(targetPost, (User) obj)) {
+                        post.addLike((User) obj);
+                        this.databaseManager.likePost(targetPost, (User) obj);
+
+                    }
                 }
                 this.databaseManager.editPost(post);
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Creates a post and adds it to the list of post
+     * @param targetPost post of interest
+     */
+    public boolean userDidNotAlreadyLike(Post targetPost, User new_like_user) {
+        for (User user: targetPost.getLikedUsers()) {
+            if (user.sameUser(new_like_user)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

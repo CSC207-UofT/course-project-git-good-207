@@ -79,6 +79,15 @@ public class User {
 
     public String getId() { return this.id; }
 
+    /** Return true if this user is same as the other user. False otherwise.
+     *
+     * @param other user to compare with
+     * @return true if two users are the same
+     */
+    public boolean sameUser(User other) {
+        return this.getId().equals(other.getId());
+    }
+
     /**
      * Increments a like on a cuisine category.
      * @param cuisine The cuisine category to like.
