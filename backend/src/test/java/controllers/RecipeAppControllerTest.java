@@ -1,6 +1,7 @@
 package controllers;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@Disabled //Intentionally ignored. See testing section of design document.
 class RecipeAppControllerTest {
     private final DummyInOut inOut = new DummyInOut();
     private final RecipeAppController recipeAppController = new RecipeAppController(inOut);
