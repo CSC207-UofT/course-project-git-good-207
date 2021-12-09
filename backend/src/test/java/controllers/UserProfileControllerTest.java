@@ -12,6 +12,7 @@ import use_cases.UserManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 class UserProfileControllerTest {
     private static final MySQLController mySQLController = new MySQLController();
@@ -84,7 +85,7 @@ class UserProfileControllerTest {
 
     @Test
     void testRunBrowseProfileInvalid() {
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("troy"));
+        ArrayList<String> inputs = new ArrayList<>(List.of("troy"));
         inOut.setInput(inputs);
         userProfileController.runBrowseProfile();
         String output = String.join("", inOut.getOutputs());
@@ -92,7 +93,6 @@ class UserProfileControllerTest {
         assertTrue(output.endsWith("Error! Either user is not in the database or user is yourself! " +
                 "Returning to main page"));
     }
-
 
     @Test
     void testRunCustomizeUsernameInvalid() {
@@ -159,5 +159,27 @@ class UserProfileControllerTest {
         String output = String.join("", outputs);
 
         assertTrue(output.endsWith("Successfully changed password to: " + "12345" + "\n" + "Returning to main page."));
+    }
+
+    @Test
+    void testViewOwnPostsWithZeroPosts() {
+        ArrayList<String> inputs = new ArrayList<>(List.of("3"));
+        inOut.setInput(inputs);
+        userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
+        ArrayList<String> outputs = inOut.getOutputs();
+        String output = String.join("", outputs);
+
+        assertTrue(output.endsWith("You have no posts! Returning to main menu."));
+    }
+
+    @Test
+    void testViewOtherUserPostsWithZeroPosts() {
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("tester", "1"));
+        inOut.setInput(inputs);
+        userProfileController.run(ShellAction.BROWSEPROFILE);
+        ArrayList<String> outputs = inOut.getOutputs();
+        String output = String.join("", outputs);
+
+        assertTrue(output.endsWith("Target user has no posts! Returning to main menu"));
     }
 }
