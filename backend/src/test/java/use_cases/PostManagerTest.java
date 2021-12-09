@@ -1,6 +1,9 @@
 package use_cases;
 
+import controllers.MySQLController;
 import entities.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +14,7 @@ import java.util.UUID;
 class PostManagerTest {
     private PostManager postManager;
     private Post samplePost;
+
 
     @BeforeEach
     void setupPostManagerTest() {
@@ -89,5 +93,11 @@ class PostManagerTest {
     void testGetPostRecipe(){
         this.postManager.createPost(this.samplePost);
         assert this.postManager.getPostRecipe(this.samplePost.getId()).equals(this.samplePost.getRecipe());
+    }
+
+    @AfterEach
+    void clearAll(){
+        MySQLController mySQLController = new MySQLController();
+        mySQLController.deletePost(this.samplePost.getId());
     }
 }

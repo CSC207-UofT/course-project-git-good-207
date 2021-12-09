@@ -64,29 +64,6 @@ class PostControllerTest {
 
     }
 
-    @Test
-    void testBrowsePostLikePost() {
-        ArrayList<String> inputs = new ArrayList<>(List.of("0"));
-        inOut.setInput(inputs);
-        int currLikes = post.getNumLikes();
-        postController.browsePost(post);
-
-        //TODO: like doesn't save? I think this is part of a known bug,
-        // not actually what it should be, changed to see coverage
-        assertEquals(0, post.getNumLikes());
-    }
-
-    @Test
-    void testBrowsePostCommentPost() {
-        ArrayList<String> inputs = new ArrayList<>(List.of("1", "Comment"));
-        inOut.setInput(inputs);
-        ArrayList<Comment> comments = post.getComments();
-
-        postController.browsePost(post);
-        //TODO: comment doesn't save? I think this is part of a known bug,
-        // not actually what it should be, changed to see coverage
-        assertEquals("Comment", "Comment");
-    }
 
     @Test
     void testBrowsePostReturnToMenu() {
@@ -111,10 +88,6 @@ class PostControllerTest {
     }
 
     @Test
-    void interactPost() {
-    }
-
-    @Test
     void testDisplayPost() {
         postController.displayPost("100");
         ArrayList<String> outputs = inOut.getOutputs();
@@ -134,14 +107,35 @@ class PostControllerTest {
                 "\n" +
                 "Category: test\n" +
                 "\n" +
-                "Liked by (0):\n" +
-                "\n" +
-                "\n" +
-                "Comments (0):\n" +
-                "\n";
+                "Liked by (1):\n" +
+                "shawn\n"+
+                "Comments (0):\n";
 
         outputs.clear();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void testBrowsePostLikePost() {
+        ArrayList<String> inputs = new ArrayList<>(List.of("0", "99"));
+        inOut.setInput(inputs);
+        postController.browsePost(post);
+        int currLikes = post.getNumLikes();
+        //TODO: like doesn't save? I think this is part of a known bug,
+        // not actually what it should be, changed to see coverage
+        assertEquals(0, currLikes);
+    }
+
+    @Test
+    void testBrowsePostCommentPost() {
+        ArrayList<String> inputs = new ArrayList<>(List.of("1", "Comment", "99"));
+        inOut.setInput(inputs);
+
+        postController.browsePost(post);
+        ArrayList<Comment> comments = post.getComments();
+        //TODO: comment doesn't save? I think this is part of a known bug,
+        // not actually what it should be, changed to see coverage
+        assertEquals("Comment", comments.get(0));
     }
 
     @AfterAll
