@@ -104,8 +104,8 @@ public class UserProfileController {
         } else if (choice == 2) {
             this.runCustomizeBio();
         } else if (choice == 3) {
-            if (this.runCheckUserAtleastOnePost(this.loginManager.getCurrUser())) {
-                this.runDisplayUserPosts(this.loginManager.getCurrUser());
+            if (this.runCheckUserAtleastOnePost(this.userManager.findUser(this.loginManager.getCurrUser().getUsername()))) {
+                this.runDisplayUserPosts(this.userManager.findUser(this.loginManager.getCurrUser().getUsername()));
             }
             else {
                 this.inOut.setOutput("You have no posts! Returning to main menu.");
