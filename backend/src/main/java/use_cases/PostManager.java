@@ -54,14 +54,32 @@ public class PostManager {
                     this.databaseManager.commentPost(targetPost, (Comment) obj);
                 }
                 else {
-                    post.addLike((User) obj);
-                    this.databaseManager.likePost(targetPost, (User) obj);
+                    if (userDidNotAlreadyLike(targetPost, (User) obj)) {
+                        post.addLike((User) obj);
+                        this.databaseManager.likePost(targetPost, (User) obj);
+
+                    }
                 }
                 this.databaseManager.editPost(post);
                 return true;
             }
         }
         return false;
+    }
+
+    /** Return true if new_like_user did not already like the post. False otherwise.
+     *
+     * @param targetPost post of interest
+     * @param new_like_user user that currently wants to like the post
+     * @return true if user did not already like the post
+     */
+    public boolean userDidNotAlreadyLike(Post targetPost, User new_like_user) {
+        for (User user: targetPost.getLikedUsers()) {
+            if (user.sameUser(new_like_user)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

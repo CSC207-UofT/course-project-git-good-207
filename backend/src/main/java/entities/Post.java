@@ -16,7 +16,14 @@ public class Post extends PostableItem {
     private final Recipe recipe;
     private final String category;
 
-    // constructor
+    /** Construct a Post object.
+     *
+     * @param authorId author of the post
+     * @param postedTime posted time of post
+     * @param recipe this post's recipe
+     * @param id this post's unique id
+     * @param category post's category
+     */
     public Post(String authorId, LocalDateTime postedTime, Recipe recipe, String category, String id) {
         super(authorId, postedTime, id);
         this.likedUsers = new ArrayList<>();
