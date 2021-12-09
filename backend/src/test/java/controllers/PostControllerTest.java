@@ -66,14 +66,14 @@ class PostControllerTest {
 
     @Test
     void testBrowsePostLikePost() {
-        ArrayList<String> inputs = new ArrayList<>(List.of("0"));
+        ArrayList<String> inputs = new ArrayList<>(List.of("0", "99"));
         inOut.setInput(inputs);
-        int currLikes = post.getNumLikes();
+
         postController.browsePost(post);
 
         //TODO: like doesn't save? I think this is part of a known bug,
         // not actually what it should be, changed to see coverage
-        assertEquals(0, post.getNumLikes());
+        assertEquals(1, post.getNumLikes());
     }
 
     @Test
