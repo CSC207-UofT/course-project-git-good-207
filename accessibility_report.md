@@ -37,7 +37,11 @@
 
 ### Low Physical Effort
 
-* Our app definitely follows this principle because the user needs minimal physical effort to use the app, and we try to require as little unnecessary typing as possible when using it
+* Our app definitely follows this principle because the user needs minimal physical effort to use the app, and we try to require as little unnecessary typing as possible when using it. This is done through allowing
+users to go back in various sections of the program.
+* This could be further improved by increasing the amount of places where we allow users to "go back" so that they are not forced 
+to do unnecessary actions. This is quite difficult to effectively implement with a command line interface, but can be quite simply done using web functionalities
+if the program is integrated with the web app.
 
 ### Size and Space for Approach and Use
 
