@@ -138,6 +138,9 @@ https://github.com/CSC207-UofT/course-project-git-good-207/pull/24/files
 * Originally, we had classes generate a unique ID for themselves when constructed, but we realized this was problematic when reconstructing Java objects based on information stored in the database - we were not able to recreate an object with an existing ID. We refactored our approach and modified many of our classes to take in an ID as a parameter in the constructor. For example, we made this change in our User object, and you can see our refactored changes in this PR: https://github.com/CSC207-UofT/course-project-git-good-207/pull/72
 
 
+* We addressed as many code smells as possible such as the repetitive code fixed in this PR https://github.com/CSC207-UofT/course-project-git-good-207/pull/110
+
+
 * We relocated some classes based on TA feedback. This is discussed further in the Code Organization section.
 
 ## Code Organization
