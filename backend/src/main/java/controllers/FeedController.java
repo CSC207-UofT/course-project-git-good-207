@@ -18,6 +18,14 @@ public class FeedController {
     private final UserManager userManager;
     private HashMap<Integer, Post> postsActionMap = new HashMap<>();
 
+    /**
+     * Construct a FeedController
+     *
+     * @param inOut        the InOut interface for managing input/output
+     * @param dbManager the DatabaseManager
+     * @param loginManager the LoginManager
+     * @param postController the PostController
+     */
     public FeedController(InOut inOut, DatabaseManager dbManager,
                           LoginManager loginManager, PostController postController) {
         this.inOut = inOut;
@@ -27,6 +35,11 @@ public class FeedController {
         this.userManager = new UserManager(this.databaseManager);
     }
 
+    /**
+     * Run the appropriate ShellAction
+     *
+     * @param action ShellAction corresponding to the action that needs to be run
+     */
     public void run(ShellAction action) {
         if (action == ShellAction.BROWSEFEED) {
             this.runBrowseFeed();
