@@ -37,7 +37,8 @@ public class LoginController {
         int DEFAULT_ACTION = 99;
         String welcomeActionPrompt = "Please select an action:\n" +
                 "0 Sign up\n" +
-                "1 Login\n";
+                "1 Login\n" +
+                "2 Exit\n";
 
         String welcomeMessage = "Welcome to the Recipe App!";
 
@@ -122,6 +123,8 @@ public class LoginController {
                 return this.runSignUpPage();
             case (1):
                 return this.runLoginPage();
+            case (2):
+                System.exit(0);
             default:
                 this.inOut.setOutput("You entered an invalid action input.");
                 return true;

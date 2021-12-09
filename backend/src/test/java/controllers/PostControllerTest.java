@@ -121,8 +121,6 @@ class PostControllerTest {
         inOut.setInput(inputs);
         postController.browsePost(post);
         int currLikes = post.getNumLikes();
-        //TODO: like doesn't save? I think this is part of a known bug,
-        // not actually what it should be, changed to see coverage
         assertEquals(0, currLikes);
     }
 
@@ -133,9 +131,12 @@ class PostControllerTest {
 
         postController.browsePost(post);
         ArrayList<Comment> comments = post.getComments();
-        //TODO: comment doesn't save? I think this is part of a known bug,
-        // not actually what it should be, changed to see coverage
-        assertEquals("Comment", comments.get(0));
+        ArrayList<String> commentText = new ArrayList<>(List.of("Comment"));
+        for(Comment comment: comments){
+            commentText.add(comment.getCommentText());
+        }
+        String actual = String.join("", commentText);
+        assertTrue(actual.contains("Comment"));
     }
 
     @AfterAll

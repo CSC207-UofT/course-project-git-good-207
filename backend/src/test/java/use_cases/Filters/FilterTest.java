@@ -1,35 +1,63 @@
-package use_cases.FilterTests;
+package use_cases.Filters;
 
 import entities.Feed;
 import entities.Post;
 import entities.Recipe;
 import entities.User;
 import org.junit.jupiter.api.Test;
-import use_cases.Filters.FilterByLikes;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
-public class FilterByLikesTest {
-    final Feed feed = setupFeed();
-    final FilterByLikes filter = new FilterByLikes(feed);
+public class FilterTest {
+    private static Feed feed;
+    private static Filter filter;
+
+    @BeforeEach
+    void setupFilter() {
+        feed = setupFeed();
+        filter = new Filter(feed);
+    }
 
     @Test
-    void testRunFeed() {
+    void testRunFilter() {
         Feed actual = filter.runFilter();
-        ArrayList<String> actualPostTitles = new ArrayList<>();
-        for (Post p : actual.getDisplayedPosts()) {
-            actualPostTitles.add(p.getRecipe().getTitle());
-        }
-        ArrayList<String> expectedTitles = new ArrayList<>(Arrays.asList("Butter Chicken", "Beef Bourguignon"));
-        assert actualPostTitles.containsAll(expectedTitles);
         assert actual.getDisplayedPosts().size() == 10;
     }
 
+    @Test
+    void testSortByPostedTime() {
+        ArrayList<Post> posts = feed.getPosts();
+        Collections.shuffle(posts);
+        ArrayList<Post> actual = filter.sortByPostedTime(posts);
+        assert actual.equals(feed.getPosts());
+    }
+
+    @Test
+    void testLimitNumPosts() {
+        ArrayList<Post> actual = filter.limitNumPosts(feed.getDisplayedPosts());
+        assert actual.size() == 10;
+    }
+
+    @Test
+    void testCheckNumPostsTrue() {
+        ArrayList<Post> posts = feed.getPosts();
+        posts.remove(11);
+        posts.remove(10);
+        assert filter.checkNumPosts(posts, 10);
+    }
+
+    @Test
+    void testCheckNumPostsFalse() {
+        ArrayList<Post> posts = feed.getPosts();
+        assert !filter.checkNumPosts(posts, 10);
+    }
+
     private static Feed setupFeed() {
-        User currentUser = new User("justin", "1234", "", UUID.randomUUID().toString());
         User friend1 = new User("glen", "1111", "", UUID.randomUUID().toString());
         User friend2 = new User("eric", "2222", "", UUID.randomUUID().toString());
 
@@ -57,14 +85,6 @@ public class FilterByLikesTest {
                 new Recipe("Beef Taco", new ArrayList<>(), new ArrayList<>(), "r11"), "Mexican", "rp7");
         Post randomPost8 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
                 new Recipe("Chicken Taco", new ArrayList<>(), new ArrayList<>(), "r12"), "Mexican", "rp8");
-
-        randomPost3.addLike(currentUser);
-        randomPost3.addLike(friend1);
-        randomPost3.addLike(friend2);
-        randomPost6.addLike(currentUser);
-        randomPost6.addLike(friend2);
-        randomPost8.addLike(currentUser);
-        currentUser.setLike("Mexican");
 
         ArrayList<Post> allPosts = new ArrayList<>(Arrays.asList(friend1Post1, friend1Post2,
                 friend2Post1, friend2Post2, randomPost1, randomPost2, randomPost3, randomPost4,

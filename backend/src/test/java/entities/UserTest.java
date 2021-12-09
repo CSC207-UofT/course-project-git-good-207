@@ -62,4 +62,11 @@ public class UserTest {
         assert this.user.getPosts().isEmpty();
     }
 
+    @Test
+    void testSetLike() {
+        user.setLike("Food");
+        user.setLike("Food");
+
+        assert this.user.getLikeHistory().get("Food") == 2;
+    }
 }

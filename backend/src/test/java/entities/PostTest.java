@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,7 +47,7 @@ public class PostTest {
     }
 
     @Test
-    void testGetTime() {
+    void testGetCreatedTime() {
         assertSame(post.getCreatedTime(), dateTime);
     }
 
@@ -77,5 +78,17 @@ public class PostTest {
     @Test
     void testGetCategory() {
         assertSame("Italian", post.getCategory());
+    }
+
+    @Test
+    void testGetHashCode() {
+        String id = post.getId();
+
+        assertEquals(post.hashCode(), Objects.hash(id));
+    }
+
+    @Test
+    void testGetTime() {
+        assertSame(post.getTime(), dateTime);
     }
 }
