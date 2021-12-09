@@ -1,9 +1,5 @@
 # Progress Report
 
-### What our group did well for Phase 2
-
-### What our group did not do well for Phase 2
-
 ## Individual Progress Report
 
 ### Glen
