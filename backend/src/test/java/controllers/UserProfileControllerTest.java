@@ -1,7 +1,8 @@
 package controllers;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,14 +21,20 @@ class UserProfileControllerTest {
     private static final UserProfileController userProfileController = new UserProfileController(inOut, mySQLController, loginManager);
     final ArrayList<String> inputs = new ArrayList<>();
 
-    @BeforeEach
-    void setup() {
+    @BeforeAll
+    static void setup() {
+        loginManager.signUp("tester", "1234");
         loginManager.login("tester", "1234");
     }
 
     @AfterEach
     void clearInputs(){
         inputs.clear();
+    }
+
+    @AfterAll
+    static void clearUser(){
+        mySQLController.deleteUser(loginManager.getCurrUser());
     }
 
     @Test
@@ -54,7 +61,7 @@ class UserProfileControllerTest {
 
     @Test
     void testRunUnfollowUserInvalid() {
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("glen","0"));
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("glen","1"));
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.BROWSEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
