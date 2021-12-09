@@ -1,5 +1,9 @@
 package controllers;
 
+import entities.CountableIngredient;
+import entities.Ingredient;
+import entities.Post;
+import entities.Recipe;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,9 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import use_cases.LoginManager;
 import use_cases.UserManager;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 class UserProfileControllerTest {
     private static final MySQLController mySQLController = new MySQLController();
@@ -20,7 +26,10 @@ class UserProfileControllerTest {
     private static final UserManager userManager = new UserManager(mySQLController);
     private static final DummyInOut inOut = new DummyInOut();
     private static final UserProfileController userProfileController = new UserProfileController(inOut, mySQLController, loginManager);
+    final static LocalDateTime dateTime = LocalDateTime.of(2021, 12, 3, 4, 20, 1);
+    final static String recipeId = UUID.randomUUID().toString();
     final ArrayList<String> inputs = new ArrayList<>();
+    static Post post;
 
     @BeforeAll
     static void setup() {
@@ -181,5 +190,14 @@ class UserProfileControllerTest {
         String output = String.join("", outputs);
 
         assertTrue(output.endsWith("Target user has no posts! Returning to main menu"));
+    }
+
+    @Test
+    void testBrowsePost() {
+        ArrayList<Ingredient> ingredients = new ArrayList<>(List.of(new CountableIngredient("apples", 13)));
+        ArrayList<String> steps = new ArrayList<>(Arrays.asList("Get apples", "Throw them"));
+        Recipe recipe = new Recipe("Test", ingredients, steps, recipeId);
+        post = new Post("2", dateTime, recipe, "test", "100");
+        loginManager.getCurrUser().addPost(post);
     }
 }
