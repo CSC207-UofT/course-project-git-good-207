@@ -1,61 +1,32 @@
-package use_cases.FilterTests;
+package use_cases.Filters;
 
 import entities.Feed;
 import entities.Post;
 import entities.Recipe;
 import entities.User;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import use_cases.Filters.Filter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.UUID;
 
-public class FilterTest {
-    private static Feed feed;
-    private static Filter filter;
-
-    @BeforeEach
-    void setupFilter() {
-        feed = setupFeed();
-        filter = new Filter(feed);
-    }
+public class FilterByCuisineTest {
+    final Feed feed = setupFeed();
+    final FilterByCuisine filter = new FilterByCuisine(feed, 0);
 
     @Test
-    void testRunFilter() {
+    void testRunFeed() {
         Feed actual = filter.runFilter();
-        assert actual.getDisplayedPosts().size() == 10;
-    }
+        ArrayList<String> actualPostTitles = new ArrayList<>();
 
-    @Test
-    void testSortByPostedTime() {
-        ArrayList<Post> posts = feed.getPosts();
-        Collections.shuffle(posts);
-        ArrayList<Post> actual = filter.sortByPostedTime(posts);
-        assert actual.equals(feed.getPosts());
-    }
+        for (Post p : actual.getDisplayedPosts()) {
+            actualPostTitles.add(p.getRecipe().getTitle());
+        }
 
-    @Test
-    void testLimitNumPosts() {
-        ArrayList<Post> actual = filter.limitNumPosts(feed.getDisplayedPosts());
-        assert actual.size() == 10;
-    }
+        ArrayList<String> expected = new ArrayList<>(Arrays.asList("Szechuan Chicken", "Stir Fry Beef", "Mapo Tofu"));
 
-    @Test
-    void testCheckNumPostsTrue() {
-        ArrayList<Post> posts = feed.getPosts();
-        posts.remove(11);
-        posts.remove(10);
-        assert filter.checkNumPosts(posts, 10);
-    }
-
-    @Test
-    void testCheckNumPostsFalse() {
-        ArrayList<Post> posts = feed.getPosts();
-        assert !filter.checkNumPosts(posts, 10);
+        assert expected.containsAll(actualPostTitles);
     }
 
     private static Feed setupFeed() {
