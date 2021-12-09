@@ -1,21 +1,33 @@
-package use_cases.FilterTests;
+package use_cases.Filters;
 
 import entities.Feed;
 import entities.Post;
 import entities.Recipe;
 import entities.User;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import use_cases.Filters.FilterByRecommended;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class FilterByRecommendedTest {
-    static final User currentUser = new User("justin", "1234", "", UUID.randomUUID().toString());
-    final Feed feed = setupFeed();
-    final FilterByRecommended filter = new FilterByRecommended(feed, currentUser);
+public class FilterByFollowingTest {
+    private static User friend1;
+    private static User friend2;
+    private static FilterByFollowing filter;
+
+    @BeforeAll
+    static void setupFollowing() {
+        User currentUser = new User("justin", "1234", "", UUID.randomUUID().toString());
+        friend1 = new User("glen", "1111", "", UUID.randomUUID().toString());
+        friend2 = new User("eric", "2222", "", UUID.randomUUID().toString());
+        currentUser.addFollowing(friend1);
+        currentUser.addFollowing(friend2);
+
+        Feed feed = setupFeed();
+        filter = new FilterByFollowing(feed, currentUser);
+    }
 
     @Test
     void testRunFeed() {
@@ -25,16 +37,22 @@ public class FilterByRecommendedTest {
         for (Post p : actual.getDisplayedPosts()) {
             actualPostTitles.add(p.getRecipe().getTitle());
         }
-        ArrayList<String> expected = new ArrayList<>();
-        expected.add("Beef Taco");
+        ArrayList<String> expected = new ArrayList<>(Arrays.asList("Szechuan Chicken", "Beef Burger",
+                "Tonkotsu Ramen", "Pepperoni Pizza"));
 
-        assert expected.containsAll(actualPostTitles) && actualPostTitles.containsAll(expected);
+        assert expected.containsAll(actualPostTitles);
+    }
+
+    @Test
+    void testGetUsersFollowingList() {
+        ArrayList<String> actual = filter.getUsersFollowingList();
+
+        ArrayList<String> expected = new ArrayList<>(Arrays.asList(friend1.getId(), friend2.getId()));
+
+        assert expected.containsAll(actual);
     }
 
     private static Feed setupFeed() {
-        User friend1 = new User("glen", "1111", "", UUID.randomUUID().toString());
-        User friend2 = new User("eric", "2222", "", UUID.randomUUID().toString());
-
         Post friend1Post1 = new Post(friend1.getId(), LocalDateTime.now(), new Recipe("Szechuan Chicken",
                 new ArrayList<>(), new ArrayList<>(), "r1"), "Chinese", "f1p1");
         Post friend1Post2 = new Post(friend1.getId(), LocalDateTime.now(), new Recipe("Beef Burger",
@@ -59,11 +77,6 @@ public class FilterByRecommendedTest {
                 new Recipe("Beef Taco", new ArrayList<>(), new ArrayList<>(), "r11"), "Mexican", "rp7");
         Post randomPost8 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
                 new Recipe("Chicken Taco", new ArrayList<>(), new ArrayList<>(), "r12"), "Mexican", "rp8");
-
-        randomPost3.addLike(currentUser);
-        randomPost6.addLike(currentUser);
-        randomPost8.addLike(currentUser);
-        currentUser.setLike("Mexican");
 
         ArrayList<Post> allPosts = new ArrayList<>(Arrays.asList(friend1Post1, friend1Post2,
                 friend2Post1, friend2Post2, randomPost1, randomPost2, randomPost3, randomPost4,

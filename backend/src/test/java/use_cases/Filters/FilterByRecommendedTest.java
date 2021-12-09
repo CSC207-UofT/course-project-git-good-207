@@ -1,20 +1,20 @@
-package use_cases.FilterTests;
+package use_cases.Filters;
 
 import entities.Feed;
 import entities.Post;
 import entities.Recipe;
 import entities.User;
 import org.junit.jupiter.api.Test;
-import use_cases.Filters.FilterByCuisine;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class FilterByCuisineTest {
+public class FilterByRecommendedTest {
+    static final User currentUser = new User("justin", "1234", "", UUID.randomUUID().toString());
     final Feed feed = setupFeed();
-    final FilterByCuisine filter = new FilterByCuisine(feed, 0);
+    final FilterByRecommended filter = new FilterByRecommended(feed, currentUser);
 
     @Test
     void testRunFeed() {
@@ -24,10 +24,10 @@ public class FilterByCuisineTest {
         for (Post p : actual.getDisplayedPosts()) {
             actualPostTitles.add(p.getRecipe().getTitle());
         }
+        ArrayList<String> expected = new ArrayList<>();
+        expected.add("Beef Taco");
 
-        ArrayList<String> expected = new ArrayList<>(Arrays.asList("Szechuan Chicken", "Stir Fry Beef", "Mapo Tofu"));
-
-        assert expected.containsAll(actualPostTitles);
+        assert expected.containsAll(actualPostTitles) && actualPostTitles.containsAll(expected);
     }
 
     private static Feed setupFeed() {
@@ -58,6 +58,11 @@ public class FilterByCuisineTest {
                 new Recipe("Beef Taco", new ArrayList<>(), new ArrayList<>(), "r11"), "Mexican", "rp7");
         Post randomPost8 = new Post(UUID.randomUUID().toString(), LocalDateTime.now(),
                 new Recipe("Chicken Taco", new ArrayList<>(), new ArrayList<>(), "r12"), "Mexican", "rp8");
+
+        randomPost3.addLike(currentUser);
+        randomPost6.addLike(currentUser);
+        randomPost8.addLike(currentUser);
+        currentUser.setLike("Mexican");
 
         ArrayList<Post> allPosts = new ArrayList<>(Arrays.asList(friend1Post1, friend1Post2,
                 friend2Post1, friend2Post2, randomPost1, randomPost2, randomPost3, randomPost4,
