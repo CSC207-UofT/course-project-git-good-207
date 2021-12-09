@@ -32,4 +32,11 @@ So, though I spent a significant amount of time researching and trying to figure
 
 Thus, the rest of my work in phase 2 was focused on testing and bug fixing the program as per TA feedback.
 I created the DummyInOut class which implements our InOut interface and uses Strings arrays to keep track of input and output instead of System.out/System.in. This made it possible for us to thoroughly test, through unit test creation, the controller classes which utilized our InOut interface.
-Additionally, I made unit tests for LoginController, PostController, CountableIngredient, MeasurableIngredient, PostableItem, and Recipe and worked to fix any bugs found during testing such as those in LoginController.
+Additionally, I made unit tests for LoginController, PostController, CountableIngredient, MeasurableIngredient, PostableItem, and Recipe and worked to fix any bugs found during testing such as those in LoginController.  
+
+A significant PR I made was: https://github.com/CSC207-UofT/course-project-git-good-207/pull/39  
+In this PR I worked with both the use case and controller layer of clean architecture to implement a sign up functionality for the program.
+I integrated the LoginManager with the DatabaseManager to check for invalid input and verify user credentials with those in the database.
+Moreover, I added a welcome page which allows users to choose between logging in and signing up, increasing program usability.
+In this PR: https://github.com/CSC207-UofT/course-project-git-good-207/pull/122 I also did a significant about out unit testing, ensuring our
+program is free of any obvious bugs in those classes and increased test coverage.
