@@ -61,21 +61,21 @@ class UserProfileControllerTest {
 
     @Test
     void testRunUnfollowUserInvalid() {
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("glen","1"));
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("","1"));
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.BROWSEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
         String output = String.join("", outputs);
 
-        assertTrue(output.endsWith("User is not followed to begin with!"));
+        assertTrue(output.endsWith("Either user is not in the database or user is yourself! Returning to main page"));
     }
 
     @Test
     void testRunUnfollowUserValid() {
         userManager.followUser(loginManager.getCurrUser(), userManager.findUser("shawn"));
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("shawn","0"));
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("4", "y", "shawn"));
         inOut.setInput(inputs);
-        userProfileController.run(ShellAction.BROWSEPROFILE);
+        userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
         String output = String.join("", outputs);
 
@@ -118,7 +118,8 @@ class UserProfileControllerTest {
 
     @Test
     void testRunCustomizeBioInvalid() {
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("2", "hi im tester"));
+
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("2", loginManager.getCurrUser().getBio()));
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
@@ -140,7 +141,7 @@ class UserProfileControllerTest {
 
     @Test
     void testRunCustomizePasswordInvalid() {
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("1", "1234"));
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList("1", loginManager.getCurrUser().getPassword()));
         inOut.setInput(inputs);
         userProfileController.run(ShellAction.CUSTOMIZEPROFILE);
         ArrayList<String> outputs = inOut.getOutputs();
