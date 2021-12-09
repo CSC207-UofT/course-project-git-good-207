@@ -1,8 +1,6 @@
 package use_cases;
 
-import entities.CountableIngredient;
 import entities.Ingredient;
-import entities.MeasurableIngredient;
 import entities.Recipe;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

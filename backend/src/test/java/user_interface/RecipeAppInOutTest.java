@@ -3,7 +3,6 @@ package user_interface;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import user_interface.RecipeAppInOut;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

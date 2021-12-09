@@ -11,11 +11,10 @@ import controllers.MySQLController;
 public class UserManagerTest {
     private User user;
     private UserManager userManager;
-    private MySQLController mySQLController;
 
     @BeforeEach
     void setupFeedTest() {
-        this.mySQLController = new MySQLController();
+        MySQLController mySQLController = new MySQLController();
         this.user = new User("eren_yeager", "#1titan_slayer", "" , UUID.randomUUID().toString());
         this.userManager = new UserManager(mySQLController);
     }
