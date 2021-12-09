@@ -32,8 +32,8 @@ public class RecipeAppController {
 
     private void runLoggedInState() {
         String action = this.inOut.getInput(this.getShellActionPrompt());
-        this.runAction(this.getShellActionEnum(action));
         this.inOut.setOutput("You selected action: " + action);
+        this.runAction(this.getShellActionEnum(action));
     }
 
     private ShellAction getShellActionEnum(String action) {
