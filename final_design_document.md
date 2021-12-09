@@ -123,6 +123,7 @@ process. For example, we agreed to put curly braces on the same line as methods 
 Our Phase 0 submission had only one unit test file, just to make sure our JUnit was working. In Phase 1, we aimed to
 cover all methods across our codebase that made sense to test (i.e. simple, limited dependencies). We did not use a 
 Mock framework like Mockito, as this was more advanced, but we may look into this later on, time permitting.  
+
 In Phase 2, we improved our test coverage and implemented tests for every single major, testable class from user interface to entity.
 As a result we have 82% overall line coverage (with 100% line coverage for entity classes).  
 
