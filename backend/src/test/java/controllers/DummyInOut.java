@@ -22,14 +22,26 @@ public class DummyInOut implements InOut {
         this.outputs.add(output);
     }
 
+    /**
+     * Clears all previous input and sets the Strings in the
+     * given ArrayList as input
+     * @param input ArrayList of Strings representing the input
+     */
     public void setInput(ArrayList<String> input) {
         this.inputs.clear();
         this.inputs.addAll(input);
     }
 
+    /**
+     * Returns all the collected outputs
+     * @return ArrayList of Strings representing the output
+     */
     public ArrayList<String> getOutputs() {
         return outputs;
     }
 
+    /**
+     * Clears all output
+     */
     public void clearOutputs() { outputs.clear(); }
 }
