@@ -3,6 +3,9 @@
 # Mac-specific
 *.DS_STORE
 
+# Backend
+/backend/bin
+
 # Gradle .gitignore (https://github.com/github/gitignore/blob/master/Gradle.gitignore)
 .gradle
 **/build/
