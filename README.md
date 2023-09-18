@@ -1,6 +1,7 @@
 ## The Recipe App - Git Good 207
+![alt The Foodstagram UI.](./public/ui-example.png)
 
-Our group, Git Good 207, decided to make a Recipe sharing app. We haven't decided on a name yet, but one possibility is "Foodstagram".
+Our group, Git Good 207, decided to make a Recipe sharing app called Foodstagram.
 
 Group Members:
 - Eric
