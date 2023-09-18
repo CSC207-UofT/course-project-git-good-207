@@ -1,5 +1,8 @@
 # This .gitignore will automatically ignore certain Gradle and IntelliJ files that you likely won't want to commit!
 
+# Mac-specific
+*.DS_STORE
+
 # Gradle .gitignore (https://github.com/github/gitignore/blob/master/Gradle.gitignore)
 .gradle
 **/build/
